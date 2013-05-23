@@ -1,0 +1,1664 @@
+The map file of "LockRace" application
+
+Thu May 23 15:24:54 PDT 2013
+
+============================================================
+simpleRTJ java class file linker, ver: 1.2.3 (18-Dec-2001)
+Copyright (c) 2000 RTJ Computing, All Rights Reserved.
+This software is not licensed and can only be used for evaluation purposes.
+============================================================
+
+
+Memory model:   LINEAR 16MB
+
+Formated outputs base address: 0x00000000  
+
+************************************************************
+* Magic number:          0xCAFEBABE
+* ClassLinker version:   1.2.3
+* Checksum
+*     Start position:    0x00000014  
+*     Length:            0x00000CAC  
+*     LRC:               0xEA
+* Application ID:        "rose"
+* Application Name:      "NetTest Application"
+************************************************************
+
+Static Fields Size:         0x00000000  
+Exception table Offset:     0x000000E4  
+main() Method Offset:       0x00000290  
+java/lang/Thread Offset:    0x00000150  
+java/lang/Object Offset:    0x00000114  
+java/lang/Cloneable Offset: 0x000001FC  
+java/io/Serializable Offset:0x0000021C  
+java/lang/String Offset:    0x00000A6C  
+String.value Offset:        0x00000AC4  
+String.count Offset:        0x00000ACC  
+String.offset Offset:       0x00000AC8  
+Number of classes:          0x0000001B   (27)
+Max. Frame Size:            0x00000024   (36)
+Max. Instance Size:         0x00000010   (16)
+
+
+<< CLASS OFFSETS TABLE >>
+Index   Offset             Size      Name
+------------------------------------------------------------------------------
+    0   0x00000114           60      java/lang/Object
+    1   0x00000150          172      java/lang/Thread
+    2   0x000001FC           32      java/lang/Cloneable
+    3   0x0000021C           32      java/io/Serializable
+    4   0x0000023C          124      LockRace
+    5   0x000002B8          104      java/lang/InternalError
+    6   0x00000320          104      java/lang/OutOfMemoryError
+    7   0x00000388          104      java/lang/NoSuchMethodError
+    8   0x000003F0          104      java/lang/AbstractMethodError
+    9   0x00000458          104      java/lang/NullPointerException
+   10   0x000004C0          104      java/lang/IndexOutOfBoundsException
+   11   0x00000528          104      java/lang/ArrayStoreException
+   12   0x00000590          104      java/lang/ArithmeticException
+   13   0x000005F8          104      java/lang/ClassCastException
+   14   0x00000660          104      java/lang/NegativeArraySizeException
+   15   0x000006C8          104      java/lang/IllegalMonitorStateException
+   16   0x00000730          104      java/lang/VirtualMachineError
+   17   0x00000798          104      java/lang/IncompatibleClassChangeError
+   18   0x00000800          104      java/lang/RuntimeException
+   19   0x00000868          104      java/lang/Error
+   20   0x000008D0          104      java/lang/LinkageError
+   21   0x00000938          104      java/lang/Exception
+   22   0x000009A0          204      java/lang/Throwable
+   23   0x00000A6C          356      java/lang/String
+   24   0x00000BD0           60      java/lang/Runnable
+   25   0x00000C0C          172      uvic/posix/Thread
+   26   0x00000CB8            8      [C
+
+
+<< RUN-TIME EXCEPTION OFFSETS TABLE >>
+Index   Offset            Name
+------------------------------------------------------------------------------
+    1   0x000002B8        java/lang/InternalError
+    2   0x00000320        java/lang/OutOfMemoryError
+    3   0x00000388        java/lang/NoSuchMethodError
+    4   0x000003F0        java/lang/AbstractMethodError
+    5   0x00000458        java/lang/NullPointerException
+    6   0x000004C0        java/lang/IndexOutOfBoundsException
+    7   0x00000528        java/lang/ArrayStoreException
+    8   0x00000590        java/lang/ArithmeticException
+    9   0x000005F8        java/lang/ClassCastException
+   10   0x00000660        java/lang/NegativeArraySizeException
+   11   0x000006C8        java/lang/IllegalMonitorStateException
+
+
+############################################################
+#  CLASS: java/lang/Object    (60 bytes)
+############################################################
+Index:              0
+Offset:             0x00000114  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       -
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000001   (1)
+Meth. Table Offset: 0x00000134  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x0000013C          java.lang.Object.<init> ()V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x0000013C  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000002  
+    Bytecodes start: 0x0000014C  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/Thread    (172 bytes)
+############################################################
+Index:              1
+Offset:             0x00000150  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x000001F4  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       0x000001D0  
+<clinit> Offset:    -
+Methods Count:      0x00000003   (3)
+Meth. Table Offset: 0x00000180  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000001B4    MethodRef             java/lang/Thread.<init>
+0x0001      0x0000013C    MethodRef             java/lang/Object.<init>
+0x0002      0x00000198    FieldRef              java/lang/Thread.target
+0x0003      0x00000BF8    InterfaceMethodRef    java/lang/Runnable.run
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x0000019C          java.lang.Thread.<init> ()V
+0x6EBB         0x000001B4          java.lang.Thread.<init> (Ljava/lang/Runnable;)V
+0x0EF3         0x000001D0          java.lang.Thread.run ()V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+0x00000198    target               L            0    PRIVATE
+
+<< Interfaces offset table >>
+Index  Offset      Interface
+------------------------------------------------------------------------------
+ 0     0x00000BD0    java/lang/Runnable
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x0000019C  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000001AC  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/Runnable;)V
+------------------------------
+    Offset:          0x000001B4  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x0000000A  
+    Bytecodes start: 0x000001C4  
+    Hashcode:        0x6EBB    
+    nArgs words:     1
+    Exception table: -
+
+run ()V
+------------------------------
+    Offset:          0x000001D0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000012  
+    Bytecodes start: 0x000001E0  
+    Hashcode:        0x0EF3    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  INTERFACE: java/lang/Cloneable    (32 bytes)
+############################################################
+Index:              2
+Offset:             0x000001FC  
+Access flags:       0x0601     (ABSTRACT INTERFACE PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000000   (0)
+Meth. Table Offset: 0x00000000  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+
+
+
+############################################################
+#  INTERFACE: java/io/Serializable    (32 bytes)
+############################################################
+Index:              3
+Offset:             0x0000021C  
+Access flags:       0x0601     (ABSTRACT INTERFACE PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000000   (0)
+Meth. Table Offset: 0x00000000  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+
+
+
+############################################################
+#  CLASS: LockRace    (124 bytes)
+############################################################
+Index:              4
+Offset:             0x0000023C  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000C0C   (uvic/posix/Thread)
+run() Offset:       0x000002A4  
+<clinit> Offset:    -
+Methods Count:      0x00000003   (3)
+Meth. Table Offset: 0x00000260  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000C58    MethodRef             uvic/posix/Thread.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000278          LockRace.<init> ()V
+0x50DC         0x00000290          LockRace.main ([Ljava/lang/String;)V
+0x0EF3         0x000002A4          LockRace.run ()V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000278  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000288  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+main ([Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000290  
+    Access flags:    0x0008     (STATIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000002  
+    Bytecodes start: 0x000002A0  
+    Hashcode:        0x50DC    
+    nArgs words:     1
+    Exception table: -
+
+run ()V
+------------------------------
+    Offset:          0x000002A4  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000002  
+    Bytecodes start: 0x000002B4  
+    Hashcode:        0x0EF3    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/InternalError    (104 bytes)
+############################################################
+Index:              5
+Offset:             0x000002B8  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000730   (java/lang/VirtualMachineError)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000002E0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000768    MethodRef             java/lang/VirtualMachineError.<init>
+0x0001      0x00000780    MethodRef             java/lang/VirtualMachineError.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000002F0          java.lang.InternalError.<init> ()V
+0x716E         0x00000308          java.lang.InternalError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000002F0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000300  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000308  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000318  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/OutOfMemoryError    (104 bytes)
+############################################################
+Index:              6
+Offset:             0x00000320  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000730   (java/lang/VirtualMachineError)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000348  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000768    MethodRef             java/lang/VirtualMachineError.<init>
+0x0001      0x00000780    MethodRef             java/lang/VirtualMachineError.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000358          java.lang.OutOfMemoryError.<init> ()V
+0x716E         0x00000370          java.lang.OutOfMemoryError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000358  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000368  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000370  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000380  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/NoSuchMethodError    (104 bytes)
+############################################################
+Index:              7
+Offset:             0x00000388  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000798   (java/lang/IncompatibleClassChangeError)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000003B0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000007D0    MethodRef             java/lang/IncompatibleClassChangeError.<init>
+0x0001      0x000007E8    MethodRef             java/lang/IncompatibleClassChangeError.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000003C0          java.lang.NoSuchMethodError.<init> ()V
+0x716E         0x000003D8          java.lang.NoSuchMethodError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000003C0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000003D0  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000003D8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000003E8  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/AbstractMethodError    (104 bytes)
+############################################################
+Index:              8
+Offset:             0x000003F0  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000798   (java/lang/IncompatibleClassChangeError)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000418  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000007D0    MethodRef             java/lang/IncompatibleClassChangeError.<init>
+0x0001      0x000007E8    MethodRef             java/lang/IncompatibleClassChangeError.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000428          java.lang.AbstractMethodError.<init> ()V
+0x716E         0x00000440          java.lang.AbstractMethodError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000428  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000438  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000440  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000450  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/NullPointerException    (104 bytes)
+############################################################
+Index:              9
+Offset:             0x00000458  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000480  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000490          java.lang.NullPointerException.<init> ()V
+0x716E         0x000004A8          java.lang.NullPointerException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000490  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000004A0  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000004A8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000004B8  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/IndexOutOfBoundsException    (104 bytes)
+############################################################
+Index:              10
+Offset:             0x000004C0  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000004E8  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000004F8          java.lang.IndexOutOfBoundsException.<init> ()V
+0x716E         0x00000510          java.lang.IndexOutOfBoundsException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000004F8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000508  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000510  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000520  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/ArrayStoreException    (104 bytes)
+############################################################
+Index:              11
+Offset:             0x00000528  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000550  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000560          java.lang.ArrayStoreException.<init> ()V
+0x716E         0x00000578          java.lang.ArrayStoreException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000560  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000570  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000578  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000588  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/ArithmeticException    (104 bytes)
+############################################################
+Index:              12
+Offset:             0x00000590  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000005B8  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000005C8          java.lang.ArithmeticException.<init> ()V
+0x716E         0x000005E0          java.lang.ArithmeticException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000005C8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000005D8  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000005E0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000005F0  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/ClassCastException    (104 bytes)
+############################################################
+Index:              13
+Offset:             0x000005F8  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000620  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000630          java.lang.ClassCastException.<init> ()V
+0x716E         0x00000648          java.lang.ClassCastException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000630  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000640  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000648  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000658  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/NegativeArraySizeException    (104 bytes)
+############################################################
+Index:              14
+Offset:             0x00000660  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000688  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000698          java.lang.NegativeArraySizeException.<init> ()V
+0x716E         0x000006B0          java.lang.NegativeArraySizeException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000698  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000006A8  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000006B0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000006C0  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/IllegalMonitorStateException    (104 bytes)
+############################################################
+Index:              15
+Offset:             0x000006C8  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000800   (java/lang/RuntimeException)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000006F0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000838    MethodRef             java/lang/RuntimeException.<init>
+0x0001      0x00000850    MethodRef             java/lang/RuntimeException.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000700          java.lang.IllegalMonitorStateException.<init> ()V
+0x716E         0x00000718          java.lang.IllegalMonitorStateException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000700  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000710  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000718  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000728  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/VirtualMachineError    (104 bytes)
+############################################################
+Index:              16
+Offset:             0x00000730  
+Access flags:       0x0421     (ABSTRACT SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000868   (java/lang/Error)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000758  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000008A0    MethodRef             java/lang/Error.<init>
+0x0001      0x000008B8    MethodRef             java/lang/Error.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000768          java.lang.VirtualMachineError.<init> ()V
+0x716E         0x00000780          java.lang.VirtualMachineError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000768  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000778  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000780  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000790  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/IncompatibleClassChangeError    (104 bytes)
+############################################################
+Index:              17
+Offset:             0x00000798  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x000008D0   (java/lang/LinkageError)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000007C0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000908    MethodRef             java/lang/LinkageError.<init>
+0x0001      0x00000920    MethodRef             java/lang/LinkageError.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000007D0          java.lang.IncompatibleClassChangeError.<init> ()V
+0x716E         0x000007E8          java.lang.IncompatibleClassChangeError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000007D0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000007E0  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000007E8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000007F8  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/RuntimeException    (104 bytes)
+############################################################
+Index:              18
+Offset:             0x00000800  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000938   (java/lang/Exception)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000828  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000970    MethodRef             java/lang/Exception.<init>
+0x0001      0x00000988    MethodRef             java/lang/Exception.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000838          java.lang.RuntimeException.<init> ()V
+0x716E         0x00000850          java.lang.RuntimeException.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000838  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000848  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000850  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000860  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/Error    (104 bytes)
+############################################################
+Index:              19
+Offset:             0x00000868  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x000009A0   (java/lang/Throwable)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000890  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000009FC    MethodRef             java/lang/Throwable.<init>
+0x0001      0x00000A14    MethodRef             java/lang/Throwable.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000008A0          java.lang.Error.<init> ()V
+0x716E         0x000008B8          java.lang.Error.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000008A0  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000008B0  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x000008B8  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x000008C8  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/LinkageError    (104 bytes)
+############################################################
+Index:              20
+Offset:             0x000008D0  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000868   (java/lang/Error)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x000008F8  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000008A0    MethodRef             java/lang/Error.<init>
+0x0001      0x000008B8    MethodRef             java/lang/Error.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000908          java.lang.LinkageError.<init> ()V
+0x716E         0x00000920          java.lang.LinkageError.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000908  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000918  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000920  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000930  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/Exception    (104 bytes)
+############################################################
+Index:              21
+Offset:             0x00000938  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x000009A0   (java/lang/Throwable)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000002   (2)
+Meth. Table Offset: 0x00000960  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x000009FC    MethodRef             java/lang/Throwable.<init>
+0x0001      0x00000A14    MethodRef             java/lang/Throwable.<init>
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000970          java.lang.Exception.<init> ()V
+0x716E         0x00000988          java.lang.Exception.<init> (Ljava/lang/String;)V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000970  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000980  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000988  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000998  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/Throwable    (204 bytes)
+############################################################
+Index:              22
+Offset:             0x000009A0  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000004   (4)
+Meth. Table Offset: 0x000009D0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x0000013C    MethodRef             java/lang/Object.<init>
+0x0001      0x000009F8    FieldRef              java/lang/Throwable.detailMessage
+0x0002      0x00000A30    MethodRef             java/lang/Throwable.getMessage
+0x0003      0x000009F0    String                ""
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x000009FC          java.lang.Throwable.<init> ()V
+0x716E         0x00000A14          java.lang.Throwable.<init> (Ljava/lang/String;)V
+0xCA71         0x00000A30          java.lang.Throwable.getMessage ()Ljava/lang/String;
+0xFCAD         0x00000A48          java.lang.Throwable.toString ()Ljava/lang/String;
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+0x000009F0    String           0      0x0000        ""
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+0x000009F8    detailMessage        L            0    PRIVATE
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x000009FC  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000A0C  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/String;)V
+------------------------------
+    Offset:          0x00000A14  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x0000000A  
+    Bytecodes start: 0x00000A24  
+    Hashcode:        0x716E    
+    nArgs words:     1
+    Exception table: -
+
+getMessage ()Ljava/lang/String;
+------------------------------
+    Offset:          0x00000A30  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000A40  
+    Hashcode:        0xCA71    
+    nArgs words:     0
+    Exception table: -
+
+toString ()Ljava/lang/String;
+------------------------------
+    Offset:          0x00000A48  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x00000010  
+    Bytecodes start: 0x00000A58  
+    Hashcode:        0xFCAD    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: java/lang/String    (356 bytes)
+############################################################
+Index:              23
+Offset:             0x00000A6C  
+Access flags:       0x0031     (SYNCHRONIZED FINAL PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000004   (4)
+Meth. Table Offset: 0x00000AA4  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x0000013C    MethodRef             java/lang/Object.<init>
+0x0001      0x00000AC4    FieldRef              java/lang/String.value
+0x0002      0x00000ACC    FieldRef              java/lang/String.count
+0x0003      0x00000AC8    FieldRef              java/lang/String.offset
+0x0004      0x00000A6C    Class                 java/lang/String
+0x0005      0x00000AD0    FieldRef              java/lang/String.hash
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000AD4          java.lang.String.<init> ()V
+0xE597         0x00000AFC          java.lang.String.equals (Ljava/lang/Object;)Z
+0x5D19         0x00000B68          java.lang.String.hashCode ()I
+0xFCAD         0x00000BBC          java.lang.String.toString ()Ljava/lang/String;
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+0x00000AC4    value                [            0    
+0x00000AC8    offset               I            1    
+0x00000ACC    count                I            2    
+0x00000AD0    hash                 I            3    
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000AD4  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000016  
+    Bytecodes start: 0x00000AE4  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+equals (Ljava/lang/Object;)Z
+------------------------------
+    Offset:          0x00000AFC  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000018  
+    Bytecodes size:  0x00000058  
+    Bytecodes start: 0x00000B0C  
+    Hashcode:        0xE597    
+    nArgs words:     1
+    Exception table: -
+
+hashCode ()I
+------------------------------
+    Offset:          0x00000B68  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x0000000C  
+    Bytecodes size:  0x00000040  
+    Bytecodes start: 0x00000B78  
+    Hashcode:        0x5D19    
+    nArgs words:     0
+    Exception table: -
+
+toString ()Ljava/lang/String;
+------------------------------
+    Offset:          0x00000BBC  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000002  
+    Bytecodes start: 0x00000BCC  
+    Hashcode:        0xFCAD    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  INTERFACE: java/lang/Runnable    (60 bytes)
+############################################################
+Index:              24
+Offset:             0x00000BD0  
+Access flags:       0x0601     (ABSTRACT INTERFACE PUBLIC)
+Interfaces table:   0x00000000  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       -
+<clinit> Offset:    -
+Methods Count:      0x00000001   (1)
+Meth. Table Offset: 0x00000BF0  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0EF3         0x00000BF8          java.lang.Runnable.run ()V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+
+<< Methods >>
+run ()V
+------------------------------
+    Offset:          0x00000BF8  
+    Access flags:    0x0401     (ABSTRACT PUBLIC)
+    Locals size:     0x00000000  
+    Bytecodes size:  0x00000000  
+    Bytecodes start: 0x00000C08  
+    Hashcode:        0x0EF3    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+############################################################
+#  CLASS: uvic/posix/Thread    (172 bytes)
+############################################################
+Index:              25
+Offset:             0x00000C0C  
+Access flags:       0x0021     (SYNCHRONIZED PUBLIC)
+Interfaces table:   0x00000CB0  
+Super Offset:       0x00000114   (java/lang/Object)
+run() Offset:       0x00000C8C  
+<clinit> Offset:    -
+Methods Count:      0x00000003   (3)
+Meth. Table Offset: 0x00000C3C  
+
+<< Constant Pool Offsets Table >>
+Index       Offset        Type                  Name/Value
+------------------------------------------------------------------------------
+0x0000      0x00000C70    MethodRef             uvic/posix/Thread.<init>
+0x0001      0x0000013C    MethodRef             java/lang/Object.<init>
+0x0002      0x00000C54    FieldRef              uvic/posix/Thread.target
+0x0003      0x00000BF8    InterfaceMethodRef    java/lang/Runnable.run
+
+<< Method Hashcode/Offsets Table >>
+Hashcode       Offset              Name & Signature
+------------------------------------------------------------------------------
+0x0C1C         0x00000C58          uvic.posix.Thread.<init> ()V
+0x6EBB         0x00000C70          uvic.posix.Thread.<init> (Ljava/lang/Runnable;)V
+0x0EF3         0x00000C8C          uvic.posix.Thread.run ()V
+
+<< Constants >>
+Offset        Type          Size      Hashcode      Value
+------------------------------------------------------------------------------
+
+<< Fields >>
+Offset        Name                 Type     Index    Flags
+------------------------------------------------------------------------------
+0x00000C54    target               L            0    PRIVATE
+
+<< Interfaces offset table >>
+Index  Offset      Interface
+------------------------------------------------------------------------------
+ 0     0x00000BD0    java/lang/Runnable
+
+<< Methods >>
+<init> ()V
+------------------------------
+    Offset:          0x00000C58  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000006  
+    Bytecodes start: 0x00000C68  
+    Hashcode:        0x0C1C    
+    nArgs words:     0
+    Exception table: -
+
+<init> (Ljava/lang/Runnable;)V
+------------------------------
+    Offset:          0x00000C70  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000008  
+    Bytecodes size:  0x0000000A  
+    Bytecodes start: 0x00000C80  
+    Hashcode:        0x6EBB    
+    nArgs words:     1
+    Exception table: -
+
+run ()V
+------------------------------
+    Offset:          0x00000C8C  
+    Access flags:    0x0001     (PUBLIC)
+    Locals size:     0x00000004  
+    Bytecodes size:  0x00000012  
+    Bytecodes start: 0x00000C9C  
+    Hashcode:        0x0EF3    
+    nArgs words:     0
+    Exception table: -
+
+
+
+
+************************************************************
+*  Array Type Class: [C    (8 bytes)
+************************************************************
+Index:              26
+Access flags:       0x8000     (ARRAY_TYPE)
+Offset:             0x00000CB8  
+Array type:         5 - char
+Array class type:   -
+

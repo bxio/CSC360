@@ -1,0 +1,416 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.2	//
+ABS_LOC	jvm.h	189;"	d
+ACC_ABSTRACT	jvm.h	93;"	d
+ACC_ARRAY_TYPE	jvm.h	87;"	d
+ACC_INTERFACE	jvm.h	85;"	d
+ACC_NATIVE	jvm.h	92;"	d
+ACC_RETVAL	jvm.h	86;"	d
+ACC_STATIC	jvm.h	95;"	d
+ACC_SYNCH	jvm.h	94;"	d
+ACTION_INVOKE	jvm.h	/^    ACTION_INVOKE,                  \/* invoke java function *\/$/;"	e	enum:bc_actions
+ACTION_NATIVE	jvm.h	/^    ACTION_NATIVE,                  \/* invoke native method *\/$/;"	e	enum:bc_actions
+ACTION_NEW	jvm.h	/^    ACTION_NEW,                     \/* create class instance *\/$/;"	e	enum:bc_actions
+ACTION_NONE	jvm.h	/^    ACTION_NONE,                    \/* no special action required *\/$/;"	e	enum:bc_actions
+ACTION_RETURN	jvm.h	/^    ACTION_RETURN,                  \/* return from method *\/$/;"	e	enum:bc_actions
+ACTION_THROW	jvm.h	/^    ACTION_THROW                    \/* handle thrown exception *\/$/;"	e	enum:bc_actions
+ALIGN4	jvm.h	212;"	d
+ALLOC_TRY	jvm.h	43;"	d
+ALLOC_TRY	jvm.h	45;"	d
+APP	jvm.h	197;"	d
+AddFront	j_thread.c	/^static void AddFront( thread_t **q, thread_t *p )$/;"	f	file:
+AddReady	j_thread.c	/^void AddReady(thread_t* thread, bool front)$/;"	f
+AssignQuantum	j_thread.c	/^static void AssignQuantum( thread_t *p ) $/;"	f	file:
+BLOCK_ON_COND	jvm.h	79;"	d
+BLOCK_ON_MUTEX	jvm.h	78;"	d
+BLOCK_ON_SEM	jvm.h	80;"	d
+CLASS_LOC	jvm.h	191;"	d
+COMPACT_TRESHOLD	jvm.h	37;"	d
+CONST_LEN	jvm.h	335;"	d
+CONST_LOC	jvm.h	194;"	d
+CONST_STR	jvm.h	337;"	d
+CONST_STR_HASH	jvm.h	336;"	d
+CONST_TYPE	jvm.h	334;"	d
+CONST_VALUE	jvm.h	338;"	d
+CONVERT	jvm.h	196;"	d
+C_FLOAT	jvm.h	114;"	d
+C_INT	jvm.h	113;"	d
+C_STRING	jvm.h	115;"	d
+CondInit	j_thread.c	/^int32 CondInit()$/;"	f
+CondSignal	j_thread.c	/^void CondSignal( int32 cond_id )$/;"	f
+CondWait	j_thread.c	/^void CondWait( int32 cond_id, int32 mutex_id )$/;"	f
+ConditionOf	j_thread.c	/^static condition_t *ConditionOf( int32 id )$/;"	f	file:
+DAEMON_LEVEL	jvm_cfg.h	20;"	d
+DEAD	jvm.h	71;"	d
+DeQ	j_thread.c	/^static void DeQ( thread_t **q, thread_t **p )$/;"	f	file:
+Dispatch	j_thread.c	/^void Dispatch()$/;"	f
+ENABLE_FLOAT	javavm.h	61;"	d
+ENABLE_GC	javavm.h	60;"	d
+ENABLE_MAIN_ARGS	javavm.h	66;"	d
+ENABLE_MULTIANEWARRAY	javavm.h	62;"	d
+ENABLE_ODDADR_READ	javavm.h	65;"	d
+ENABLE_PRAGMA_PACK	javavm.h	56;"	d
+ENABLE_STRING_EXCEPTIONS	javavm.h	63;"	d
+ENABLE_TEXT_NOTIFY	javavm.h	64;"	d
+ENABLE_THREADS	javavm.h	59;"	d
+ENABLE_TIMER	javavm.h	67;"	d
+ENABLE_UNICODE	javavm.h	57;"	d
+ENABLE_WDT	javavm.h	58;"	d
+ERROR_AbstractMethod	javavm.h	/^    ERROR_AbstractMethod,           \/* 4  method is abstract - no code present *\/$/;"	e	enum:_system_exceptions
+ERROR_Internal	javavm.h	/^    ERROR_Internal,                 \/* 1  something went wrong; see detail code *\/$/;"	e	enum:_system_exceptions
+ERROR_NoSuchMethod	javavm.h	/^    ERROR_NoSuchMethod,             \/* 3  missing method definition *\/$/;"	e	enum:_system_exceptions
+ERROR_OutOfMemory	javavm.h	/^    ERROR_OutOfMemory,              \/* 2  VM run out of memory; see detail code *\/$/;"	e	enum:_system_exceptions
+EXCEP_Arithmetic	javavm.h	/^    EXCEP_Arithmetic,               \/* 8  arithmetic error occured *\/$/;"	e	enum:_system_exceptions
+EXCEP_ArrayStore	javavm.h	/^    EXCEP_ArrayStore,               \/* 7  unable to store data type in this array *\/$/;"	e	enum:_system_exceptions
+EXCEP_ClassCast	javavm.h	/^    EXCEP_ClassCast,                \/* 9  unable to cast object to specified type *\/$/;"	e	enum:_system_exceptions
+EXCEP_IllegalMonitState	javavm.h	/^    EXCEP_IllegalMonitState         \/* 11 thrown when current thread is not owner on object lock *\/$/;"	e	enum:_system_exceptions
+EXCEP_IndexOutOfBounds	javavm.h	/^    EXCEP_IndexOutOfBounds,         \/* 6  array index is out of bound for this array *\/$/;"	e	enum:_system_exceptions
+EXCEP_NegativeArraySize	javavm.h	/^    EXCEP_NegativeArraySize,        \/* 10 specified array size has negative value *\/$/;"	e	enum:_system_exceptions
+EXCEP_NullPointer	javavm.h	/^    EXCEP_NullPointer,              \/* 5  null pointer discovered *\/$/;"	e	enum:_system_exceptions
+EnQ	j_thread.c	/^static void EnQ( thread_t **q, thread_t *p )$/;"	f	file:
+FIELD_LOC	jvm.h	193;"	d
+FLD_INDEX	jvm.h	321;"	d
+FLD_STATIC	jvm.h	323;"	d
+FLD_TYPE	jvm.h	322;"	d
+FRAME_HDR_SIZE	jvm.h	440;"	d
+FT_ARRAY	jvm.h	/^    FT_ARRAY$/;"	e	enum:field_type
+FT_BOOLEAN	jvm.h	/^    FT_BOOLEAN,$/;"	e	enum:field_type
+FT_BYTE	jvm.h	/^    FT_BYTE = 0,$/;"	e	enum:field_type
+FT_CHAR	jvm.h	/^    FT_CHAR,$/;"	e	enum:field_type
+FT_CLASS	jvm.h	/^    FT_CLASS,$/;"	e	enum:field_type
+FT_FLOAT	jvm.h	/^    FT_FLOAT,$/;"	e	enum:field_type
+FT_INT	jvm.h	/^    FT_INT,$/;"	e	enum:field_type
+FT_SHORT	jvm.h	/^    FT_SHORT,$/;"	e	enum:field_type
+GC_DONE_FLAG	jvm.h	55;"	d
+GET_PC16	jvm.h	200;"	d
+GET_PC16	jvm.h	204;"	d
+GET_PC16	jvm.h	207;"	d
+GET_PC32	jvm.h	201;"	d
+GET_PC32	jvm.h	205;"	d
+GET_PC32	jvm.h	208;"	d
+GET_REF	jvm.h	187;"	d
+GRAY_FLAG	jvm.h	57;"	d
+HI_PAR	javavm.h	184;"	d
+INTERR	javavm.h	/^    INTERR = 0x30,                  \/*      starting index for internal errors *\/$/;"	e	enum:_internal_errors
+INTERR_ArgsCreate	javavm.h	/^    INTERR_ArgsCreate               \/* 0x39 Unable to create main method Strings[] argument *\/$/;"	e	enum:_internal_errors
+INTERR_InvBytecode	javavm.h	/^    INTERR_InvBytecode,             \/* 0x33 encountered unsupported byte code *\/$/;"	e	enum:_internal_errors
+INTERR_ProgEnd	javavm.h	/^    INTERR_ProgEnd,                 \/* 0x32 application has terminated *\/$/;"	e	enum:_internal_errors
+INTERR_RuntimeExcepCount	javavm.h	/^    INTERR_RuntimeExcepCount,       \/* 0x31 invalid number of runtime exceptions *\/$/;"	e	enum:_internal_errors
+INTERR_ThreadLimit	javavm.h	/^    INTERR_ThreadLimit,             \/* 0x35 max # of threads was reached *\/$/;"	e	enum:_internal_errors
+INTERR_ThreadSetupFail	javavm.h	/^    INTERR_ThreadSetupFail,         \/* 0x34 unable to find run() *\/$/;"	e	enum:_internal_errors
+INTERR_UnhandledExcep	javavm.h	/^    INTERR_UnhandledExcep,          \/* 0x36 checked exception without handler *\/$/;"	e	enum:_internal_errors
+INTERR_UnsupportedType	javavm.h	/^    INTERR_UnsupportedType,         \/* 0x37 operand type not supported for this operation *\/$/;"	e	enum:_internal_errors
+INTERR_gcFail	javavm.h	/^    INTERR_gcFail,                  \/* 0x38 GC failed to update references, possible memory corruption *\/$/;"	e	enum:_internal_errors
+INVALID	javavm.h	52;"	d
+InitROSE	j_thread.c	/^bool InitROSE(void)$/;"	f
+LO_PAR	javavm.h	185;"	d
+LSB_FIRST	javavm.h	55;"	d
+MAGIC	jvm.h	31;"	d
+MAX_CONDITIONS	jvm_cfg.h	9;"	d
+MAX_EVENTS	jvm_cfg.h	13;"	d
+MAX_HEAPSIZE	jvm_cfg.h	11;"	d
+MAX_MUTEXES	jvm_cfg.h	8;"	d
+MAX_PRI_LEVELS	jvm_cfg.h	14;"	d
+MAX_REFERENCES	jvm_cfg.h	5;"	d
+MAX_SEMAPHORES	jvm_cfg.h	10;"	d
+MAX_STRINGS	jvm_cfg.h	6;"	d
+MAX_THREADS	jvm_cfg.h	7;"	d
+MAX_TIMERS	jvm_cfg.h	12;"	d
+MAX_TRACES	jvm.h	39;"	d
+MEMERR	javavm.h	/^    MEMERR = 0x50,              \/*      starting index for memory errors *\/$/;"	e	enum:_memory_errors
+MEMERR_AllocFail	javavm.h	/^    MEMERR_AllocFail            \/* 0x55 memory allocation failed due to currupt data *\/$/;"	e	enum:_memory_errors
+MEMERR_NoFrames	javavm.h	/^    MEMERR_NoFrames,            \/* 0x53 no more memory for method frames *\/$/;"	e	enum:_memory_errors
+MEMERR_NoHeap	javavm.h	/^    MEMERR_NoHeap,              \/* 0x51 no more memory on the heap *\/$/;"	e	enum:_memory_errors
+MEMERR_NoRefs	javavm.h	/^    MEMERR_NoRefs,              \/* 0x52 no more memory in refereneces table *\/$/;"	e	enum:_memory_errors
+MEMERR_StrTableFull	javavm.h	/^    MEMERR_StrTableFull,        \/* 0x54 string hashcode\/reference table is full *\/$/;"	e	enum:_memory_errors
+METHOD_LOC	jvm.h	192;"	d
+MIN_OBJDATA_SIZE	jvm.h	36;"	d
+MutexInit	j_thread.c	/^int32 MutexInit()$/;"	f
+MutexLock	j_thread.c	/^void MutexLock( int32 id )$/;"	f
+MutexOf	j_thread.c	/^static mutex_t *MutexOf( int32 id )$/;"	f	file:
+MutexUnLock	j_thread.c	/^void MutexUnLock( int32 id )$/;"	f
+NOTIFY_INSUF_HEAP	javavm.h	/^    NOTIFY_INSUF_HEAP,              \/* 0x84 java VM has insuficient amount of heap memory *\/$/;"	e	enum:_system_notifications
+NOTIFY_TIMER_SLOW	javavm.h	/^    NOTIFY_TIMER_SLOW		    \/* 0x85 java VM timer resolution is too small *\/$/;"	e	enum:_system_notifications
+NOTIFY_VM	javavm.h	/^    NOTIFY_VM = 0x80,               \/*      starting index for notification messages *\/$/;"	e	enum:_system_notifications
+NOTIFY_VM_INIT	javavm.h	/^    NOTIFY_VM_INIT,                 \/* 0x81 java VM intialisation started *\/$/;"	e	enum:_system_notifications
+NOTIFY_VM_NOAPP	javavm.h	/^    NOTIFY_VM_NOAPP,                \/* 0x83 java VM can't find application file *\/$/;"	e	enum:_system_notifications
+NOTIFY_VM_START	javavm.h	/^    NOTIFY_VM_START,                \/* 0x82 java VM started program execution *\/$/;"	e	enum:_system_notifications
+NOT_USED	javavm.h	110;"	d
+NO_EXCEP	javavm.h	/^    NO_EXCEP = 0,                   \/*    no pending exception *\/$/;"	e	enum:_system_exceptions
+NULL	javavm.h	48;"	d
+NaN	jcommon.h	186;"	d
+NewThread	j_thread.c	/^static thread_t *NewThread(void)$/;"	f	file:
+OBJREF_FLAG	jvm.h	51;"	d
+OBJ_ARR_FLAG	jvm.h	56;"	d
+OF_ARRAY	jvm.h	62;"	d
+OF_BLACK	jvm.h	66;"	d
+OF_CLASS	jvm.h	63;"	d
+OF_DAEMON	jvm.h	64;"	d
+OF_GRAY	jvm.h	65;"	d
+PUT_REF	jvm.h	186;"	d
+PreemptIfNecessary	j_thread.c	/^void PreemptIfNecessary(void)$/;"	f
+READY	jvm.h	72;"	d
+REAL_TIME_LEVEL	jvm_cfg.h	18;"	d
+REFERENCE	jvm.h	185;"	d
+REL_LOC	jvm.h	190;"	d
+RETVAL_FLAG	jvm.h	53;"	d
+RUNNING	jvm.h	73;"	d
+RUNTIME_EXCEPTIONS	jvm.h	35;"	d
+RUN_SPECIAL_FLAG	jvm.h	52;"	d
+Reschedule	j_thread.c	/^void Reschedule()$/;"	f
+SLEEP	jvm.h	74;"	d
+STACKTRACE_SIZE	jvm.h	40;"	d
+SUSPEND	jvm.h	75;"	d
+SW_VER	jvm.h	32;"	d
+SYSTEM_LEVEL	jvm_cfg.h	17;"	d
+SYS_BASE_INDEX	jvm.h	33;"	d
+SemInit	j_thread.c	/^int32 SemInit( int initial )$/;"	f
+SemSignal	j_thread.c	/^void SemSignal( int32 id )$/;"	f
+SemWait	j_thread.c	/^void SemWait( int32 id )$/;"	f
+SemaphoreOf	j_thread.c	/^static semaphore_t *SemaphoreOf( int32 id )$/;"	f	file:
+SetLevel	j_thread.c	/^void SetLevel( int32 level )$/;"	f
+THR_SWITCH_FLAG	jvm.h	54;"	d
+TMR_EXPIRED	jvm.h	120;"	d
+TMR_FIRE_COUNTER	jvm.h	127;"	d
+T_BOOLEAN	jvm.h	100;"	d
+T_BYTE	jvm.h	104;"	d
+T_CHAR	jvm.h	101;"	d
+T_DOUBLE	jvm.h	103;"	d
+T_FLOAT	jvm.h	102;"	d
+T_INT	jvm.h	106;"	d
+T_LONG	jvm.h	107;"	d
+T_OBJREF	jvm.h	108;"	d
+T_SHORT	jvm.h	105;"	d
+USER_LEVEL	jvm_cfg.h	19;"	d
+VMTick	j_thread.c	/^void VMTick(void)$/;"	f
+VM_REFS_END	jcommon.h	85;"	d
+VM_STATIC_END	jcommon.h	82;"	d
+VM_STRINGS_END	jcommon.h	83;"	d
+VM_THREADS_END	jcommon.h	84;"	d
+WAIT_LOCK	jvm.h	76;"	d
+WAIT_NOTIFY	jvm.h	77;"	d
+WIDE_FLAG	jvm.h	50;"	d
+_GLOBALS_H	jcommon.h	25;"	d
+_JAVAVM_H	javavm.h	30;"	d
+_JVM_CFG_H_	jvm_cfg.h	2;"	d
+_JVM_H	jvm.h	25;"	d
+_PACKED_	javavm.h	70;"	d
+_PACKED_	javavm.h	72;"	d
+__timer_t_defined	j_thread.c	24;"	d	file:
+_internal_errors	javavm.h	/^enum _internal_errors$/;"	g
+_memory_errors	javavm.h	/^enum _memory_errors$/;"	g
+_system_exceptions	javavm.h	/^enum _system_exceptions$/;"	g
+_system_notifications	javavm.h	/^enum _system_notifications$/;"	g
+acquireClassLock	j_thread.c	/^void acquireClassLock(thread_t *thread)$/;"	f
+acquireObjectLock	j_thread.c	/^void acquireObjectLock(thread_t *thread, ref_t *ref)$/;"	f
+app_T	jvm.h	/^struct app_T$/;"	s
+app_start	javavm.h	/^    uint8       *app_start;         \/* java application start addres *\/$/;"	m	struct:
+app_t	jvm.h	/^typedef _PACKED_ struct app_T        app_t;$/;"	t
+args	javavm.h	/^    int8        **args;             \/* list of arguments passed to java application main method *\/$/;"	m	struct:
+args_count	javavm.h	/^    uint16      args_count;         \/* number of arguments passed to java application main method *\/$/;"	m	struct:
+arrhdr_t	jvm.h	/^} arrhdr_t;$/;"	t
+bc_actions	jvm.h	/^enum bc_actions$/;"	g
+bc_handler	jvm.h	/^typedef int16 (*bc_handler)(void);$/;"	t
+blen_idx	jvm.h	/^    uint16  blen_idx;           \/* bytecodes length or index to native method lookup table *\/$/;"	m	struct:method_T
+blockQ	jvm.h	/^    thread_t  *blockQ;   \/* queue of waiting threads *\/$/;"	m	struct:condition_T
+blockQ	jvm.h	/^    thread_t  *blockQ;   \/* queue of waiting threads *\/$/;"	m	struct:mutex_T
+blockQ	jvm.h	/^    thread_t  *blockQ;   \/* queue of waiting threads *\/$/;"	m	struct:semaphore_T
+bool	javavm.h	/^typedef uint32          bool;$/;"	t
+class_T	jvm.h	/^struct class_T$/;"	s
+class_arr_T	jvm.h	/^struct class_arr_T$/;"	s
+class_arr_t	jvm.h	/^typedef _PACKED_ struct class_arr_T  class_arr_t;$/;"	t
+class_count	jvm.h	/^    uint32      class_count;        \/* number of classes in this application *\/$/;"	m	struct:app_T
+class_ptr	jvm.h	/^    class_t     *class_ptr;         \/* pointer to class structure if object is class instance *\/$/;"	m	struct:ref_T
+class_ptr	jvm.h	/^    class_t     *class_ptr;         \/* pointer to the class containing this method *\/$/;"	m	struct:frame_T
+class_ptr	jvm.h	/^    class_t    *class_ptr;          \/* pointer to array's class if type=T_OBJREF *\/$/;"	m	struct:class_arr_T
+class_ptr	jvm.h	/^    class_t *class_ptr;         \/* pointer to class containing this method *\/$/;"	m	struct:method_T
+class_ptr	jvm.h	/^    uint32  class_ptr[1];           \/* list of pointers to exception classes *\/$/;"	m	struct:excep_T
+class_t	jvm.h	/^typedef _PACKED_ struct class_T      class_t;$/;"	t
+class_tbl	jvm.h	/^    uint32      class_tbl[1];       \/* array of offsets to classes *\/$/;"	m	struct:app_T
+classhdr_t	jvm.h	/^typedef objhdr_t classhdr_t;$/;"	t
+classlock_t	jvm.h	/^} classlock_t;$/;"	t
+clearWaitingPos	j_thread.c	/^void clearWaitingPos(thread_t *thread, ref_t *ref)$/;"	f
+clearWdt	javavm.h	/^    void        (*clearWdt)(void);  \/* address of the clear watchdog timer function *\/$/;"	m	struct:
+clinit	jvm.h	/^    uint8      *clinit;             \/* pointer to <clinit> method *\/$/;"	m	struct:class_T
+cloneable	jvm.h	/^    uint8      *cloneable;          \/* pointer to java\/io\/Cloneable interface *\/$/;"	m	struct:app_T
+condition_T	jvm.h	/^struct condition_T {$/;"	s
+condition_t	jvm.h	/^typedef _PACKED_ struct condition_T  condition_t;$/;"	t
+const_T	jvm.h	/^struct const_T$/;"	s
+const_t	jvm.h	/^typedef _PACKED_ struct const_T      const_t;$/;"	t
+count	javavm.h	/^    uint32      count;              \/* number of entries in stack trace *\/$/;"	m	struct:
+count	jvm.h	/^    int32   count;                  \/* number of system runtime exceptions *\/$/;"	m	struct:excep_T
+count	jvm.h	/^    uint32      count;              \/* max. number of elements in the array object *\/$/;"	m	struct:
+count	jvm.h	/^    uint32  count;                  \/* number of interfaces *\/$/;"	m	struct:iface_T
+createThread	j_thread.c	/^bool createThread(ref_t *ref, int32 pri)$/;"	f
+csum_len	jvm.h	/^    uint32      csum_len;           \/* number of bytes for checksum *\/$/;"	m	struct:app_T
+csum_lrc	jvm.h	/^    uint32      csum_lrc;           \/* checksum *\/$/;"	m	struct:app_T
+csum_start	jvm.h	/^    uint8      *csum_start;         \/* start offset for checksum *\/$/;"	m	struct:app_T
+curr_frame	jvm.h	/^    frame_t     *curr_frame;        \/* pointer to current frame *\/$/;"	m	struct:thread_T
+dead_pool	j_thread.c	/^static thread_t *dead_pool;	       \/* a queue of DEAD threads *\/$/;"	v	file:
+deleteThread	j_thread.c	/^void deleteThread(thread_t *thread)$/;"	f
+desc	jvm.h	/^    uint8       desc[32];           \/* appl. description string *\/$/;"	m	struct:app_T
+end	jvm.h	/^    uint16      end;                \/* end PC *\/$/;"	m	struct:
+entries	jvm.h	/^    uint16          entries;        \/* number of excep. table etries *\/$/;"	m	struct:
+ev_counters	javavm.h	/^    uint16      *ev_counters;       \/* pointer to event fire counters table *\/$/;"	m	struct:
+events	javavm.h	/^    uint16      events;             \/* number of event fire counters *\/$/;"	m	struct:
+excep	jvm.h	/^    excep_entry_t   excep[1];       \/* list of exceptions that can be caught *\/$/;"	m	struct:
+excep_T	jvm.h	/^struct excep_T$/;"	s
+excep_entry_t	jvm.h	/^} excep_entry_t;$/;"	t
+excep_idx	jvm.h	/^    uint16      excep_idx;          \/* const. pool at this index is exception class that can be caught *\/$/;"	m	struct:
+excep_list	jvm.h	/^    uint8      *excep_list;         \/* pointer to runtime exception table *\/$/;"	m	struct:app_T
+excep_t	jvm.h	/^typedef _PACKED_ struct excep_T      excep_t;$/;"	t
+excep_tbl_t	jvm.h	/^} excep_tbl_t;$/;"	t
+f	jvm.h	/^    float32 f;$/;"	m	union:value_T
+false	javavm.h	44;"	d
+field_T	jvm.h	/^struct field_T$/;"	s
+field_t	jvm.h	/^typedef _PACKED_ struct field_T      field_t;$/;"	t
+field_tbl	jvm.h	/^    uint8      *field_tbl;          \/* pointer to fields table *\/$/;"	m	struct:class_T
+field_type	jvm.h	/^enum field_type$/;"	g
+findRunMethod	j_thread.c	/^static method_t *findRunMethod(class_t *cl)$/;"	f	file:
+findThread	j_thread.c	/^thread_t *findThread(ref_t *ref)$/;"	f
+flag	jvm.h	/^    uint16       flag;              \/* thread flags *\/$/;"	m	struct:thread_T
+flag	jvm.h	/^    uint16      flag;               \/* object's status flags *\/$/;"	m	struct:
+flag	jvm.h	/^    uint32      flag;               \/* expired flag, set when timer's timeout value expires *\/$/;"	m	struct:
+flags	jvm.h	/^    uint16      flags;              \/* always 0x0000 *\/$/;"	m	struct:class_arr_T
+flags	jvm.h	/^    uint16      flags;              \/* class modifier flags *\/$/;"	m	struct:class_T
+flags	jvm.h	/^    uint16  flags;              \/* method flags *\/$/;"	m	struct:method_T
+float32	javavm.h	/^typedef float           float32;$/;"	t
+frame_T	jvm.h	/^struct frame_T$/;"	s
+frame_size	jvm.h	/^    uint32      frame_size;         \/* size of the largest method frame in bytes *\/$/;"	m	struct:app_T
+frame_t	jvm.h	/^typedef _PACKED_ struct frame_T      frame_t;$/;"	t
+getProperty	javavm.h	/^    int8        *(*getProperty)(int8 *key); \/* address of function for retrieving system properties *\/$/;"	m	struct:
+getWaitingThread	j_thread.c	/^thread_t *getWaitingThread(ref_t *ref)$/;"	f
+handler	jvm.h	/^    uint16      handler;            \/* handler PC *\/$/;"	m	struct:
+hash	jvm.h	/^    uint16      hash;               \/* string's hashcode *\/$/;"	m	struct:
+hash	jvm.h	/^    uint16  hash;               \/* hashcode calc. over meth. signature and name *\/$/;"	m	struct:method_T
+hash	jvm.h	/^    uint32      hash;               \/* hashcode calculated over method name and signature *\/$/;"	m	struct:method_tbl_T
+heap_end	javavm.h	/^    uint8       *heap_end;          \/* end addr. of the heap - exclusive *\/$/;"	m	struct:
+heap_start	javavm.h	/^    uint8       *heap_start;        \/* start addr. of the heap *\/$/;"	m	struct:
+i	jvm.h	/^    int32   i;$/;"	m	union:value_T
+id	jvm.h	/^    uint16       id;                \/* thread number, used by object locking functions *\/$/;"	m	struct:thread_T
+id	jvm.h	/^    uint8       id[12];             \/* appl. version string *\/$/;"	m	struct:app_T
+iface	jvm.h	/^    uint8    *iface[1];             \/* offset to first interface class, not present if count=0 *\/$/;"	m	struct:iface_T
+iface_T	jvm.h	/^struct iface_T$/;"	s
+iface_t	jvm.h	/^typedef _PACKED_ struct iface_T      iface_t;$/;"	t
+ifaces	jvm.h	/^    uint8      *ifaces;             \/* pointer to interfaces offsets table *\/$/;"	m	struct:class_T
+index	jvm.h	/^    uint16      index;              \/* class location in the class offsets table *\/$/;"	m	struct:class_T
+initMainThread	j_thread.c	/^bool initMainThread(void)$/;"	f
+inst_size	jvm.h	/^    uint32      inst_size;          \/* size of the largest class instance in bytes *\/$/;"	m	struct:app_T
+int16	javavm.h	/^typedef signed short    int16;$/;"	t
+int32	javavm.h	/^typedef signed int      int32;$/;"	t
+int8	javavm.h	/^typedef signed char     int8;$/;"	t
+jbool	javavm.h	/^typedef bool            jbool;$/;"	t
+jbyte	javavm.h	/^typedef int8            jbyte;$/;"	t
+jchar	javavm.h	/^  typedef uint16        jchar;$/;"	t
+jchar	javavm.h	/^  typedef uint8         jchar;$/;"	t
+jfloat	javavm.h	/^typedef float32         jfloat;$/;"	t
+jint	javavm.h	/^typedef int32           jint;$/;"	t
+jshort	javavm.h	/^typedef int16           jshort;$/;"	t
+locals	jvm.h	/^    uint16  locals;             \/* size of locals *\/$/;"	m	struct:method_T
+locals	jvm.h	/^    value_t      locals[1];         \/* start of method locals *\/$/;"	m	struct:frame_T
+locks	jvm.h	/^    uint16      locks;              \/* number of locks applied to this class *\/$/;"	m	struct:
+locks	jvm.h	/^    uint16      locks;              \/* number of locks applied to this object *\/$/;"	m	struct:
+magic	jvm.h	/^    uint32      magic;              \/* magic number *\/$/;"	m	struct:app_T
+main	jvm.h	/^    uint8      *main;               \/* pointer to main() method *\/$/;"	m	struct:app_T
+meth_count	jvm.h	/^    uint32      meth_count;         \/* number of methods defined in this class *\/$/;"	m	struct:class_T
+meth_tbl	jvm.h	/^    uint8      *meth_tbl;           \/* pointer to hashcode\/method offsets table *\/$/;"	m	struct:class_T
+method	javavm.h	/^    uint8       *method;            \/* method offset *\/$/;"	m	struct:
+method	jvm.h	/^    method_t    *method;            \/* pointer to method being executed *\/$/;"	m	struct:frame_T
+method	jvm.h	/^    uint8      *method;             \/* pointer to method *\/$/;"	m	struct:method_tbl_T
+method_T	jvm.h	/^struct method_T$/;"	s
+method_t	jvm.h	/^typedef _PACKED_ struct method_T     method_t;$/;"	t
+method_tbl_T	jvm.h	/^struct method_tbl_T$/;"	s
+method_tbl_t	jvm.h	/^typedef _PACKED_ struct method_tbl_T method_tbl_t;$/;"	t
+mutex_T	jvm.h	/^struct mutex_T {$/;"	s
+mutex_t	jvm.h	/^typedef _PACKED_ struct mutex_T      mutex_t;$/;"	t
+nargs	jvm.h	/^    uint16  nargs;              \/* number of arguments this mehod takes (in 32-bit words) *\/$/;"	m	struct:method_T
+native_func_ptr	javavm.h	/^typedef int16 (*native_func_ptr)(int32 param[], int32 *retval);$/;"	t
+native_tbl	javavm.h	/^    native_func_ptr *native_tbl;    \/* pointer to native method lookup table *\/$/;"	m	struct:
+next	jvm.h	/^    frame_t     *next;              \/* next frame; NULL is this is last frame *\/$/;"	m	struct:frame_T
+next	jvm.h	/^    struct thread_T* next;	    \/* next thread in queue *\/$/;"	m	struct:thread_T
+obj	jvm.h	/^    objhdr_t    obj;                \/* header common to all objects created on the heap *\/$/;"	m	struct:
+object	jvm.h	/^    uint8      *object;             \/* pointer to java\/lang\/Object class *\/$/;"	m	struct:app_T
+objhdr_t	jvm.h	/^} objhdr_t;$/;"	t
+objref	jvm.h	/^    ref_t       *objref;            \/* pointer to Thread object reference *\/$/;"	m	struct:thread_T
+owner	jvm.h	/^    thread_t  *owner;    \/* owner of this mutex *\/$/;"	m	struct:mutex_T
+pc	javavm.h	/^    uint8       *pc;                \/* PC counter *\/$/;"	m	struct:
+pc	jvm.h	/^    uint8       *pc;                \/* program counter *\/$/;"	m	struct:frame_T
+prev	jvm.h	/^    frame_t     *prev;              \/* previous frame; NULL if this is first frame *\/$/;"	m	struct:frame_T
+pri	jvm.h	/^    int32        pri;		    \/* priority, 0=highest priority *\/$/;"	m	struct:thread_T
+priLevel	javavm.h	/^    uint16	priLevel;	    \/* number of scheduling level *\/$/;"	m	struct:
+ptr	jvm.h	/^    objhdr_t    *ptr;               \/* pointer to either class or array object header *\/$/;"	m	struct:ref_T
+ready_q	j_thread.c	/^static thread_t *ready_q;	       \/* a queue of READY threads *\/$/;"	v	file:
+ref	jvm.h	/^    ref_t      *ref;                \/* pointer to reference of String object *\/$/;"	m	struct:
+ref_T	jvm.h	/^struct ref_T$/;"	s
+ref_t	jvm.h	/^typedef _PACKED_ struct ref_T        ref_t;$/;"	t
+references	javavm.h	/^    uint16      references;         \/* max. number of references *\/$/;"	m	struct:
+releaseClassLock	j_thread.c	/^static bool releaseClassLock(void)$/;"	f	file:
+releaseLocks	j_thread.c	/^bool releaseLocks(void)$/;"	f
+releaseObjectLock	j_thread.c	/^bool releaseObjectLock(ref_t *ref)$/;"	f
+run	jvm.h	/^    uint8      *run;                \/* pointer to run() method, if exists *\/$/;"	m	struct:class_T
+semaphore_T	jvm.h	/^struct semaphore_T {$/;"	s
+semaphore_t	jvm.h	/^typedef _PACKED_ struct semaphore_T  semaphore_t;$/;"	t
+serializable	jvm.h	/^    uint8      *serializable;       \/* pointer to java\/io\/Serializable interface *\/$/;"	m	struct:app_T
+setWaitingPos	j_thread.c	/^void setWaitingPos(thread_t *thread, ref_t *ref)$/;"	f
+size	jvm.h	/^    uint32      size;               \/* size of the object on the heap *\/$/;"	m	struct:
+sleep	jvm.h	/^    int32        sleep;             \/* 32-bit thread sleep counter *\/$/;"	m	struct:thread_T
+sp	jvm.h	/^    value_t     *sp;                \/* stack pointer *\/$/;"	m	struct:frame_T
+stack_trace	javavm.h	/^    trace_t     *stack_trace;$/;"	m	struct:
+start	jvm.h	/^    uint16      start;              \/* start PC *\/$/;"	m	struct:
+state	jvm.h	/^    uint16	 state;		    \/* current state of thread (DEAD,READY,RUNNING,...) *\/$/;"	m	struct:thread_T
+static_size	jvm.h	/^    uint32      static_size;        \/* size static fields *\/$/;"	m	struct:app_T
+string	jvm.h	/^    uint8      *string;             \/* pointer to java\/lang\/String class *\/$/;"	m	struct:app_T
+string_count	jvm.h	/^    uint8      *string_count;       \/* pointer to String.count field in String class *\/$/;"	m	struct:app_T
+string_offset	jvm.h	/^    uint8      *string_offset;      \/* pointer to String.offset field in String class *\/$/;"	m	struct:app_T
+string_value	jvm.h	/^    uint8      *string_value;       \/* pointer to String.value field in String class *\/$/;"	m	struct:app_T
+strings	javavm.h	/^    uint16      strings;            \/* max. entries in strings table *\/$/;"	m	struct:
+strings_t	jvm.h	/^} strings_t;$/;"	t
+super	jvm.h	/^    uint8      *super;              \/* pointer of super class\/interface *\/$/;"	m	struct:class_T
+thread	jvm.h	/^    uint8      *thread;             \/* pointer to java\/lang\/Thread class *\/$/;"	m	struct:app_T
+thread_T	jvm.h	/^struct thread_T$/;"	s
+thread_id	jvm.h	/^    uint16      thread_id;          \/* ID of thread that has lock on this class *\/$/;"	m	struct:
+thread_id	jvm.h	/^    uint16      thread_id;          \/* ID of thread that has lock on this object *\/$/;"	m	struct:
+thread_t	jvm.h	/^typedef _PACKED_ struct thread_T     thread_t;$/;"	t
+threads	javavm.h	/^    uint16      threads;            \/* max. entries in thread table *\/$/;"	m	struct:
+ticks	jvm.h	/^    int32        ticks;             \/* remaining tick count *\/$/;"	m	struct:thread_T
+time	jvm.h	/^    int32       time;               \/* 32-bit timeout value *\/$/;"	m	struct:
+time_slice	javavm.h	/^    uint16      time_slice;         \/* time in ms specifying time slicing interval *\/$/;"	m	struct:
+timer_t	jvm.h	/^} timer_t;$/;"	t
+timers	javavm.h	/^    uint16      timers;             \/* number of software timers JVM should create *\/$/;"	m	struct:
+trace	javavm.h	/^    trace_tbl_t trace[1];           \/* stack trace entries *\/$/;"	m	struct:
+trace_t	javavm.h	/^} trace_t;$/;"	t
+trace_tbl_t	javavm.h	/^} trace_tbl_t;$/;"	t
+true	javavm.h	45;"	d
+type	jvm.h	/^    uint16      type;               \/* array type *\/$/;"	m	struct:
+type	jvm.h	/^    uint16      type;               \/* class array type: T_BOOLEAN, T_CHAR, ... *\/$/;"	m	struct:class_arr_T
+type_index	jvm.h	/^    uint32 type_index;$/;"	m	struct:field_T
+type_len	jvm.h	/^    uint32  type_len;$/;"	m	struct:const_T
+uint16	javavm.h	/^typedef unsigned short  uint16;$/;"	t
+uint32	javavm.h	/^typedef unsigned int    uint32;$/;"	t
+uint8	javavm.h	/^typedef unsigned char   uint8;$/;"	t
+unused	jvm.h	/^    uint16      unused;             \/* just to make structure size multiple of four *\/$/;"	m	struct:
+unused	jvm.h	/^    uint16  unused;             \/* just to make header size multiple of four *\/$/;"	m	struct:method_T
+used	jvm.h	/^    bool      used;      \/* true if this condition is used *\/$/;"	m	struct:condition_T
+used	jvm.h	/^    bool      used;      \/* true if this mutex is used *\/$/;"	m	struct:mutex_T
+used	jvm.h	/^    bool      used;      \/* true if this semaphore is used *\/$/;"	m	struct:semaphore_T
+usrNotify	javavm.h	/^    void        (*usrNotify)(uint16 code, char *msg);   \/* can be NULL if not implemented *\/$/;"	m	struct:
+val	jvm.h	/^    int32     val;       \/* current value of this semaphore *\/$/;"	m	struct:semaphore_T
+val	jvm.h	/^    uint32  val;                \/* 32-bit value of unspecified type *\/$/;"	m	union:value_T
+value_T	jvm.h	/^union value_T$/;"	u
+value_t	jvm.h	/^typedef _PACKED_ union value_T       value_t;$/;"	t
+version	jvm.h	/^    uint32      version;            \/* ClassLinker's version number *\/$/;"	m	struct:app_T
+vmGetArray	javavm.h	/^    void*       (*vmGetArray)(int32);$/;"	m	struct:
+vmGetArraySize	javavm.h	/^    jint        (*vmGetArraySize)(int32);$/;"	m	struct:
+vmGetStringArray	javavm.h	/^    jchar*      (*vmGetStringArray)(int32);$/;"	m	struct:
+vmGetStringCount	javavm.h	/^    jint        (*vmGetStringCount)(int32);$/;"	m	struct:
+vmGetSysTime	javavm.h	/^    uint32      (*vmGetSysTime)(void);$/;"	m	struct:
+vmUpdateEventCounter	javavm.h	/^    void        (*vmUpdateEventCounter)(uint16 index);$/;"	m	struct:
+vm_config_t	javavm.h	/^} vm_config_t;$/;"	t
+wait	jvm.h	/^    int32        wait;              \/* 32-bit monitor wait counter *\/$/;"	m	struct:thread_T
+wait_locks	jvm.h	/^    uint16       wait_locks;        \/* number of locks associated with object on which this thread waits *\/$/;"	m	struct:thread_T
+wait_obj	jvm.h	/^    ref_t       *wait_obj;          \/* object's reference on which this thread is waiting or trying to get lock *\/$/;"	m	struct:thread_T
+wait_pos	jvm.h	/^    uint16       wait_pos;          \/* thread's queue position when waiting for the lock release *\/$/;"	m	struct:thread_T
