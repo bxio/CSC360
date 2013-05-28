@@ -646,12 +646,47 @@ void AddReady(thread_t* thread, bool front)
 	if(ready_q == NULL) {
 		ready_q = thread;
 	}
-	else {
-		if(front) {
-			AddFront( &(ready_q), thread );
+	else 
+	{
+		thread_t* ptr = ready_q;
+
+		if(thread->pri < ptr->pri)
+		{
+			AddFront( &(ready_q), thread);
 		}
-		else {
-			EnQ( &(ready_q), thread );
+		
+		
+		if(front)
+		{
+			while(ptr->next != NULL && thread->pri > ptr->next->pri)
+			{
+				ptr = ptr->next;
+			}
+			
+			if(ptr->next == NULL)
+			{
+				EnQ( &(ready_q), thread);
+			}
+			else
+			{
+				AddFront( &(ptr), thread );
+			}
+		}
+		else
+		{
+			while(ptr->next != NULL && thread->pri >= ptr->next->pri)
+			{
+				ptr = ptr->next;
+			}
+			
+			if(ptr->next == NULL)
+			{
+				EnQ( &(ready_q), thread);
+			}
+			else
+			{
+				EnQ( &(ptr), thread);
+			}
 		}
 	}
 } /* end AddReady */
@@ -666,7 +701,12 @@ void AddReady(thread_t* thread, bool front)
    */
 void PreemptIfNecessary(void)
 {
-
+	thread_t* tmp = ready_q;
+	
+	if(tmp-> pri > thr_active->pri)
+	{
+		Reschedule();
+	}
 /* TO BE WRITTEN BY YOU!!! */
 // If active thread's priority is lower than something
 // then reschedule
@@ -680,7 +720,10 @@ void PreemptIfNecessary(void)
    */
 void Reschedule()
 {
-
+	thr_active->state = READY;
+	AssignQuantum(thr_active);
+	AddReady(thr_active, false);
+	Dispatch();
 /* TO BE WRITTEN BY YOU!!! */
 
 } /* end Reschedule */
