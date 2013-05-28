@@ -714,6 +714,19 @@ int16 java_lang_Math_cos(int32 param[], int32 *retval)
  *====================================================
  */
 
+/****************************************************************************
+* Starts execution of the new thread. There must be enough room in thr_table
+* and run() method must be defined.
+*
+* Java prototype:
+*           void start();
+****************************************************************************/
+int32 uvic_posix_Thread_cpu_time(int32 par[], int32 *rv)
+{
+    int32 time = cputime();
+	*rv = time;
+    return NO_EXCEP;
+}
 
 /****************************************************************************
 * Starts execution of the new thread. There must be enough room in thr_table

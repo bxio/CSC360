@@ -727,6 +727,10 @@ void SetLevel( int32 level )
 
 } /* end SetLevel */
 
+  /** Function to find out current time. */
+int32 cputime(void){
+	return GetVMTime();
+}
 
   /** A tick has elapsed; it may be time to reschedule */
 void VMTick(void)

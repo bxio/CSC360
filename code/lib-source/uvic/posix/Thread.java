@@ -51,6 +51,8 @@ public class Thread implements Runnable
     /** change this thread's level; as a result, pre-emption may occur */
     public static native void set( int level );
 	
+	/** Native Call code for part D. */
+	public static native int cpu_time();
 
     /**
      * Subclasses must override this method to implement required functionality.
