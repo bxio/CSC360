@@ -20,7 +20,7 @@
 *
 *  Developer(s): Peter Gasparik <peterg@rtjcom.com>
 **************************************************************************************/
-
+#define MAXVALUE 2147483647
 #define __timer_t_defined
 #include <stdio.h>
 
@@ -470,7 +470,9 @@ static void EnQ( thread_t **q, thread_t *p )
     else {
            /* "q" is not empty */
         tmp = *q;
-        while ( tmp->next != NULL ) { tmp = tmp->next; }
+        while ( tmp->next != NULL){
+			tmp = tmp->next;
+		}
         tmp->next = p;
     }
 
@@ -580,7 +582,9 @@ bool InitROSE(void)
   /** Assign fresh ticks to a thread. **/
 static void AssignQuantum( thread_t *p ) 
 {
-
+	if(p->pri == 0 || p->pri == 3){
+		p->ticks = MAXVALUE;
+	}
 	/* TO BE WRITTEN BY YOU!!! */
 	return;
 
@@ -617,7 +621,7 @@ void Dispatch()
     thr_active->state = RUNNING;
     thr_active->next = NULL;
 	
-      /* restore our new active's context */
+    /* restore our new active's context */
     vm_pc = thr_active->curr_frame->pc;
     vm_sp = thr_active->curr_frame->sp;
 
@@ -645,52 +649,31 @@ void AddReady(thread_t* thread, bool front)
 	
 	if(ready_q == NULL) {
 		ready_q = thread;
+		printf("ReadyQ was empty. Added thread.\n");
 	}
-	else 
-	{
-		thread_t* ptr = ready_q;
-
-		if(thread->pri < ptr->pri)
-		{
-			AddFront( &(ready_q), thread);
-		}
-		
-		
-		if(front)
-		{
-			while(ptr->next != NULL && thread->pri > ptr->next->pri)
-			{
-				ptr = ptr->next;
+	else {
+		thread_t *ptr = ready_q;
+		if(front) {
+			if(ptr->pri != thread->pri){
+				while(ptr->next != NULL && ptr->next->pri < thread->pri){
+					ptr = ptr -> next;
+				}
 			}
+			thread->next = ptr->next;
+			ptr->next = thread;
 			
-			if(ptr->next == NULL)
-			{
-				EnQ( &(ready_q), thread);
-			}
-			else
-			{
-				AddFront( &(ptr), thread );
-			}
+			//AddFront( &(ready_q), thread );
 		}
-		else
-		{
-			while(ptr->next != NULL && thread->pri >= ptr->next->pri)
-			{
-				ptr = ptr->next;
+		else {
+			//EnQ( &(ready_q), thread );
+			while(ptr->next != NULL && ptr->next->pri <= thread->pri){
+					ptr = ptr -> next;
 			}
-			
-			if(ptr->next == NULL)
-			{
-				EnQ( &(ready_q), thread);
-			}
-			else
-			{
-				EnQ( &(ptr), thread);
-			}
+			thread->next = ptr->next;
+			ptr->next = thread;
 		}
 	}
 } /* end AddReady */
-
 
 
   /** 
@@ -748,7 +731,11 @@ void SetLevel( int32 level )
   /** A tick has elapsed; it may be time to reschedule */
 void VMTick(void)
 {
-
+	if(thr_active->pri == 0 || thr_active->pri == 3){
+		return;
+	}else{
+		thr_active->pri = thr_active->pri - 1;
+	}
 /* TO BE WRITTEN BY YOU!!! */
 // If ticks have run out
 // If thread is dead or sleeping

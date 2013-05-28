@@ -26,14 +26,14 @@ public class Race extends uvic.posix.Thread
 		Race r2 = new Race(2);
 		Race r3 = new Race(3);
 		
-		/*//Uncomment this block to get correct result! 
+		/*Uncomment this block to get correct result! 
 		set(DAEMON); 
 		*/
 
 		r1.start(1);
-		r2.start(1);
+		r2.start(2);
 		r3.start(1);
-		set(DAEMON);
+		//set(DAEMON);
 
 		System.println("Expected Value: 60000");
 		System.println("Actual Value: "+total);
