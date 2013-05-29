@@ -628,6 +628,7 @@ static void AssignQuantum( thread_t *p )
 
 int32 cputime(void)
 {
+	/*Returns current thread's total running time.*/
 	updateThreadTimer(thr_active);
 	return thr_active->deltaTime;
 }
@@ -733,11 +734,6 @@ void AddReady(thread_t* thread, bool front)
 				ptr->next = thread;
 			}
 		}
-		
-		
-		
-		
-		
 	}
 }
 
@@ -751,20 +747,22 @@ void AddReady(thread_t* thread, bool front)
 void PreemptIfNecessary(void)
 {
 	thread_t* tmp = ready_q;
-	
-	if(tmp-> pri > thr_active->pri)
+	/* Check if current thread has highest priority. It should always first in ready_q */
+	if(thr_active->pri > tmp-> pri)
 	{
+		/* thr_active has lower priority than first thread in ready_q */
+		/* Update current thread's delta time */
 		updateThreadTimer(thr_active);
-		//AddReady(thr_active,true);
-		//Dispatch();
-		Reschedule();
+		/* Insert thr_active in right position of ready_q according to priority */
+        AddReady(thr_active, true);
+		Dispatch();
+		//Reschedule();
 	}
 /* TO BE WRITTEN BY YOU!!! */
 // If active thread's priority is lower than something
 // then reschedule
 
 } /* end PreemptIfNecessary */
-
 
 
   /** "thr_active" is given up voluntarily its share of processor; 
@@ -825,10 +823,13 @@ void VMTick(void)
 	}
 	else
 	{
-		thr_active->ticks = thr_active->ticks - 1;
+		//thr_active->ticks = thr_active->ticks - 1;
 		if(thr_active->ticks == 0)
 		{
 			Reschedule();
+			return;
+		}else{
+			thr_active->ticks = thr_active->ticks - 1;
 		}
 		
 	}
