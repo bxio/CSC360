@@ -597,7 +597,7 @@ static void AssignQuantum( thread_t *p )
   /** current active thread is not runnable; 
    * select a new ready thread and switch their contexts 
    */
-void Dispatch()
+void Dispatch(void)
 {
     if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
@@ -695,68 +695,14 @@ void AddReady(thread_t* thread, bool front)
 				ptr->next = thread;
 			}
 		}
-		
-		
-		
-		
-		
+		/* TO BE MODIFIED BY YOU!!!
+		 *
+		 * You need to modify the following lines. It depends on how
+		 * you implement your ready_q.
+		 *
+		 */
 	}
 }
-
-    /* TO BE MODIFIED BY YOU!!!
-     *
-     * You need to modify the following lines. It depends on how
-     * you implement your ready_q.
-     *
-     */
-	
-	/*if(ready_q == NULL) {
-		ready_q = thread;
-	}
-	else 
-	{
-		thread_t* ptr = ready_q;
-
-		if(thread->pri < ptr->pri)
-		{
-			AddFront( &(ready_q), thread);
-		}
-		
-		
-		if(front)
-		{
-			while(ptr->next != NULL && thread->pri > ptr->next->pri)
-			{
-				ptr = ptr->next;
-			}
-			
-			if(ptr->next == NULL)
-			{
-				EnQ( &(ready_q), thread);
-			}
-			else
-			{
-				AddFront( &(ptr), thread );
-			}
-		}
-		else
-		{
-			while(ptr->next != NULL && thread->pri >= ptr->next->pri)
-			{
-				ptr = ptr->next;
-			}
-			
-			if(ptr->next == NULL)
-			{
-				EnQ( &(ready_q), thread);
-			}
-			else
-			{
-				EnQ( &(ptr), thread);
-			}
-		}
-	}
-} /* end AddReady */
 
 
 
@@ -785,7 +731,7 @@ void PreemptIfNecessary(void)
   /** "thr_active" is given up voluntarily its share of processor; 
    * select a new READY thread to run (remember to assign quantum)
    */
-void Reschedule()
+void Reschedule(void)
 {
 	thr_active->state = READY;
 	if(thr_active->ticks == 0)
@@ -852,7 +798,7 @@ void VMTick(void)
  */
 
   /* allocate a new Mutex */
-int32 MutexInit()
+int32 MutexInit(void)
 {
     int32 i, idx;
 
@@ -917,7 +863,7 @@ static condition_t *ConditionOf( int32 id )
 
 
   /* allocate a new Condition */
-int32 CondInit()
+int32 CondInit(void)
 {
     int32 i, idx;
 
