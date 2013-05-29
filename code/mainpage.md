@@ -59,6 +59,6 @@ A native method was added to thread.java, its stub was added to j\_lang.c and cp
 
 Two additional int32's (startTime and deltaTime) were added to the struct thread_t in jvm.h to keep track of the start time of the thread and the deltaTime (the total elapsed time) of the thread.
 
-We also Changed Rose so that it would call on these functions to determine the running time of the threads that we create.
+Three additional methods were added to j_thread.c in order to keep track of thread's times. We also Changed Rose so that it would call on these functions to determine the running time of the threads that we create.
 
-The method we added, cputime(), is called in dispatch. We grab the current time (ie, the time that the thread ended execution) and we subtract from this the startTime of the thread, and then we add it to the deltaTime of the thread.
+Native methods are so difficult to get to work right. 

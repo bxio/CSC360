@@ -57,14 +57,36 @@ bool initMainThread(void)
     }
     return false;
 }
-
+/****************************************************************************
+* Sets the thread's startTime and deltaTime to 0
+*
+* Input:        thread 	pointer to the current thread.
+* Output:       none
+* Return:       none
+****************************************************************************/
 void initThreadTimer(thread_t *thread){
 	thread->startTime = 0;
 	thread->deltaTime = 0;
 }
+/****************************************************************************
+* Calls GetVMTime() and stores the int32 in the thread's startTime, 
+* 	thereby "Starting" the thread's timer. 
+*
+* Input:        thread 	pointer to the current thread.
+* Output:       none
+* Return:       none
+****************************************************************************/
 void startThreadTimer(thread_t *thread){
 	thread->startTime = GetVMTime();
 }
+/****************************************************************************
+* Calls GetVMTime() and updates the thread's deltaTime, 
+* 	incrementing the time that the thread has been run.
+*
+* Input:        thread 	pointer to the current thread.
+* Output:       none
+* Return:       none
+****************************************************************************/
 void updateThreadTimer(thread_t *thread){
 	thread->deltaTime += GetVMTime() - thread->startTime;
 }
@@ -125,7 +147,6 @@ bool createThread(ref_t *ref, int32 pri)
 
     return true;
 }
-
 
 /****************************************************************************
 * Searches for the run method in current class. I not found then it will
