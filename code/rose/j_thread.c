@@ -58,6 +58,16 @@ bool initMainThread(void)
     return false;
 }
 
+void initThreadTimer(thread_t *thread){
+	thread->startTime = 0;
+	thread->deltaTime = 0;
+}
+void startThreadTimer(thread_t *thread){
+	thread->startTime = GetVMTime();
+}
+void updateThreadTimer(thread_t *thread){
+	thread->deltaTime += GetVMTime() - thread->startTime;
+}
 
 /****************************************************************************
 * Creates new entry in thr_table if there is enough room. If table is full
@@ -108,6 +118,7 @@ bool createThread(ref_t *ref, int32 pri)
     thr_count++;
 
     AssignQuantum( thread );
+	initThreadTimer(thread);
     AddReady(thread,false);
 
     PreemptIfNecessary();
@@ -593,15 +604,16 @@ static void AssignQuantum( thread_t *p )
 
 } /* end AssignQuantum */
 
+
 int32 cputime(void)
 {
-	return GetVMTime();
+	updateThreadTimer(thr_active);
+	return thr_active->deltaTime;
 }
-
   /** current active thread is not runnable; 
    * select a new ready thread and switch their contexts 
    */
-void Dispatch()
+void Dispatch(void)
 {
     if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
@@ -625,6 +637,7 @@ void Dispatch()
     DeQ(&(ready_q), &thr_active);
 
     thr_active->state = RUNNING;
+	startThreadTimer(thr_active);
     thr_active->next = NULL;
 	
       /* restore our new active's context */
@@ -720,6 +733,9 @@ void PreemptIfNecessary(void)
 	
 	if(tmp-> pri > thr_active->pri)
 	{
+		updateThreadTimer(thr_active);
+		//AddReady(thr_active,true);
+		//Dispatch();
 		Reschedule();
 	}
 /* TO BE WRITTEN BY YOU!!! */
@@ -736,6 +752,7 @@ void PreemptIfNecessary(void)
 void Reschedule()
 {
 	thr_active->state = READY;
+	updateThreadTimer(thr_active);
 	if(thr_active->ticks == 0)
 	{
 		AssignQuantum(thr_active);
