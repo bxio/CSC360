@@ -6,7 +6,8 @@ import uvic.posix.*;
 /**
  Solution to Question 2.
  
- Put description here.
+ Please see main page for documentation.
+ To see the deadlock, comment line 32, uncomment line 33 and run ./Rose.exe 1 LockRace.bin  
 */
 public class LockRace extends uvic.posix.Thread 
 {
