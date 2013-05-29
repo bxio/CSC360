@@ -20,10 +20,13 @@ public class TestTimer extends uvic.posix.Thread
 	
     static void main(String[] args)
     {
-		TestTimer t1,t2,t3;
+		TestTimer t1,t2,t3,t4,t5,t6;
 		t1 = new TestTimer(1);
 		t2 = new TestTimer(2);
 		t3 = new TestTimer(3);
+		t4 = new TestTimer(3);
+		t5 = new TestTimer(3);
+		t6 = new TestTimer(3);
 		
 		t1.start(1);
 		t2.start(1);
