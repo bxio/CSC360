@@ -451,8 +451,6 @@ struct thread_T
     int32        pri;		    /**< priority, 0=highest priority */
     int32        ticks;             /**< remaining tick count */
     struct thread_T* next;	    /**< next thread in queue */
-	int32		startTime;		/**< The Time that the thread was last started. Used to calculate deltaTime */
-	int32		deltaTime;		/**< The total running time the thread has acquired. */
 
 /*===== Remaining fields not used by ROSE ===== */
     uint16       id;                /**< thread number, used by object locking functions */

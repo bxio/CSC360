@@ -714,19 +714,6 @@ int16 java_lang_Math_cos(int32 param[], int32 *retval)
  *====================================================
  */
 
-/****************************************************************************
-* Method returns current time according to the CPU. Used to calculate total
-* running time of the thread.
-*
-* Java prototype:
-*           void start();
-****************************************************************************/
-int32 uvic_posix_Thread_cpu_time(int32 par[], int32 *rv)
-{
-    int32 time = cputime();
-	*rv = time;
-    return NO_EXCEP;
-}
 
 /****************************************************************************
 * Starts execution of the new thread. There must be enough room in thr_table
@@ -770,7 +757,6 @@ static int16 uvic_posix_Thread_yield(int32 par[], int32 *rv)
     return NO_EXCEP;
 }
 
-
 /****************************************************************************
 * Change the current thread's level
 *
@@ -782,6 +768,23 @@ static int16 uvic_posix_Thread_set(int32 par[], int32 *rv)
 {
       /* This is a "static" method; hence, the first parameter is 0 */
     SetLevel( par[0] );
+    return NO_EXCEP;
+}
+
+
+
+/****************************************************************************
+* Change the current thread's level
+*
+* Java prototype:
+*           static void set( int level );
+*
+****************************************************************************/
+static int16 uvic_posix_Thread_cpu_time(int32 par[], int32 *rv)
+{
+      /* This is a "static" method; hence, the first parameter is 0 */
+    int32 time = cputime();
+	*rv = time;
     return NO_EXCEP;
 }
 
@@ -918,11 +921,11 @@ const native_func_ptr sys_native_tbl[] =
     /* uvic.posix package          */
     /* (UVic/CS MHMC 22/Aug/2002)  */
     /*=============================*/
-	uvic_posix_Thread_cpu_time,
     uvic_posix_Thread_start,
     uvic_posix_Thread_stop,
     uvic_posix_Thread_yield,
     uvic_posix_Thread_set,
+	uvic_posix_Thread_cpu_time,
     uvic_posix_Mutex_init_mutex,
     uvic_posix_Mutex_lock_mutex,
     uvic_posix_Mutex_unlock_mutex,

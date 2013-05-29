@@ -580,6 +580,7 @@ bool InitROSE(void)
   /** Assign fresh ticks to a thread. **/
 static void AssignQuantum( thread_t *p ) 
 {
+	
 	if(p->pri == 1){
 		p->ticks = 1;
 	}
@@ -592,12 +593,15 @@ static void AssignQuantum( thread_t *p )
 
 } /* end AssignQuantum */
 
-
+int32 cputime(void)
+{
+	return GetVMTime();
+}
 
   /** current active thread is not runnable; 
    * select a new ready thread and switch their contexts 
    */
-void Dispatch(void)
+void Dispatch()
 {
     if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
@@ -664,7 +668,7 @@ void AddReady(thread_t* thread, bool front)
 				thread->next = ptr;
 				ready_q = thread;
 			}
-			else
+			else //thread is lower priority than thread in q.
 			{
 				ptr->next = thread;
 			}
@@ -695,15 +699,13 @@ void AddReady(thread_t* thread, bool front)
 				ptr->next = thread;
 			}
 		}
-		/* TO BE MODIFIED BY YOU!!!
-		 *
-		 * You need to modify the following lines. It depends on how
-		 * you implement your ready_q.
-		 *
-		 */
+		
+		
+		
+		
+		
 	}
 }
-
 
 
   /** 
@@ -731,7 +733,7 @@ void PreemptIfNecessary(void)
   /** "thr_active" is given up voluntarily its share of processor; 
    * select a new READY thread to run (remember to assign quantum)
    */
-void Reschedule(void)
+void Reschedule()
 {
 	thr_active->state = READY;
 	if(thr_active->ticks == 0)
@@ -743,11 +745,17 @@ void Reschedule(void)
 	{
 		AddReady(thr_active, true);
 	}
-
 	Dispatch();
 /* TO BE WRITTEN BY YOU!!! */
 
 } /* end Reschedule */
+
+/*void yield()
+{
+	thr_active->state = READY;
+	AddReady(thr_active, false);
+	Dispatch();
+}*/
 
 
 
@@ -798,7 +806,7 @@ void VMTick(void)
  */
 
   /* allocate a new Mutex */
-int32 MutexInit(void)
+int32 MutexInit()
 {
     int32 i, idx;
 
@@ -863,7 +871,7 @@ static condition_t *ConditionOf( int32 id )
 
 
   /* allocate a new Condition */
-int32 CondInit(void)
+int32 CondInit()
 {
     int32 i, idx;
 

@@ -4,18 +4,13 @@ import uvic.posix.*;
 /**
  Solution for Question 1.
  
- When you run this, you will get any random value. This is because there is a race condition for the shared resource total.
- 
- In order to get the correct total, uncomment line 31 and comment out line 36. This will set the main thread 
- to DAEMON level before the other threads, effectively allowing the threads to complete one at a time.
-
- When doing so, don't forget to recompile.
+ Put description of what is being done here.
 */
 public class Race extends uvic.posix.Thread 
 {
 	// Define static variables here
-	static int total; /**< Shared variable for the three threads to race for */
-	int n; /**< The number to increment the variable by */
+	static int total;
+	int n;
 	
 	public Race(int value){
 		this.n = value;
@@ -28,8 +23,8 @@ public class Race extends uvic.posix.Thread
 		Race r2 = new Race(2);
 		Race r3 = new Race(3);
 		
-		//set(DAEMON);  //uncomment this line to make program halt properly.
-		
+		//set(DAEMON);
+
 		r1.start(1);
 		r2.start(1);
 		r3.start(1);

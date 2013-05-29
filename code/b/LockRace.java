@@ -6,17 +6,17 @@ import uvic.posix.*;
 /**
  Solution to Question 2.
  
- Comment line 31 and uncomment 32 in order to see the deadlock.
+ Put description here.
 */
 public class LockRace extends uvic.posix.Thread 
 {
     // Define static variables here
-    static int s1; /**< The First static variable for the threads to increment. */
-    static int s2; /**< The Second static variable for the threads to increment. */
-    static Spinlock l1; /**< The First SpinLock for the threads. */
-    static Spinlock l2; /**< The Second SpinLock for the threads. */
+    static int s1;
+    static int s2;
+    static Spinlock l1;
+    static Spinlock l2;
     
-    int n; /**< the increment value */
+    int n; // the increment value
     
     LockRace(int value)
     {
@@ -28,16 +28,19 @@ public class LockRace extends uvic.posix.Thread
 	{
 		// Initialize any variables and start race threads
 		LockRace lr1 = new LockRace(1);
-		LockRace lr2 = new LockRace(2); //Comment this line and uncomment 32 to get deadlock.
-		//LockRace1 lr2 = new LockRace1(2); //Uncommet this line to get deadlock. don't forget to recompile.
+		LockRace lr2 = new LockRace(2);
+		//LockRace1 lr2 = new LockRace1(2);
 		s1 = 0;
 		s2 = 0;
 		l1 = new Spinlock();
 		l2 = new Spinlock();
-				
+		
+		//set(DAEMON);
+		
 		lr1.start(1);
 		lr2.start(1);
 
+		
 		set(DAEMON);
 		
 		System.println("s1: " + s1);
