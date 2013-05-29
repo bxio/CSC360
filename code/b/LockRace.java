@@ -28,8 +28,8 @@ public class LockRace extends uvic.posix.Thread
 	{
 		// Initialize any variables and start race threads
 		LockRace lr1 = new LockRace(1);
-		LockRace lr2 = new LockRace(2);
-		//LockRace1 lr2 = new LockRace1(2);
+		LockRace lr2 = new LockRace(2); //Comment this line and uncomment 32 to get deadlock.
+		//LockRace1 lr2 = new LockRace1(2); //Uncommet this line to get deadlock. don't forget to recompile.
 		s1 = 0;
 		s2 = 0;
 		l1 = new Spinlock();
@@ -38,7 +38,6 @@ public class LockRace extends uvic.posix.Thread
 		lr1.start(1);
 		lr2.start(1);
 
-		
 		set(DAEMON);
 		
 		System.println("s1: " + s1);

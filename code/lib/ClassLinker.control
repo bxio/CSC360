@@ -51,6 +51,7 @@ java/lang/Float.toString0
 // javax/events/Timer.getExpiredId
 // javax/events/Timer.start0
 // javax/events/Timer.getTimersCount
+uvic/posix/Thread.cpu_time
 uvic/posix/Thread.start
 uvic/posix/Thread.stop
 uvic/posix/Thread.yield
