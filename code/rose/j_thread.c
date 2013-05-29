@@ -20,7 +20,7 @@
 *
 *  Developer(s): Peter Gasparik <peterg@rtjcom.com>
 **************************************************************************************/
-#define MAXVALUE 2147483647
+
 #define __timer_t_defined
 #include <stdio.h>
 
@@ -91,8 +91,7 @@ bool createThread(ref_t *ref, int32 pri)
         vm_excep = INTERR_ThreadLimit;
         return false;
     }
-	thread->startTime = 0;
-	thread->deltaTime = 0;
+
     thread->objref = ref;
     thread->curr_frame = NULL;
       /* By default, a thread is set to the USER_LEVE */
@@ -471,9 +470,7 @@ static void EnQ( thread_t **q, thread_t *p )
     else {
            /* "q" is not empty */
         tmp = *q;
-        while ( tmp->next != NULL){
-			tmp = tmp->next;
-		}
+        while ( tmp->next != NULL ) { tmp = tmp->next; }
         tmp->next = p;
     }
 
@@ -500,10 +497,6 @@ static void AddFront( thread_t **q, thread_t *p )
 
 } /* end AddFront */
 
-/** Function to find out current time. */
-int32 cputime(void){
-	return GetVMTime();
-}
 
    /* return a new thread descriptor from the DEAL pool */
    /* if DEAL pool is empty, then it returns NULL */
@@ -587,11 +580,11 @@ bool InitROSE(void)
   /** Assign fresh ticks to a thread. **/
 static void AssignQuantum( thread_t *p ) 
 {
-	if(p->pri == 0 || p->pri == 3){
-		p->ticks = MAXVALUE;
-	}else if(p->pri == 1){
+	if(p->pri == 1){
 		p->ticks = 1;
-	}else if(p->pri == 2){
+	}
+	else if(p->pri == 2)
+	{
 		p->ticks = 2;
 	}
 	/* TO BE WRITTEN BY YOU!!! */
@@ -604,7 +597,7 @@ static void AssignQuantum( thread_t *p )
   /** current active thread is not runnable; 
    * select a new ready thread and switch their contexts 
    */
-void Dispatch(void)
+void Dispatch()
 {
     if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
@@ -629,8 +622,8 @@ void Dispatch(void)
 
     thr_active->state = RUNNING;
     thr_active->next = NULL;
-	thr_active->startTime = cputime();
-    /* restore our new active's context */
+	
+      /* restore our new active's context */
     vm_pc = thr_active->curr_frame->pc;
     vm_sp = thr_active->curr_frame->sp;
 
@@ -641,6 +634,8 @@ void Dispatch(void)
    * Add a new READY "thread" into the ready_q.
    * if "front" is true, then "thread" is added to the front of its level
    */
+   
+
 void AddReady(thread_t* thread, bool front)
 {
 	if (thread == NULL)
@@ -648,14 +643,7 @@ void AddReady(thread_t* thread, bool front)
 	
     thread->state = READY;
     thread->next = NULL;
-
-    /* TO BE MODIFIED BY YOU!!!
-     *
-     * You need to modify the following lines. It depends on how
-     * you implement your ready_q.
-     *
-     */
-	
+    
 	if(ready_q == NULL) {
 		ready_q = thread;
 		
@@ -664,26 +652,34 @@ void AddReady(thread_t* thread, bool front)
 		thread_t *ptr = ready_q;
 		if(ptr->next == NULL){
 			// There's only one thread in q.
-			if(ptr->pri == thread->pri){
+			if(thread->pri == ptr->pri){
 			//thread and ptr share same priority.
 				if(front){
-					thread->next = NULL;
-					ptr->next = thread;
+					thread->next = ptr;
 				}else{
-					thread->next = ptr->next;
 					ptr->next = thread;
 				}
-			}else{
-				//thread is higher priority than thread in q.
-				thread->next = ptr->next;
+			}else if(thread->pri < ptr->pri){
+				//thread is higher priority than thread in q.	
+				thread->next = ptr;
+				ready_q = thread;
+			}
+			else
+			{
 				ptr->next = thread;
 			}
 		
 		}else{
 			if(front) {
 			
-			while(ptr->next != NULL && ptr->next->pri < thread->pri){
+			while((ptr->next != NULL) && (ptr->next->pri < thread->pri)){
 				ptr = ptr -> next;
+			}
+			
+			if(ptr == ready_q)
+			{
+				thread->next = ptr;
+				ready_q = thread;
 			}
 
 			thread->next = ptr->next;
@@ -692,7 +688,7 @@ void AddReady(thread_t* thread, bool front)
 			//AddFront( &(ready_q), thread );
 			}else {
 				//EnQ( &(ready_q), thread );
-				while(ptr->next != NULL && ptr->next->pri <= thread->pri){
+				while((ptr->next != NULL) && (ptr->next->pri <= thread->pri)){
 						ptr = ptr -> next;
 				}
 				thread->next = ptr->next;
@@ -705,7 +701,63 @@ void AddReady(thread_t* thread, bool front)
 		
 		
 	}
+}
+
+    /* TO BE MODIFIED BY YOU!!!
+     *
+     * You need to modify the following lines. It depends on how
+     * you implement your ready_q.
+     *
+     */
+	
+	/*if(ready_q == NULL) {
+		ready_q = thread;
+	}
+	else 
+	{
+		thread_t* ptr = ready_q;
+
+		if(thread->pri < ptr->pri)
+		{
+			AddFront( &(ready_q), thread);
+		}
+		
+		
+		if(front)
+		{
+			while(ptr->next != NULL && thread->pri > ptr->next->pri)
+			{
+				ptr = ptr->next;
+			}
+			
+			if(ptr->next == NULL)
+			{
+				EnQ( &(ready_q), thread);
+			}
+			else
+			{
+				AddFront( &(ptr), thread );
+			}
+		}
+		else
+		{
+			while(ptr->next != NULL && thread->pri >= ptr->next->pri)
+			{
+				ptr = ptr->next;
+			}
+			
+			if(ptr->next == NULL)
+			{
+				EnQ( &(ready_q), thread);
+			}
+			else
+			{
+				EnQ( &(ptr), thread);
+			}
+		}
+	}
 } /* end AddReady */
+
 
 
   /** 
@@ -728,18 +780,24 @@ void PreemptIfNecessary(void)
 
 } /* end PreemptIfNecessary */
 
+
+
   /** "thr_active" is given up voluntarily its share of processor; 
    * select a new READY thread to run (remember to assign quantum)
    */
-void Reschedule(void)
+void Reschedule()
 {
 	thr_active->state = READY;
-	/*
-	int32 endTime = cputime();
-	thr_active->deltaTime = thr_active->deltaTime + (endtime - thr_active->startTime);
-	*/
-	AssignQuantum(thr_active);
-	AddReady(thr_active, false);
+	if(thr_active->ticks == 0)
+	{
+		AssignQuantum(thr_active);
+		AddReady(thr_active, false);
+	}
+	else
+	{
+		AddReady(thr_active, true);
+	}
+
 	Dispatch();
 /* TO BE WRITTEN BY YOU!!! */
 
@@ -765,19 +823,23 @@ void SetLevel( int32 level )
   /** A tick has elapsed; it may be time to reschedule */
 void VMTick(void)
 {
+
+/* TO BE WRITTEN BY YOU!!! */
+// If ticks have run out
+// If thread is dead or sleeping
+
 	if(thr_active->pri == 0 || thr_active->pri == 3){
 		return;
-	}else{
-	
+	}
+	else
+	{
 		thr_active->ticks = thr_active->ticks - 1;
-		if(thr_active->ticks == 0){
+		if(thr_active->ticks == 0)
+		{
 			Reschedule();
 		}
 		
 	}
-/* TO BE WRITTEN BY YOU!!! */
-// If ticks have run out
-// If thread is dead or sleeping
 
 } /* end VMTick */
 
