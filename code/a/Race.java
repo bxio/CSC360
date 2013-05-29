@@ -33,7 +33,7 @@ public class Race extends uvic.posix.Thread
 		r1.start(1);
 		r2.start(1);
 		r3.start(1);
-		//set(DAEMON);
+		set(DAEMON);
 
 		System.println("Expected Value: 60000");
 		System.println("Actual Value: "+total);

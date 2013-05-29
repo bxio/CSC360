@@ -91,7 +91,8 @@ bool createThread(ref_t *ref, int32 pri)
         vm_excep = INTERR_ThreadLimit;
         return false;
     }
-
+	thread->startTime = 0;
+	thread->deltaTime = 0;
     thread->objref = ref;
     thread->curr_frame = NULL;
       /* By default, a thread is set to the USER_LEVE */
@@ -499,6 +500,10 @@ static void AddFront( thread_t **q, thread_t *p )
 
 } /* end AddFront */
 
+/** Function to find out current time. */
+int32 cputime(void){
+	return GetVMTime();
+}
 
    /* return a new thread descriptor from the DEAL pool */
    /* if DEAL pool is empty, then it returns NULL */
@@ -584,6 +589,10 @@ static void AssignQuantum( thread_t *p )
 {
 	if(p->pri == 0 || p->pri == 3){
 		p->ticks = MAXVALUE;
+	}else if(p->pri == 1){
+		p->ticks = 1;
+	}else if(p->pri == 2){
+		p->ticks = 2;
 	}
 	/* TO BE WRITTEN BY YOU!!! */
 	return;
@@ -595,7 +604,7 @@ static void AssignQuantum( thread_t *p )
   /** current active thread is not runnable; 
    * select a new ready thread and switch their contexts 
    */
-void Dispatch()
+void Dispatch(void)
 {
     if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
@@ -620,7 +629,7 @@ void Dispatch()
 
     thr_active->state = RUNNING;
     thr_active->next = NULL;
-	
+	thr_active->startTime = cputime();
     /* restore our new active's context */
     vm_pc = thr_active->curr_frame->pc;
     vm_sp = thr_active->curr_frame->sp;
@@ -649,29 +658,52 @@ void AddReady(thread_t* thread, bool front)
 	
 	if(ready_q == NULL) {
 		ready_q = thread;
-		printf("ReadyQ was empty. Added thread.\n");
+		
 	}
 	else {
 		thread_t *ptr = ready_q;
-		if(front) {
-			if(ptr->pri != thread->pri){
-				while(ptr->next != NULL && ptr->next->pri < thread->pri){
-					ptr = ptr -> next;
+		if(ptr->next == NULL){
+			// There's only one thread in q.
+			if(ptr->pri == thread->pri){
+			//thread and ptr share same priority.
+				if(front){
+					thread->next = NULL;
+					ptr->next = thread;
+				}else{
+					thread->next = ptr->next;
+					ptr->next = thread;
 				}
+			}else{
+				//thread is higher priority than thread in q.
+				thread->next = ptr->next;
+				ptr->next = thread;
 			}
+		
+		}else{
+			if(front) {
+			
+			while(ptr->next != NULL && ptr->next->pri < thread->pri){
+				ptr = ptr -> next;
+			}
+
 			thread->next = ptr->next;
 			ptr->next = thread;
 			
 			//AddFront( &(ready_q), thread );
-		}
-		else {
-			//EnQ( &(ready_q), thread );
-			while(ptr->next != NULL && ptr->next->pri <= thread->pri){
-					ptr = ptr -> next;
+			}else {
+				//EnQ( &(ready_q), thread );
+				while(ptr->next != NULL && ptr->next->pri <= thread->pri){
+						ptr = ptr -> next;
+				}
+				thread->next = ptr->next;
+				ptr->next = thread;
 			}
-			thread->next = ptr->next;
-			ptr->next = thread;
 		}
+		
+		
+		
+		
+		
 	}
 } /* end AddReady */
 
@@ -696,14 +728,16 @@ void PreemptIfNecessary(void)
 
 } /* end PreemptIfNecessary */
 
-
-
   /** "thr_active" is given up voluntarily its share of processor; 
    * select a new READY thread to run (remember to assign quantum)
    */
-void Reschedule()
+void Reschedule(void)
 {
 	thr_active->state = READY;
+	/*
+	int32 endTime = cputime();
+	thr_active->deltaTime = thr_active->deltaTime + (endtime - thr_active->startTime);
+	*/
 	AssignQuantum(thr_active);
 	AddReady(thr_active, false);
 	Dispatch();
@@ -727,10 +761,6 @@ void SetLevel( int32 level )
 
 } /* end SetLevel */
 
-  /** Function to find out current time. */
-int32 cputime(void){
-	return GetVMTime();
-}
 
   /** A tick has elapsed; it may be time to reschedule */
 void VMTick(void)
@@ -738,7 +768,12 @@ void VMTick(void)
 	if(thr_active->pri == 0 || thr_active->pri == 3){
 		return;
 	}else{
-		thr_active->pri = thr_active->pri - 1;
+	
+		thr_active->ticks = thr_active->ticks - 1;
+		if(thr_active->ticks == 0){
+			Reschedule();
+		}
+		
 	}
 /* TO BE WRITTEN BY YOU!!! */
 // If ticks have run out

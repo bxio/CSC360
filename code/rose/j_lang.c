@@ -715,8 +715,8 @@ int16 java_lang_Math_cos(int32 param[], int32 *retval)
  */
 
 /****************************************************************************
-* Starts execution of the new thread. There must be enough room in thr_table
-* and run() method must be defined.
+* Method returns current time according to the CPU. Used to calculate total
+* running time of the thread.
 *
 * Java prototype:
 *           void start();
@@ -918,6 +918,7 @@ const native_func_ptr sys_native_tbl[] =
     /* uvic.posix package          */
     /* (UVic/CS MHMC 22/Aug/2002)  */
     /*=============================*/
+	uvic_posix_Thread_cpu_time,
     uvic_posix_Thread_start,
     uvic_posix_Thread_stop,
     uvic_posix_Thread_yield,
