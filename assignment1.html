@@ -1,0 +1,308 @@
+
+<!-- saved from url=(0077)http://webhome.csc.uvic.ca/~mcheng/360/summer.2013/labs/lab1/assignment1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css"></style></head><body><h1>CSc 360 Assignment #1</h1>
+<p><strong>Due date: 11:59pm, Wednesday, 22 May 2013</strong></p>
+<hr>
+<hr>
+<h2>Overview</h2>
+<p>In this assignment, we will be introducing The <strong>R</strong>eal
+Time Java Based <strong>O</strong>perating <strong>S</strong>ystem <strong>E</strong>mulator
+(ROSE).&nbsp; Download a copy of "<a href="http://webhome.csc.uvic.ca/~mcheng/360/summer.2013/labs/lab1/assign1.org.tgz" target="_blank">assign1.org.tgz</a>", which includes everything you
+need for this assignment. Follow <a href="http://webhome.csc.uvic.ca/~mcheng/360/summer.2013/install.html" target="_blank">these instructions on how to install Cygwin for ROSE.</a> </p><h3>Objectives</h3>
+<p>You will learn the following issues:</p>
+<ol>
+  <li>
+    <p>Become familiar with ROSE and its development toolchain (GCC,
+javac, Cygwin, Makefile and our ClassLinker) and Doxygen .</p>
+  </li>
+  <li>
+    <p>Understand race conditions using java threads with preemptive
+scheduling.</p>
+  </li>
+  <li>
+    <p>Understand how the real-time clock and Java native methods are
+implemented in ROSE.</p>
+  </li>
+  <li>
+    <p>Understand how our Java threads are scheduled (i.e. our
+scheduling policy and how the scheduler API works).</p>
+  </li>
+  <li>
+    <p>Add functionality to the Thread class into the "uvic" package
+library and a new <em>native</em> method into ROSE (i.e. create
+"stubs" of the ROSE JVM).</p>
+  </li>
+</ol>
+<hr>
+<h2>Questions</h2>
+<p>There are four parts to this assignment. Each is independent of the
+other.
+They are increasingly more difficult. You should try them in the order
+listed
+below. Parts (a) and (b) will be done in Java. Part (c) and (d) will be done in C.</p><p>(<span style="font-weight: bold; color: red;">Important note</span>: "System.out.println" in Java is renamed to "System.println" in ROSE, actually in SimpleRTJ. ROSE doesn't implement the standard Java library; SimpleRTJ provides it.)</p><p>To do this assignment, you must study <a href="http://webhome.csc.uvic.ca/~mcheng/360/summer.2013/rose.summary.html" target="_blank">the design of ROSE</a>. Make sure that you understand the scheduling levels as specified in our "uvic.posix.Thread" class under "lib-source/" directory.<br></p>
+<h3>a) Concurrent sharing of a single resource [10%]</h3>
+<p>Consider the problem of three concurrent processes (threads)
+incrementing
+a global shared integer variable. Each process increments the shared
+variable
+by 1, 2, and 3 respectively for 10,000 times. Initially, the shared
+variable
+has a value of 0. Its value is printed after all three processes have
+completed. We should expect the final result to be 60,000. <em>Surprise!</em></p><p><span style="font-weight: bold;">Question</span>: Sometimes, the results are not 60,000. Why?</p>
+<p>In the code, go to folder <strong>a</strong> and work in <em>Race.java</em>.
+For this part, the main() program is created as a SYSTEM level thread
+in ROSE by default, which has the highest priority. It will create
+three
+instances of a <em>Race</em> thread, each of which is asked to
+increment this global
+shared integer variable. We'll create each <em>Race</em> thread at the
+REAL_TIME
+level. REAL_TIME level threads are scheduled in a round-robin fashion
+with
+a quantum size of 1 tick. A tick is specified at the command line to
+ROSE.
+For example, </p>
+<pre><code>../soln/rose.exe 3 Race.bin<br></code></pre>
+<p>specifies each tick to be 3 milliseconds.</p>
+<p>Try setting the main thread's level to DAEMON before starting each
+thread:</p>
+<pre><code>    // create race threads here<br>    ...<br>    set( DAEMON ); // now, let the race threads run<br><br>    // Run race threads at REAL_TIME level<br></code></pre>
+<p><span style="font-weight: bold;">Question</span>: The result turns out as 60,000. Why?</p>
+<h3>b) Concurrent sharing of multiple resources [10%]</h3>
+<p>On a symmetric mulitprocessor system, several CPUs share a common
+memory.
+Many concurrent processes may issue access to multiple shared resources
+simultaneously. To prevent simultaneous access to a shared resource, we
+often use a "spinlock" to control concurrent access. That is, a "lock"
+is
+associated with each shared resource, which is unlocked/free initially.
+Before a process is allowed to make access to this shared resource, it
+must lock it first by busy-waiting,</p>
+<pre><code>while (locked) do nothing; // wait until lock is free<br>locked = true;             // now, lock it<br></code></pre>
+<p>Let lock l1 be assocated with shared resource r1, and lock l2 be
+associated
+with shared resource r2. When a process wants to use r1 and r2, it must
+lock l1 and l2 first. When it is done, it must unlock l1 and l2.</p>
+<p>When there are mulitple applications/processes which may share the
+same set
+of shared resources, they must lock all of them in some application
+dependent order.</p>
+<p>For example, let us assume that we have two globally shared integers
+s1 and s2.
+There are two "race" threads (similar to Part a) increment s1 and s2 by
+1, and
+by 2 respectively 10,000 times. There are two "spinlocks" l1 and l2
+assocated with s1 and s2.</p>
+<p>If they both lock l1 and l2 in the same order, then the final
+accumulated
+results in s1 and s2 should be always 30,000 each.</p>
+<p>What if one of the race threads, for some reason unknown to the
+other, decided
+to lock s2 first and then s1? <em>Surprise!</em></p>
+<p>For this part, start editing the <em>LockRace</em> thread class in
+folder <strong>b</strong>. You should
+not need to modify <em>SpinLock</em>. Your main program will create
+two instances of <em>LockRace</em>, two Spinlocks and two
+shared integers. When you run this program, the final answer should
+always
+be 30,000.</p>
+<p>Now, create a subclass <em>LockRace1</em> of <em>LockRace</em>.
+Redefine the run() method
+in class <em>LockRace1</em> so that it locks "l2" before "l1". In your
+new main
+program, now create an instance of <em>LockRace</em> and <em>LockRace1</em>.
+Try running this program
+several times (5 or 6 times). <br></p><p><span style="font-weight: bold;">Question</span>: What do you discover? <span style="font-weight: bold;"></span>Could you explain why?<br></p>
+<h3>c) Pre-emptive and time-slice scheduling [30%]</h3>
+<p>We want our ROSE Java VM to support four scheduling levels (ordered
+by priority): </p>
+<ol>
+  <li><strong>SYSTEM</strong>
+    <ul>
+      <li>Quantum: Infinite (or maximum possible number)</li>
+      <li>Strategy: FCFS</li>
+    </ul>
+  </li>
+  <li><strong>REAL_TIME</strong>
+    <ul>
+      <li>Quantum: 1</li>
+      <li>Strategy: Round-Robin</li>
+    </ul>
+  </li>
+  <li><strong>USER</strong>
+    <ul>
+      <li>Quantum: 2</li>
+      <li>Strategy: Round-Robin</li>
+    </ul>
+  </li>
+  <li><strong>DAEMON</strong>
+    <ul>
+      <li>Quantum: Infinite (or maximum possible number)</li>
+      <li>Strategy: FCFS</li>
+    </ul>
+  </li>
+</ol>
+<p>In the last part of this assignment, you are asked to implement this
+scheduling policy in our JVM. It is pre-emptive. That is, whenever a
+higher
+priority thread becomes ready (or runnable), it will pre-empt the
+current
+lower priority active thread immediately. There is no automatic
+promotion or demotion. But, a thread may request to change its running
+level during
+its life time by called "set()".</p>
+<p>For this part, you need to study the ROSE JVM source code, which is
+written
+in C. The only part that you are concerned about is the "j_thread.c",
+which
+is the runtime multithreading support of this JVM. For the most part,
+you don't need to know. The only part that you need to study is the
+scheduler.</p>
+<p>Our thread scheduler is defined by the following API:</p>
+<pre><code>    InitROSE(); // initialize various internal data structures<br>    Dispatch(); // select a new "active" thread to run<br>    AddReady(); // insert a thread into the ready_q<br>    PreemptIfNecessary(); // check for preemption condition<br>    Reschedule(); // "active" gives up its share of CPU; select another<br>                  // thread to run<br>    AssignQuantum(); // assign a fresh quantum<br>    VMTick();  // this is called by JVM whenever there is a "tick"<br></code></pre>
+<p>and two very important variables:</p>
+<pre><code>    threat_t  *ready_q;  // a queue of READY threads<br>    thread_t  *thr_active;  // a ptr to the current active thread<br></code></pre>
+<p>Your task is to modify these procedures to implement our scheduling
+policy. This aspect of
+the assignment is the most difficult and will likely take you the most
+amount of time.
+Dispatch() and AddReady() are partially done, but
+you may need to make some changes. InitROSE() is done for you; so you
+don't
+need to make any changes.</p>
+<p>First and foremost, you must decide how you are going to represent
+your
+ready_q. That is, what data structure you are going to use? Then, you
+must understand what these API operations do as far as the process/
+thread state transition diagram is concerned.</p>
+<p>The structure "thread_t" is defined in "jvm.h" by:</p>
+<p>typedef struct thread_T thread_t;</p>
+<pre><code>    struct thread_T {<br>        uint16    state;   // current state of this thread, which may be<br>                               // DEAD, READY and RUNNING (defined in jvm.h)<br>        int32     ticks;   // remaining number of ticks in this quauntum<br>        int32     pri;     // priority level of this thread<br>        struct thread_t  *next;<br>    }<br></code></pre>
+<p>The priority level are defined in "jvm_cfg.h", which are from 0 to 3.</p>
+<h3>d) Thread CPU time and Java native extension [20%]</h3>
+<p>In this part of the assignment we are going to add functionality
+from ROSE to our Java threads using <em>native</em> extension. This
+will require coding in both Java and C. Your test solution will be in
+folder <strong>/d</strong>, but most of the work will involve
+modifying <strong>/rose</strong> and <strong>lib-source/uvic/posix/Thread.java</strong>.</p>
+<p>This part will involve you modifying multiple files concurrently.
+But it might be helpful to examine things in this order.</p>
+<p>First, edit <em>lib-source/uvic/posix/Thread.java</em> and add a
+new native function:</p>
+<pre><code>    public static native int cpu_time();<br></code></pre>
+<p>This function will return the current time, in milliseconds, that
+the thread has been running and will directly run C code you are going
+to write in ROSE. You will need to remake the uvic.jar:</p>
+<pre><code>    cd ~/assign1/code/lib-source<br>    make clean; make<br></code></pre>
+<p>Next, look through:</p>
+<ol>
+  <li><em>timer.c</em> [GetVMTime()]: You can call this function to get
+the current time (ms).</li>
+  <li><em>j_thread.c</em>: This is where you will implement the actual
+native function (i.e. create a function and modify a few functions).</li>
+  <li><em>j_common.h</em>: Add forward declaration for function.</li>
+  <li><em>j_lang.c</em>: This is where your function stub will go. Look
+at how the other stubs are implemented to get an idea of how it is
+done. <strong>Be aware of ordering</strong>.</li>
+  <li><em>lib/ClassLinker.control</em>: Define your native stub <strong>in
+the order it was specified in j_lang.c</strong>. This is very
+important. Use the other functions defined there as a reference.</li>
+</ol>
+<p>After the new function definition has been added, we need to update
+the ClassLinker: </p>
+<pre><code>    cd ~/assign1/code/lib<br>    make<br></code></pre>
+<p>This will re-package the ClassLinker and allow us to properly access
+the native C function when we run <em>rose.exe</em>.</p>
+<p>In folder <strong>d</strong>, there is a <em>TestTimer.java</em>
+husk file that you can use for testing your native implemented file.
+Feel free to add more tests.</p>
+<hr>
+<h2>Support</h2>
+<p>A directory called "soln" contains a compiled solution of rose.exe
+that you will need to use for Question <strong>a)</strong> and <strong>b)</strong>.
+When you have completed Question <strong>c)</strong>, use your version
+to test <strong>a)</strong> and <strong>b)</strong>.</p>
+<ul>
+  <li><strong>Race.bin</strong> is a compiled solution to Part (a);</li>
+  <li><strong>LockRace.bin</strong> is a solution to Part (b);</li>
+  <li><strong>TestTimer.bin</strong> is a solution to Part (d); and</li>
+  <li><strong>rose.exe</strong> is a solution to Part (c,d) and used
+for testing parts (a) and (b).</li>
+</ul>
+<p>Run them and see what they do to get an understanding of what your
+solutions can look like.</p>
+<hr>
+<h2>Evaluation</h2>
+<p>The assignment is to be done in teams of two. Each member will
+receive the same mark. If you do not have a partner or are having
+issues with a partner: email me. Each team
+member needs to understand all aspects of the assignment -- midterms
+will be based around
+understanding aspects of the assignments. It is <strong>HIGHLY</strong>
+recommended that team
+members do the assignment together.</p>
+<p>Your evaluation will be based mostly on the correctness of your
+solutions.
+Testing is one way to evaluate correctness. Code inspection is another.
+Even if your code runs, there may still be errors which can only be
+uncovered by inspection. Obscured programming tricks and habits will
+make programs harder to understand. Keep everything simple and elegant!</p>
+<ul>
+  <li>Coding and correctness [70%]</li>
+  <ul>
+    <li>The 4 parts of this assignment have different weights. Each
+part is evaluated separately.<br>
+    </li>
+  </ul>
+  <li>Documentation and testing [30%]
+    <ul>
+      <li>Doxygen and coding style (The solution should not be overly
+convoluted.) [10%]</li>
+      <li>One or two additional test cases (encouraged for part c) [10%]</li>
+      <li>Answers to the posted questions [10%]</li>
+    </ul>
+  </li>
+</ul>
+<hr>
+<h2>Submission</h2>
+<p>Each team is required to submit a "Doxygen"ed version of your source
+files. Instructions on <a href="http://webhome.csc.uvic.ca/~mcheng/360/summer.2013/doxygen.html" target="_blank">how to install Doxygen can be found here</a>. (A
+default "Doxyfile" configuration file is provided to you. Use File-&gt;Open to use this configuration file, then "Run doxygen".) Explain
+briefly how your solve the assigned problems and answer all questions
+inside "mainpage.md" (a mark-up plain text file) in doxygen, inside the
+"code" directory. If you do not answer the questions on the mainpage,
+please provide a link from the "mainpage.md"
+to the answers for each question (helpful for the marker and you).</p>
+<p>Please include all necessary makefiles in each directory to generate
+the executables and make sure that "make clean; make" will rebuild your
+solutions to each part in each subdirectories. </p>
+<p>Submit a tar-zipped file with the folder assign1.</p>
+<p>assign1 should keep the structure of</p>
+<ul>
+  <li>assign1
+    <ul>
+      <li>code</li>
+      <ul>
+        <li>mainpage.md</li>
+        <li>rose</li>
+        <li>... etc ...<br>
+        </li>
+      </ul>
+      <li>html</li>
+      <ul>
+        <li>index.html</li>
+        <li>... etc ...<br>
+        </li>
+      </ul>
+      <li>Doxyfile<br>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p>To do this go into cygwin and navigate to the path above assign1,
+then enter:</p>
+<pre><code>    tar czvf assignment1.tgz assign1<br></code></pre>
+<p>Please submit this file (<strong>assignment1.tgz</strong>)
+electronically through Connex before the due date. <strong>Only one
+team member needs to submit.</strong></p>
+</body></html>
