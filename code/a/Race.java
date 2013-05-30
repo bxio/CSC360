@@ -10,7 +10,7 @@ public class Race extends uvic.posix.Thread
 {
 	// Define static variables here
 	static int total;
-	int n;
+	int n;//each instance of Race thread will have its own increment value
 	
 	public Race(int value){
 		this.n = value;
@@ -18,13 +18,12 @@ public class Race extends uvic.posix.Thread
 	
 	static void main(String[] args)
 	{
-		// Initialize any variables and start race threads
+		// Initialization of race threads
 		Race r1 = new Race(1);
 		Race r2 = new Race(2);
 		Race r3 = new Race(3);
 		
-		//set(DAEMON);
-
+		//start all threads at REAL_TIME (1)
 		r1.start(1);
 		r2.start(1);
 		r3.start(1);
@@ -39,9 +38,8 @@ public class Race extends uvic.posix.Thread
 	{
 		// Each thread's "work"
 		for(int i=0;i<10000;i++){
-			this.total += this.n;
+			total += this.n;//increment total by n
 		}
-		//System.println("Thread "+this.n+" Done.");
 	}
 	
 }

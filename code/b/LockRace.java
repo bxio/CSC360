@@ -29,6 +29,7 @@ public class LockRace extends uvic.posix.Thread
 	{
 		// Initialize any variables and start race threads
 		LockRace lr1 = new LockRace(1);
+		//comment the line below and uncomment the one below it for deadlock
 		LockRace lr2 = new LockRace(2);
 		//LockRace1 lr2 = new LockRace1(2);
 		s1 = 0;
@@ -54,12 +55,12 @@ public class LockRace extends uvic.posix.Thread
 		// Each thread's "work"
 		for(int i=1; i<=10000; i++)
 		{
-			
+			//lock l1 then l2, then increment shared resources
 			l1.lock();
 			l2.lock();
 			
-			s1 = s1+ n;
-			s2 = s2 + n;
+			s1 = s1+ this.n;
+			s2 = s2 + this.n;
 
 			l1.unlock();
 			l2.unlock();
@@ -83,12 +84,12 @@ class LockRace1 extends LockRace
 		// Each thread's "work"
 		for(int i=1; i<=10000; i++)
 		{
-			
+			//lock l2 first, then l1, then increment shared resources
 			l2.lock();
 			l1.lock();
 			
-			s1 = s1 + n;
-			s2 = s2 + n;
+			s1 = s1 + this.n;
+			s2 = s2 + this.n;
 			
 			l2.unlock();
 			l1.unlock();	
