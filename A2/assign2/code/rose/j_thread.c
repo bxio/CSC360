@@ -886,11 +886,14 @@ void CondWait( int32 cond_id, int32 mutex_id )
 
     m = MutexOf( mutex_id );
     c = ConditionOf( cond_id );
-    //Unlock mutex m
-    //set active thread's staet to block on condition
-    //enQ(active,m->blockQ);
-    //Dispatch();
-    
+    *p = thr_active;
+
+    /*
+    MutexUnlock(mutex_id);
+    p->state = BLOCK_ON_COND;
+    enQ(active,m->blockQ);
+    Dispatch();
+    */
 
 /* TO BE WRITTEN BY YOU! */
 // DELETEME
