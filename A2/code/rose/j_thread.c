@@ -839,6 +839,7 @@ void MutexUnLock( int32 id )
 			m->owner = NULL;  /* it is free now! */
 		}
 	} 
+
 } /* end MutexUnLock */
 
 
@@ -886,14 +887,16 @@ void CondWait( int32 cond_id, int32 mutex_id )
 
     m = MutexOf( mutex_id );
     c = ConditionOf( cond_id );
-    *p = thr_active;
-
-    /*
-    MutexUnlock(mutex_id);
+	p = thr_active;
+	//Unlock the mutex
+	MutexUnLock( mutex_id );
+	//set active thread's state to blocked on condition
     p->state = BLOCK_ON_COND;
-    enQ(active,m->blockQ);
+    //Enqueue the active thread
+    EnQ(&p,m->blockQ);
+    //Dispatch a new thread.
     Dispatch();
-    */
+	
 
 /* TO BE WRITTEN BY YOU! */
 // DELETEME
