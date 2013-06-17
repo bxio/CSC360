@@ -887,25 +887,18 @@ void CondWait( int32 cond_id, int32 mutex_id )
 
     m = MutexOf( mutex_id );
     c = ConditionOf( cond_id );
-	p = thr_active;
+	/* TO BE WRITTEN BY YOU! */
 	//Unlock the mutex
 	MutexUnLock( mutex_id );
+	thr_active->relock = m;
 	//set active thread's state to blocked on condition
-    p->state = BLOCK_ON_COND;
+    thr_active->state = BLOCK_ON_COND;
     //Enqueue the active thread
-    EnQ(&p,m->blockQ);
+    EnQ(&(c->blockQ),thr_active);
     //Dispatch a new thread.
     Dispatch();
-	
-
-/* TO BE WRITTEN BY YOU! */
-// DELETEME
-	fprintf( stderr, "ERROR: CondWait not Implemented, to be done by you.\n" );
-	exit( 0 );
 
 } /* end CondWait */
-
-
 
 void CondSignal( int32 cond_id )
 {
@@ -916,29 +909,36 @@ void CondSignal( int32 cond_id )
     c = ConditionOf( cond_id );
 
 /* TO BE WRITTEN BY YOU! */
-// DELETEME
-	fprintf( stderr, "ERROR: CondSignal not Implemented, to be done by you.\n" );
-	exit( 0 );
-
+	//wake up first thread in c->blockQ
+    DeQ(&c->blockQ,&p);
+    p->state = BLOCK_ON_MUTEX;
+	//pass lock to that thread
+	p->relock = m;
+	EnQ(&(m->blockQ),p);
 } /* end CondSignal */
-
-
 
 void CondBroadcast( int32 cond_id )
 {
     condition_t  *c;
     mutex_t      *m;
     thread_t     *p;
-
     c = ConditionOf( cond_id );
-
+    m = c->blockQ->relock; //m is the mutex that we have to relock
 /* TO BE WRITTEN BY YOU! */
-// DELETEME
-	fprintf( stderr, "ERROR: CondBroadcast not Implemented, to be done by you.\n" );
-	exit( 0 );
-
+    //move c->blockQ to the front of m->blockQ
+    thread_t *tmp;
+    tmp = c->blockQ;
+   	tmp->state = BLOCK_ON_MUTEX;	
+    while(tmp->next != NULL){
+    	tmp = tmp -> next;
+	   	tmp->state = BLOCK_ON_MUTEX;
+	   	//printf("Set mutex state!\n");
+    }//tmp is now the end of c->blockQ
+    //printf("Exited while loop\n");
+    tmp->next = m->blockQ;
+    m->blockQ = c->blockQ;
+    c->blockQ = NULL; //empty c->blockQ
 } /* end CondBroadcast */
-
 
 
   /* allocate a new Semaphore */

@@ -52,7 +52,10 @@ class TestBroadcast extends uvic.posix.Thread
 			c.Wait(m);
 		}
 
+		//System.println("About to call Broadcast");
 		c.Broadcast();
+		//System.println("Finished calling Broadcast");
+
 		m.UnLock();
 
 		System.print(myname + "],");
