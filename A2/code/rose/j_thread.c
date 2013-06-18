@@ -910,7 +910,7 @@ void CondSignal( int32 cond_id )
 
 /* TO BE WRITTEN BY YOU! */
 	//wake up first thread in c->blockQ
-    DeQ(&c->blockQ,&p);
+    DeQ(&(c->blockQ),&p);
     p->state = BLOCK_ON_MUTEX;
 	//pass lock to that thread
 	p->relock = m;
@@ -922,23 +922,27 @@ void CondBroadcast( int32 cond_id )
     condition_t  *c;
     mutex_t      *m;
     thread_t     *p;
+    thread_t	 *tmp;
     c = ConditionOf( cond_id );
     m = c->blockQ->relock; //m is the mutex that we have to relock
 /* TO BE WRITTEN BY YOU! */
     //move c->blockQ to the front of m->blockQ
     p = c->blockQ;
-   	p->state = BLOCK_ON_MUTEX;	
-    while(p->next != NULL){
-    	printf("Inside while loop!\n");
-    	p = p -> next;
-	   	p->state = BLOCK_ON_MUTEX;
-	   	//printf("Set mutex state!\n");
-    }//p is now the end of c->blockQ
-    printf("Exited while loop\n");
+    if(p == NULL){
+    	//There's nothing waiting on Condition.
+    }else{
 
-    p->next = m->blockQ;
-    m->blockQ = c->blockQ;
-    c->blockQ = NULL; //empty c->blockQ
+    	//There's at least one thread waiting on the condition
+		while(c->blockQ != NULL){
+    		DeQ(&(c->blockQ),&tmp);
+    		tmp ->state = BLOCK_ON_MUTEX;
+    		//printf("thread state is %u\n",tmp ->state);
+    		EnQ(&(m->blockQ),tmp);
+    		printf("Added thread to m.\n");
+		}
+		
+    }
+
 } /* end CondBroadcast */
 
 

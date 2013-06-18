@@ -38,7 +38,7 @@ class TestBroadcast extends uvic.posix.Thread
 
 	public void run()
 	{
-		System.println("Now Running "+myname);
+		//System.println("Now Running "+myname);
 
 		System.print("[" + myname);
 
@@ -56,7 +56,7 @@ class TestBroadcast extends uvic.posix.Thread
 
 		//System.println("About to call Broadcast");
 		c.Broadcast();
-		System.println("Finished calling Broadcast");
+		//System.println("Finished calling Broadcast");
 
 		m.UnLock();
 
