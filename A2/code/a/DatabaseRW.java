@@ -7,8 +7,12 @@ import uvic.posix.*;
 public class DatabaseRW implements Database {
 
 	private Mutex m;
-    private Condition okToRW;
-    private int readers; ///< no. of pending/reading readers 
+    private Condition readQ;
+	private Condition writeQ;
+    private int waitingReaders;
+	private int activeReaders;
+	private int waitingWriters;
+	private int activeWriters;
     private int dbState;
 
     private int val;
@@ -19,8 +23,9 @@ public class DatabaseRW implements Database {
 
     public DatabaseRW() {  
 		m = new Mutex();
-		okToRW = new Condition();
-		readers = 0;
+		readQ = new Condition();
+		writeQ = new Condition();
+		activeReaders = waitingReaders = activeWriters = waitingWriters = 0;
 		dbState = NOTUSED;
 		val = 0;
     }
@@ -28,19 +33,24 @@ public class DatabaseRW implements Database {
 
     public void StartRead() {
 		m.Lock();
-		while (dbState == WRITING) okToRW.Wait(m);
-		++readers;
-		if (readers == 1) dbState = READING;
+		while (dbState == WRITING){
+			++waitingReaders;
+			readQ.Wait(m);
+			--waitingReaders;
+		}
+		++activeReaders;
+		if (activeReaders == 1) dbState = READING;
 		m.UnLock();
     }
 
 
     public void EndRead() {
 		m.Lock();
-		--readers;
-		if (readers == 0) { // I'm the last to read
+		--activeReaders;
+		
+		if (activeReaders == 0 && waitingWriters > 0) { // I'm the last to read
 			dbState = NOTUSED;
-			okToRW.Broadcast();
+			writeQ.Signal();
 		}
 		m.UnLock();
     }
@@ -48,7 +58,12 @@ public class DatabaseRW implements Database {
 
     public void StartWrite() {
 		m.Lock();
-		while (dbState != NOTUSED) okToRW.Wait(m);
+		while (dbState != NOTUSED){
+			++waitingWriters;
+			writeQ.Wait(m);
+			--waitingWriters;
+		}	
+		++activeWriters;
 		dbState = WRITING;
 		m.UnLock();
     }
@@ -56,8 +71,10 @@ public class DatabaseRW implements Database {
 
     public void EndWrite() {
 		m.Lock();
+		--activeWriters;
 		dbState = NOTUSED;
-		okToRW.Broadcast();
+		if(waitingWriters > 0) writeQ.Signal();
+		else readQ.Broadcast();
 		m.UnLock();
     }
 
