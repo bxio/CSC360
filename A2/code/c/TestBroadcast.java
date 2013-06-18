@@ -38,7 +38,7 @@ class TestBroadcast extends uvic.posix.Thread
 
 	public void run()
 	{
-		//System.println("Now Running "+myname);
+		
 
 		System.print("[" + myname);
 
@@ -53,10 +53,8 @@ class TestBroadcast extends uvic.posix.Thread
 			m.Lock();
 			c.Wait(m);
 		}
-
-		//System.println("About to call Broadcast");
+		System.println("Now Running "+myname);
 		c.Broadcast();
-		//System.println("Finished calling Broadcast");
 
 		m.UnLock();
 
