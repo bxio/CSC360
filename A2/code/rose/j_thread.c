@@ -824,6 +824,9 @@ void MutexUnLock( int32 id )
     thread_t *p;
 
 	m = MutexOf( id );
+
+	printf("Inside MutexUnLock\n");
+
 	if (m->owner == thr_active) { /* I'm the owner */
 		/* Is anyone waiting? */
 		if (m->blockQ != NULL) { /* yes */
@@ -931,18 +934,29 @@ void CondBroadcast( int32 cond_id )
     if(p == NULL){
     	//There's nothing waiting on Condition.
     }else{
-
+    	/*
+    	if(m->blockQ==NULL){
+    		printf("Mutex BlockQ is empty\n");
+    	}
+    	*/
     	//There's at least one thread waiting on the condition
 		while(c->blockQ != NULL){
     		DeQ(&(c->blockQ),&tmp);
     		tmp ->state = BLOCK_ON_MUTEX;
     		//printf("thread state is %u\n",tmp ->state);
     		EnQ(&(m->blockQ),tmp);
-    		printf("Added thread to m.\n");
+    		//printf("Added thread to m.\n");
 		}
 		
     }
-
+    /*
+    thread_t *checker;
+	checker = m->blockQ;
+	while(checker != NULL){
+		printf("Element in Mutex BlockQ\n");
+		checker = checker->next;
+	}
+	*/
 } /* end CondBroadcast */
 
 
