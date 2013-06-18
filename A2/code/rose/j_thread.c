@@ -914,11 +914,23 @@ void CondSignal( int32 cond_id )
 
 	/* TO BE WRITTEN BY YOU! */
 	//wake up first thread in c->blockQ
-    DeQ(&(c->blockQ),&p);
-    p->state = BLOCK_ON_MUTEX;
-	//pass lock to that thread
-	p->relock = m;
-	EnQ(&(m->blockQ),p);
+	DeQ(&(c->blockQ),&p);
+	if(p == NULL){
+		//There is no thread in c->blockQ
+		printf("c->blockQ DeQ returned null!\n");
+	}else{
+		printf("Woke thread %p\n",p);
+		p->state = BLOCK_ON_MUTEX;
+		//fetch the lock
+		m = p->relock;
+		printf("Fetched mutex %p. Owner:%p\n",m,m->owner);
+		//pass the lock to p
+		p->relock = m;
+		EnQ(&(m->blockQ),p);
+		printf("Just EnQ'd thread.\n");
+	}
+    
+	
 } /* end CondSignal */
 
 void CondBroadcast( int32 cond_id )
