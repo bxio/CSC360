@@ -824,33 +824,29 @@ void MutexUnLock( int32 id )
     thread_t *p;
 
 	m = MutexOf( id );
-	//printf("Unlocking mutex id:%u\n",id);
-	/*
-	if(m->blockQ == NULL){
-		printf("BlockQ is null\n");
-	}else{
-		printf("BlockQ not null\n");
-	}
-	*/
 	if (m->owner == thr_active) { /* I'm the owner */
 		/* Is anyone waiting? */
 		if (m->blockQ != NULL) { /* yes */
 			/* Let's grab the first queued locked thread,
 			   lock the mutex for it and possibly let it run. */
 			DeQ( &(m->blockQ), &p );
+			printf("Grabbed thread %p from mutex blockq\n",p);
 			m->owner = p;
 			AssignQuantum( p );
-			printf("About to AddReady\n");
 			AddReady( p, false );
-			printf("After AddReady\n");
 			PreemptIfNecessary();
 		} 
 		else {
 			m->owner = NULL;  /* it is free now! */
 		}
-	}else{
-		printf("Owner wasn't right. Didn't enter block\n");
 	}
+	thread_t *tmp;
+	tmp = ready_q;
+	while (tmp != NULL){
+		printf("Thread %p in ReadyQ\n",tmp);
+		tmp = tmp ->next;
+	}
+
 } /* end MutexUnLock */
 
 
@@ -901,16 +897,14 @@ void CondWait( int32 cond_id, int32 mutex_id )
 	/* TO BE WRITTEN BY YOU! */
 	p = thr_active;
 	//Unlock the mutex
-	printf("Before:%p\n",m->owner);
 	MutexUnLock( mutex_id );
-	printf("After:%p\n",m->owner);
-
+	//store the mutex so we can relock it
+	//printf("Stored mutex:%p in thr_active's relock.\n",m);
 	p->relock = m;
 	//set active thread's state to blocked on condition
     p->state = BLOCK_ON_COND;
     //Enqueue the active thread
     EnQ(&(c->blockQ),p);
-
     //Dispatch a new thread.
     //printf("Last Mutex id: %u\n",mutex_id);
     Dispatch();
@@ -941,45 +935,39 @@ void CondBroadcast( int32 cond_id )
     thread_t     *p;
     thread_t	 *tmp;
     c = ConditionOf( cond_id );
-    m = c->blockQ->relock; //m is the mutex that we have to relock
+    //Fetch the mutex that we have to relock
+    m = c->blockQ->relock;
 /* TO BE WRITTEN BY YOU! */
-    printf("I am:%p\n",thr_active);
-    if(m->blockQ == NULL){
-    	printf("mutex blockq is empty\n");
-    }
-    //printf("1 Owner:%p\n",m->owner);
     //relock the mutex
-    //m->owner = thr_active;
-
+    m->owner = thr_active;
+    printf("I am:%p owner is:%p\n",thr_active,m->owner);
 
     //move c->blockQ to the front of m->blockQ
     p = c->blockQ;
     if(p == NULL){
     	//There's nothing waiting on Condition.
     }else{
-    	/*
-    	if(m->blockQ==NULL){
-    		printf("Mutex BlockQ is empty\n");
-    	}
-    	*/
     	//There's at least one thread waiting on the condition
 		while(c->blockQ != NULL){
     		DeQ(&(c->blockQ),&tmp);
     		tmp ->state = BLOCK_ON_MUTEX;
     		//printf("thread state is %u\n",tmp ->state);
     		EnQ(&(m->blockQ),tmp);
-    		//printf("Added thread to m.\n");
+    		printf("thread %p to m->blockQ.\n",tmp);
 		}
 		
     }
     /*
-    thread_t *checker;
-	checker = m->blockQ;
-	while(checker != NULL){
-		printf("Element in Mutex BlockQ\n");
-		checker = checker->next;
-	}
-	*/
+    if(m->blockQ == NULL){
+    	printf("mutex blockq is empty\n");
+    }else{
+    	tmp = m->blockQ;
+    	while(tmp != NULL){
+    		printf("Thread %p in mutex blockQ\n",tmp);
+    		tmp = tmp->next;
+    	}
+    }
+    */
 } /* end CondBroadcast */
 
 
