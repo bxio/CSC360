@@ -53,7 +53,7 @@ class TestBroadcast extends uvic.posix.Thread
 			m.Lock();
 			c.Wait(m);
 		}
-		System.println("Now Running "+myname);
+		//System.println("Now Running "+myname);
 		c.Broadcast();
 
 		m.UnLock();
