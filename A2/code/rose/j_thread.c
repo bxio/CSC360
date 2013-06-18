@@ -801,7 +801,7 @@ static mutex_t *MutexOf( int32 id )
 
 
 void MutexLock( int32 id )
-{
+{		
 	mutex_t *m;
 
 	m = MutexOf( id );
@@ -839,7 +839,6 @@ void MutexUnLock( int32 id )
 			m->owner = NULL;  /* it is free now! */
 		}
 	} 
-
 } /* end MutexUnLock */
 
 
@@ -888,13 +887,14 @@ void CondWait( int32 cond_id, int32 mutex_id )
     m = MutexOf( mutex_id );
     c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
+	p = thr_active;
 	//Unlock the mutex
 	MutexUnLock( mutex_id );
-	thr_active->relock = m;
+	p->relock = m;
 	//set active thread's state to blocked on condition
-    thr_active->state = BLOCK_ON_COND;
+    p->state = BLOCK_ON_COND;
     //Enqueue the active thread
-    EnQ(&(c->blockQ),thr_active);
+    EnQ(&(c->blockQ),p);
     //Dispatch a new thread.
     Dispatch();
 
@@ -926,16 +926,17 @@ void CondBroadcast( int32 cond_id )
     m = c->blockQ->relock; //m is the mutex that we have to relock
 /* TO BE WRITTEN BY YOU! */
     //move c->blockQ to the front of m->blockQ
-    thread_t *tmp;
-    tmp = c->blockQ;
-   	tmp->state = BLOCK_ON_MUTEX;	
-    while(tmp->next != NULL){
-    	tmp = tmp -> next;
-	   	tmp->state = BLOCK_ON_MUTEX;
+    p = c->blockQ;
+   	p->state = BLOCK_ON_MUTEX;	
+    while(p->next != NULL){
+    	printf("Inside while loop!\n");
+    	p = p -> next;
+	   	p->state = BLOCK_ON_MUTEX;
 	   	//printf("Set mutex state!\n");
-    }//tmp is now the end of c->blockQ
-    //printf("Exited while loop\n");
-    tmp->next = m->blockQ;
+    }//p is now the end of c->blockQ
+    printf("Exited while loop\n");
+
+    p->next = m->blockQ;
     m->blockQ = c->blockQ;
     c->blockQ = NULL; //empty c->blockQ
 } /* end CondBroadcast */
