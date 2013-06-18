@@ -50,12 +50,12 @@ static thread_t *dead_pool;	       /* a queue of DEAD threads */
 ****************************************************************************/
 bool initMainThread(void)
 {
-    if (run_init(thr_active->objref, NULL))
-    {
-        thr_count++;
-        return true;
-    }
-    return false;
+	if (run_init(thr_active->objref, NULL))
+	{
+		thr_count++;
+		return true;
+	}
+	return false;
 }
 
 
@@ -75,44 +75,44 @@ bool initMainThread(void)
 ****************************************************************************/
 bool createThread(ref_t *ref, int32 pri)
 {
-    method_t *run;
-    thread_t *thread;
+	method_t *run;
+	thread_t *thread;
 
-    run = findRunMethod(ref->class_ptr);
-    if (run == NULL)
-    {
-        if (vm_excep == NO_EXCEP)
-            vm_excep = INTERR_ThreadSetupFail;
-        return false;
-    }
-
-
-    if ((thread = NewThread()) == NULL) {
-        vm_excep = INTERR_ThreadLimit;
-        return false;
-    }
-
-    thread->objref = ref;
-    thread->curr_frame = NULL;
-      /* By default, a thread is set to the USER_LEVE */
-    if ((pri < 0) || (pri >= MAX_PRI_LEVELS )) pri = USER_LEVEL;
-    thread->pri = pri;
-    thread->curr_frame = createFrame(NULL,run);
-
-    if (thread->curr_frame == NULL)
-        return false;
+	run = findRunMethod(ref->class_ptr);
+	if (run == NULL)
+	{
+		if (vm_excep == NO_EXCEP)
+			vm_excep = INTERR_ThreadSetupFail;
+		return false;
+	}
 
 
-    thread->curr_frame->locals[0].i = PUT_REF(ref);
+	if ((thread = NewThread()) == NULL) {
+		vm_excep = INTERR_ThreadLimit;
+		return false;
+	}
 
-    thr_count++;
+	thread->objref = ref;
+	thread->curr_frame = NULL;
+		/* By default, a thread is set to the USER_LEVE */
+	if ((pri < 0) || (pri >= MAX_PRI_LEVELS )) pri = USER_LEVEL;
+	thread->pri = pri;
+	thread->curr_frame = createFrame(NULL,run);
 
-    AssignQuantum( thread );
-    AddReady(thread,false);
+	if (thread->curr_frame == NULL)
+		return false;
 
-    PreemptIfNecessary();
 
-    return true;
+	thread->curr_frame->locals[0].i = PUT_REF(ref);
+
+	thr_count++;
+
+	AssignQuantum( thread );
+	AddReady(thread,false);
+
+	PreemptIfNecessary();
+
+	return true;
 }
 
 
@@ -127,23 +127,23 @@ bool createThread(ref_t *ref, int32 pri)
 ****************************************************************************/
 static method_t *findRunMethod(class_t *cl)
 {
-    method_t *run;
+	method_t *run;
 
-    while (cl->run == NULL)
-    {
-        if (cl->super == NULL)
-            return NULL;
+	while (cl->run == NULL)
+	{
+		if (cl->super == NULL)
+			return NULL;
 
-        cl = CLASS_LOC(cl->super);
-    }
-    run = METHOD_LOC(cl->run);
-    if (run->flags & ACC_ABSTRACT)
-    {
-        vm_excep = ERROR_AbstractMethod;
-        return NULL;
-    }
+		cl = CLASS_LOC(cl->super);
+	}
+	run = METHOD_LOC(cl->run);
+	if (run->flags & ACC_ABSTRACT)
+	{
+		vm_excep = ERROR_AbstractMethod;
+		return NULL;
+	}
 
-    return run;
+	return run;
 }
 
 
@@ -157,19 +157,19 @@ static method_t *findRunMethod(class_t *cl)
 void deleteThread(thread_t *thread)
 {
 
-    if ((thr_count > 0) && (thread != NULL))
-    {
-        thr_count--;
-        thread->state = DEAD;
-          /* put it back into the DEAL pool */
+	if ((thr_count > 0) && (thread != NULL))
+	{
+		thr_count--;
+		thread->state = DEAD;
+		  /* put it back into the DEAL pool */
 	AddFront( &(dead_pool), thread );
 
-          /* reschedule if the active thread is deleted! */
+		  /* reschedule if the active thread is deleted! */
 	if((thr_active == thread) && (thr_count > 0)) Dispatch();
 
-        /* if event thread has been deleted then clear pointer to it */
-        if (thread == ev_thread) ev_thread = NULL;
-    }
+		/* if event thread has been deleted then clear pointer to it */
+		if (thread == ev_thread) ev_thread = NULL;
+	}
 }
 
 
@@ -183,18 +183,18 @@ void deleteThread(thread_t *thread)
 ****************************************************************************/
 thread_t *findThread(ref_t *ref)
 {
-    uint16 i;
+	uint16 i;
 
 /*
-    printf("findThread(%lX)",ref);
+	printf("findThread(%lX)",ref);
 */
-    for (i=0; i < config->threads; i++)
-    {
-        if ((threads[i].state != DEAD) && (threads[i].objref == ref))
-            return &threads[i];
-    }
+	for (i=0; i < config->threads; i++)
+	{
+		if ((threads[i].state != DEAD) && (threads[i].objref == ref))
+			return &threads[i];
+	}
 
-    return NULL;
+	return NULL;
 }
 
 
@@ -210,22 +210,22 @@ thread_t *findThread(ref_t *ref)
 ****************************************************************************/
 void setWaitingPos(thread_t *thread, ref_t *ref)
 {
-    uint16 i, pos = 0;
+	uint16 i, pos = 0;
 
-    /* check if the queue position has been already allocated */
-    if (thread->wait_pos > 0)
-        return;
+	/* check if the queue position has been already allocated */
+	if (thread->wait_pos > 0)
+		return;
 
-    /* place the thread at the end of the wait queue */
-    for (i=0; i < config->threads; i++)
-    {
-        if ((threads[i].state == WAIT_LOCK) &&
-            (threads[i].wait_obj == ref) && (pos < threads[i].wait_pos))
-        {
-            pos = threads[i].wait_pos;
-        }
-    }
-    thread->wait_pos = (uint16)(pos + 1);
+	/* place the thread at the end of the wait queue */
+	for (i=0; i < config->threads; i++)
+	{
+		if ((threads[i].state == WAIT_LOCK) &&
+			(threads[i].wait_obj == ref) && (pos < threads[i].wait_pos))
+		{
+			pos = threads[i].wait_pos;
+		}
+	}
+	thread->wait_pos = (uint16)(pos + 1);
 }
 
 /***************************************************************************
@@ -240,19 +240,19 @@ void setWaitingPos(thread_t *thread, ref_t *ref)
 ****************************************************************************/
 void clearWaitingPos(thread_t *thread, ref_t *ref)
 {
-    uint16 i;
+	uint16 i;
 
-    /* decrement wait position of threads waiting for this object */
-    for (i=0; i < config->threads; i++)
-    {
-        if ((threads[i].state == WAIT_LOCK) &&
-            (threads[i].wait_obj == ref))
-        {
-            threads[i].wait_pos--;
-        }
-    }
-    thread->wait_pos = 0;
-    thread->state = READY;
+	/* decrement wait position of threads waiting for this object */
+	for (i=0; i < config->threads; i++)
+	{
+		if ((threads[i].state == WAIT_LOCK) &&
+			(threads[i].wait_obj == ref))
+		{
+			threads[i].wait_pos--;
+		}
+	}
+	thread->wait_pos = 0;
+	thread->state = READY;
 }
 
 /***************************************************************************
@@ -266,22 +266,22 @@ void clearWaitingPos(thread_t *thread, ref_t *ref)
 ****************************************************************************/
 thread_t *getWaitingThread(ref_t *ref)
 {
-    uint16 i, pos = 0xFFFF, index;
+	uint16 i, pos = 0xFFFF, index;
 
-    /* find thread with lowest queue position */
-    for (i=0; i < config->threads; i++)
-    {
-        if ((threads[i].state == WAIT_LOCK) && (threads[i].wait_obj == ref && pos >= threads[i].wait_pos))
-        {
-            pos = threads[i].wait_pos;
-            index = i;
-        }
-    }
+	/* find thread with lowest queue position */
+	for (i=0; i < config->threads; i++)
+	{
+		if ((threads[i].state == WAIT_LOCK) && (threads[i].wait_obj == ref && pos >= threads[i].wait_pos))
+		{
+			pos = threads[i].wait_pos;
+			index = i;
+		}
+	}
 
-    if (pos == 0xFFFF)
-        return NULL;
+	if (pos == 0xFFFF)
+		return NULL;
 
-    return &threads[index];
+	return &threads[index];
 }
 
 /***************************************************************************
@@ -297,26 +297,26 @@ thread_t *getWaitingThread(ref_t *ref)
 ****************************************************************************/
 void acquireObjectLock(thread_t *thread, ref_t *ref)
 {
-    if (thread->wait_locks > 0 && ref->ptr->locks == 0)
-    {
-        ref->ptr->locks = thread->wait_locks;
-        ref->ptr->thread_id = thread->id;
-        thread->wait_locks = 0;
-        clearWaitingPos(thread, ref);
-        return;
-    }
-    else if (ref->ptr->locks == 0 || ref->ptr->thread_id == thread->id)
-    {
-        ref->ptr->locks++;
-        ref->ptr->thread_id = thread->id;
-        clearWaitingPos(thread, ref);
-        return;
-    }
+	if (thread->wait_locks > 0 && ref->ptr->locks == 0)
+	{
+		ref->ptr->locks = thread->wait_locks;
+		ref->ptr->thread_id = thread->id;
+		thread->wait_locks = 0;
+		clearWaitingPos(thread, ref);
+		return;
+	}
+	else if (ref->ptr->locks == 0 || ref->ptr->thread_id == thread->id)
+	{
+		ref->ptr->locks++;
+		ref->ptr->thread_id = thread->id;
+		clearWaitingPos(thread, ref);
+		return;
+	}
 
-    /* suspend this thread and force another thread to run */
-    setWaitingPos(thread, ref);
-    thread->wait_obj = ref;
-    thread->state = WAIT_LOCK;
+	/* suspend this thread and force another thread to run */
+	setWaitingPos(thread, ref);
+	thread->wait_obj = ref;
+	thread->state = WAIT_LOCK;
 }
 
 /***************************************************************************
@@ -333,23 +333,23 @@ void acquireObjectLock(thread_t *thread, ref_t *ref)
 ****************************************************************************/
 void acquireClassLock(thread_t *thread)
 {
-    uint16 cls_index;
+	uint16 cls_index;
 
-    cls_index = thread->curr_frame->class_ptr->index;
-    if (class_locks[cls_index].locks == 0 ||
-        class_locks[cls_index].thread_id == (uint16)thread->id)
-    {
-        class_locks[cls_index].locks++;
-        class_locks[cls_index].thread_id = thread->id;
-        clearWaitingPos(thread, (ref_t *)(uint32)cls_index);
-    }
-    else
-    {
-        /* suspend this thread and force another thread to run */
-        setWaitingPos(thread, (ref_t *)(uint32)cls_index);
-        thread->wait_obj = (ref_t *)(uint32)cls_index;
-        thread->state = WAIT_LOCK;
-    }
+	cls_index = thread->curr_frame->class_ptr->index;
+	if (class_locks[cls_index].locks == 0 ||
+		class_locks[cls_index].thread_id == (uint16)thread->id)
+	{
+		class_locks[cls_index].locks++;
+		class_locks[cls_index].thread_id = thread->id;
+		clearWaitingPos(thread, (ref_t *)(uint32)cls_index);
+	}
+	else
+	{
+		/* suspend this thread and force another thread to run */
+		setWaitingPos(thread, (ref_t *)(uint32)cls_index);
+		thread->wait_obj = (ref_t *)(uint32)cls_index;
+		thread->state = WAIT_LOCK;
+	}
 }
 
 /***************************************************************************
@@ -364,17 +364,17 @@ void acquireClassLock(thread_t *thread)
 ****************************************************************************/
 bool releaseLocks(void)
 {
-    if ((thr_active->curr_frame->method->flags & (ACC_SYNCH | ACC_STATIC)) == ACC_SYNCH)
-    {
-        if (!releaseObjectLock(GET_REF(thr_active->curr_frame->locals[0].val)) && !handle_excep())
-            return false;
-    }
-    else if ((thr_active->curr_frame->method->flags & (ACC_SYNCH | ACC_STATIC)) == (ACC_SYNCH | ACC_STATIC))
-    {
-        if (!releaseClassLock() && !handle_excep())
-            return false;
-    }
-    return true;
+	if ((thr_active->curr_frame->method->flags & (ACC_SYNCH | ACC_STATIC)) == ACC_SYNCH)
+	{
+		if (!releaseObjectLock(GET_REF(thr_active->curr_frame->locals[0].val)) && !handle_excep())
+			return false;
+	}
+	else if ((thr_active->curr_frame->method->flags & (ACC_SYNCH | ACC_STATIC)) == (ACC_SYNCH | ACC_STATIC))
+	{
+		if (!releaseClassLock() && !handle_excep())
+			return false;
+	}
+	return true;
 }
 
 
@@ -388,29 +388,29 @@ bool releaseLocks(void)
 ****************************************************************************/
 bool releaseObjectLock(ref_t *ref)
 {
-    thread_t *next_thread;
+	thread_t *next_thread;
 
-    if (thr_active->id != ref->ptr->thread_id || ref->ptr->locks == 0)
-    {
-        vm_excep = EXCEP_IllegalMonitState;
-        return false;
-    }
+	if (thr_active->id != ref->ptr->thread_id || ref->ptr->locks == 0)
+	{
+		vm_excep = EXCEP_IllegalMonitState;
+		return false;
+	}
 
-    ref->ptr->locks--;
-    if (ref->ptr->locks == 0)
-    {
-        ref->ptr->thread_id = 0;
-        /* resume the next thread waiting for this lock to be released */
-        next_thread = getWaitingThread(ref);
-        if (next_thread != NULL)
-        {
-            next_thread->state = READY;
-            next_thread->wait_obj = NULL;
-            acquireObjectLock(next_thread, ref);
-        }
-    }
+	ref->ptr->locks--;
+	if (ref->ptr->locks == 0)
+	{
+		ref->ptr->thread_id = 0;
+		/* resume the next thread waiting for this lock to be released */
+		next_thread = getWaitingThread(ref);
+		if (next_thread != NULL)
+		{
+			next_thread->state = READY;
+			next_thread->wait_obj = NULL;
+			acquireObjectLock(next_thread, ref);
+		}
+	}
 
-    return true;
+	return true;
 }
 
 /***************************************************************************
@@ -423,31 +423,31 @@ bool releaseObjectLock(ref_t *ref)
 ****************************************************************************/
 static bool releaseClassLock(void)
 {
-    thread_t *next_thread;
-    uint16 cls_index;
+	thread_t *next_thread;
+	uint16 cls_index;
 
-    cls_index = thr_active->curr_frame->class_ptr->index;
-    if ((uint16)thr_active->id != class_locks[cls_index].thread_id ||
-        class_locks[cls_index].locks == 0)
-    {
-        vm_excep = EXCEP_IllegalMonitState;
-        return false;
-    }
+	cls_index = thr_active->curr_frame->class_ptr->index;
+	if ((uint16)thr_active->id != class_locks[cls_index].thread_id ||
+		class_locks[cls_index].locks == 0)
+	{
+		vm_excep = EXCEP_IllegalMonitState;
+		return false;
+	}
 
-    class_locks[cls_index].locks--;
-    if (class_locks[cls_index].locks == 0)
-    {
-        class_locks[cls_index].thread_id = 0;
-        /* resume the next thread waiting for this class lock to be released */
-        next_thread = getWaitingThread((ref_t *)(uint32)cls_index);
-        if (next_thread != NULL)
-        {
-            next_thread->state = READY;
-            acquireClassLock(next_thread);
-        }
-    }
+	class_locks[cls_index].locks--;
+	if (class_locks[cls_index].locks == 0)
+	{
+		class_locks[cls_index].thread_id = 0;
+		/* resume the next thread waiting for this class lock to be released */
+		next_thread = getWaitingThread((ref_t *)(uint32)cls_index);
+		if (next_thread != NULL)
+		{
+			next_thread->state = READY;
+			acquireClassLock(next_thread);
+		}
+	}
 
-    return true;
+	return true;
 }
 
 
@@ -457,22 +457,22 @@ static bool releaseClassLock(void)
  *=========================
  */
 
-    /*===== General Queue Operations on Threads ===== */
+	/*===== General Queue Operations on Threads ===== */
 
   /* enqueue "p" at the end of "q" */
 static void EnQ( thread_t **q, thread_t *p )
 {
-    thread_t  *tmp;
+	thread_t  *tmp;
 
-    p->next = NULL;
-    if ((*q) == NULL)
-         (*q) = p;
-    else {
-           /* "q" is not empty */
-        tmp = *q;
-        while ( tmp->next != NULL ) { tmp = tmp->next; }
-        tmp->next = p;
-    }
+	p->next = NULL;
+	if ((*q) == NULL)
+		 (*q) = p;
+	else {
+		   /* "q" is not empty */
+		tmp = *q;
+		while ( tmp->next != NULL ) { tmp = tmp->next; }
+		tmp->next = p;
+	}
 
 } /* end EnQ */
 
@@ -480,11 +480,11 @@ static void EnQ( thread_t **q, thread_t *p )
   /* remove the first element "p" from "q" */
 static void DeQ( thread_t **q, thread_t **p )
 {
-    (*p) = (*q);
-    if ( (*q) != NULL ) {
-       (*q) = (*q)->next;
-       (*p)->next = NULL;
-    }
+	(*p) = (*q);
+	if ( (*q) != NULL ) {
+	   (*q) = (*q)->next;
+	   (*p)->next = NULL;
+	}
 
 } /* end DeQ */
 
@@ -502,11 +502,11 @@ static void AddFront( thread_t **q, thread_t *p )
    /* if DEAL pool is empty, then it returns NULL */
 static thread_t *NewThread(void)
 {
-    thread_t  *th;
+	thread_t  *th;
 
-    DeQ( &dead_pool, &th );   /* tested ??? */
+	DeQ( &dead_pool, &th );   /* tested ??? */
 
-    return th;
+	return th;
 
 } /* end NewThread */
 
@@ -516,58 +516,58 @@ static thread_t *NewThread(void)
 
 bool InitROSE(void)
 {
-    uint16 i;
+	uint16 i;
 
-    ev_thread = NULL;
+	ev_thread = NULL;
 
-    thr_count = 0;
-    ready_q = NULL;
+	thr_count = 0;
+	ready_q = NULL;
 
-    /* initialize both mutexes and conditions tables */
-    for (i=0; i < MAX_MUTEXES; i++)
-    {
-        mutexes[i].used = false;
-        mutexes[i].owner = NULL;
-        mutexes[i].blockQ = NULL;
-    }
+	/* initialize both mutexes and conditions tables */
+	for (i=0; i < MAX_MUTEXES; i++)
+	{
+		mutexes[i].used = false;
+		mutexes[i].owner = NULL;
+		mutexes[i].blockQ = NULL;
+	}
 
-    for (i=0; i < MAX_CONDITIONS; i++)
-    {
-        conditions[i].used = false;
-        conditions[i].blockQ = NULL;
-    }
+	for (i=0; i < MAX_CONDITIONS; i++)
+	{
+		conditions[i].used = false;
+		conditions[i].blockQ = NULL;
+	}
 
-    for (i=0; i < MAX_SEMAPHORES; i++)
-    {
-        semaphores[i].used = false;
-        semaphores[i].blockQ = NULL;
-    }
+	for (i=0; i < MAX_SEMAPHORES; i++)
+	{
+		semaphores[i].used = false;
+		semaphores[i].blockQ = NULL;
+	}
 
-    /* assign unique ID to each entry in thread table */
-    for (i=0; i < config->threads; i++)
-    {
-        threads[i].id = (uint8)(i + 1);
+	/* assign unique ID to each entry in thread table */
+	for (i=0; i < config->threads; i++)
+	{
+		threads[i].id = (uint8)(i + 1);
 	threads[i].state = DEAD;
-    }
+	}
 
-    /* initially all threads are DEAD */
-    dead_pool = &(threads[0]);
-    for (i=0; i < (config->threads-1); i++)
-        threads[i].next = &(threads[i+1]);
-    threads[(config->threads-1)].next = NULL;
+	/* initially all threads are DEAD */
+	dead_pool = &(threads[0]);
+	for (i=0; i < (config->threads-1); i++)
+		threads[i].next = &(threads[i+1]);
+	threads[(config->threads-1)].next = NULL;
 
-    /* add new entry to thread table for main() method */
-    thr_active = NewThread();
-    thr_active->objref = createObject(CLASS_LOC(APP->thread));
-    if ( thr_active->objref != NULL )
-    {
-        thr_active->state = RUNNING;
+	/* add new entry to thread table for main() method */
+	thr_active = NewThread();
+	thr_active->objref = createObject(CLASS_LOC(APP->thread));
+	if ( thr_active->objref != NULL )
+	{
+		thr_active->state = RUNNING;
 	/* set to highest priority level */
 	thr_active->pri= SYSTEM_LEVEL;
-        AssignQuantum( thr_active );
-        return true;
-    }
-    return false;
+		AssignQuantum( thr_active );
+		return true;
+	}
+	return false;
 
 } /* end InitROSE */
 
@@ -609,24 +609,24 @@ static void AssignQuantum( thread_t *p )
    */
 void Dispatch()
 {
-    if (ready_q == NULL) {
+	if (ready_q == NULL) {
 	fprintf( stderr, "(Dispatch) ERROR: Empty runnable queue!\n" );
 	exit( 0 );
-    }
+	}
 
-      /* save current active's context */
-    thr_active->curr_frame->pc = vm_pc;
-    thr_active->curr_frame->sp = vm_sp;
+	  /* save current active's context */
+	thr_active->curr_frame->pc = vm_pc;
+	thr_active->curr_frame->sp = vm_sp;
 	
-    DeQ(&(ready_q), &thr_active);
+	DeQ(&(ready_q), &thr_active);
 
-    thr_active->state = RUNNING;
-    thr_active->next = NULL;
+	thr_active->state = RUNNING;
+	thr_active->next = NULL;
 	
 
-      /* restore our new active's context */
-    vm_pc = thr_active->curr_frame->pc;
-    vm_sp = thr_active->curr_frame->sp;
+	  /* restore our new active's context */
+	vm_pc = thr_active->curr_frame->pc;
+	vm_sp = thr_active->curr_frame->sp;
 
 } /* end Dispatch */
 
@@ -640,8 +640,8 @@ void AddReady(thread_t* thread, bool front)
 	if (thread == NULL)
 		return;
 	
-    thread->state = READY;
-    thread->next = NULL;
+	thread->state = READY;
+	thread->next = NULL;
 
 	if(ready_q == NULL)
 	{
@@ -736,12 +736,12 @@ void Reschedule()
    */
 void SetLevel( int32 level )
 {
-    if ((level < 0) || (level >= MAX_PRI_LEVELS) ||
-        (level == thr_active->pri)) return;
-    
-    thr_active->pri = level;
-    AssignQuantum( thr_active );
-    PreemptIfNecessary();
+	if ((level < 0) || (level >= MAX_PRI_LEVELS) ||
+		(level == thr_active->pri)) return;
+	
+	thr_active->pri = level;
+	AssignQuantum( thr_active );
+	PreemptIfNecessary();
 
 } /* end SetLevel */
 
@@ -770,20 +770,20 @@ void VMTick(void)
   /* allocate a new Mutex */
 int32 MutexInit()
 {
-    int32 i, idx;
+	int32 i, idx;
 
-    idx = INVALID;
-    for( i=0; i < MAX_MUTEXES; ++i ) {
-      if (!mutexes[i].used) { 
-         mutexes[i].used = true;
-         idx = i; break; 
-      }
-    }
-    if (idx == INVALID) {
-        fprintf( stderr, "ERROR: exhaust Mutexes!\n" );
-        exit( 0 );
-    }
-    return idx;
+	idx = INVALID;
+	for( i=0; i < MAX_MUTEXES; ++i ) {
+	  if (!mutexes[i].used) { 
+		 mutexes[i].used = true;
+		 idx = i; break; 
+	  }
+	}
+	if (idx == INVALID) {
+		fprintf( stderr, "ERROR: exhaust Mutexes!\n" );
+		exit( 0 );
+	}
+	return idx;
 
 } /* end MutexInit */
 
@@ -791,11 +791,11 @@ int32 MutexInit()
 
 static mutex_t *MutexOf( int32 id )
 {
-    if ((id < 0) || (id > MAX_MUTEXES) || (!mutexes[id].used)) {
+	if ((id < 0) || (id > MAX_MUTEXES) || (!mutexes[id].used)) {
 	fprintf( stderr, "ERROR: invalid mutex %d!\n", id );
 	exit( 0 );
-    }
-    return (&(mutexes[id]));
+	}
+	return (&(mutexes[id]));
 
 } /* end MutexOf */
 
@@ -820,8 +820,8 @@ void MutexLock( int32 id )
 
 void MutexUnLock( int32 id )
 {
-    mutex_t *m;
-    thread_t *p;
+	mutex_t *m;
+	thread_t *p;
 
 	m = MutexOf( id );
 	if (m->owner == thr_active) { /* I'm the owner */
@@ -845,11 +845,11 @@ void MutexUnLock( int32 id )
 
 static condition_t *ConditionOf( int32 id )
 {
-    if ((id < 0) || (id > MAX_CONDITIONS) || (!conditions[id].used)) {
+	if ((id < 0) || (id > MAX_CONDITIONS) || (!conditions[id].used)) {
 	fprintf( stderr, "Error: invalid condition variable %d!\n", id );
 	exit( 0 );
-    }
-    return (&(conditions[id]));
+	}
+	return (&(conditions[id]));
 
 } /* end ConditionOf */
 
@@ -858,21 +858,21 @@ static condition_t *ConditionOf( int32 id )
   /* allocate a new Condition */
 int32 CondInit()
 {
-    int32 i, idx;
+	int32 i, idx;
 
-    idx = INVALID;
-    for( i=0; i < MAX_CONDITIONS; ++i ) {
-      if (!conditions[i].used) { 
-         conditions[i].used = true;
-         idx = i; 
-         break; 
-      }
-    }
-    if (idx == INVALID) {
-        fprintf( stderr, "ERROR: exhaust Condition variables!\n" );
-        exit( 0 );
-    }
-    return idx;
+	idx = INVALID;
+	for( i=0; i < MAX_CONDITIONS; ++i ) {
+	  if (!conditions[i].used) { 
+		 conditions[i].used = true;
+		 idx = i; 
+		 break; 
+	  }
+	}
+	if (idx == INVALID) {
+		fprintf( stderr, "ERROR: exhaust Condition variables!\n" );
+		exit( 0 );
+	}
+	return idx;
 
 } /* end CondInit */
 
@@ -880,12 +880,12 @@ int32 CondInit()
 
 void CondWait( int32 cond_id, int32 mutex_id )
 {
-    mutex_t      *m;
-    condition_t  *c;
-    thread_t     *p;
+	mutex_t      *m;
+	condition_t  *c;
+	thread_t     *p;
 
-    m = MutexOf( mutex_id );
-    c = ConditionOf( cond_id );
+	m = MutexOf( mutex_id );
+	c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
 	p = thr_active;
 	//Unlock the mutex
@@ -895,22 +895,22 @@ void CondWait( int32 cond_id, int32 mutex_id )
 	p->relock = m;
 	//printf("Relock mutex is %p\n",m);
 	//set active thread's state to blocked on condition
-    p->state = BLOCK_ON_COND;
-    //Enqueue the active thread
-    EnQ(&(c->blockQ),p);
-    //Dispatch a new thread.
-    //printf("Last Mutex id: %u\n",mutex_id);
-    Dispatch();
+	p->state = BLOCK_ON_COND;
+	//Enqueue the active thread
+	EnQ(&(c->blockQ),p);
+	//Dispatch a new thread.
+	//printf("Last Mutex id: %u\n",mutex_id);
+	Dispatch();
 
 } /* end CondWait */
 
 void CondSignal( int32 cond_id )
 {
-    condition_t  *c;
-    mutex_t      *m;
-    thread_t     *p;
+	condition_t  *c;
+	mutex_t      *m;
+	thread_t     *p;
 
-    c = ConditionOf( cond_id );
+	c = ConditionOf( cond_id );
 
 	/* TO BE WRITTEN BY YOU! */
 	//wake up first thread in c->blockQ
@@ -938,38 +938,38 @@ void CondSignal( int32 cond_id )
 
 void CondBroadcast( int32 cond_id )
 {
-    condition_t  *c;
-    mutex_t      *m;
-    thread_t     *p;
-    thread_t	 *tmp;
-    c = ConditionOf( cond_id );
+	condition_t  *c;
+	mutex_t      *m;
+	thread_t     *p;
+	thread_t	 *tmp;
+	c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
-    p = thr_active;
-    //Fetch the mutex that we have to relock
-    m = p->relock;
+	p = thr_active;
+	//Fetch the mutex that we have to relock
+	m = p->relock;
 	if(m == NULL){
 		//printf("thr_active->relock returned null!\n");
 		m = c->blockQ->relock;
 	}
 	//printf("Relocking mutex %p\n",m);
-    //relock the mutex
-    m->owner = p;
-    //printf("I am:%p owner is:%p\n",thr_active,m->owner);
-    p = c->blockQ;
-    if(p == NULL){
-        //There's nothing waiting on Condition.
-        //printf("c->blockQ returned null.\n");
-    }else{
-        //There's at least one thread waiting on the condition
-        while(c->blockQ != NULL){
-            DeQ(&(c->blockQ),&tmp);
-            tmp ->state = BLOCK_ON_MUTEX;
-            //printf("thread state is %u\n",tmp ->state);
-            EnQ(&(m->blockQ),tmp);
-            //printf("thread %p to m->blockQ.\n",tmp);
-        }
-    }
-    
+	//relock the mutex
+	m->owner = p;
+	//printf("I am:%p owner is:%p\n",thr_active,m->owner);
+	p = c->blockQ;
+	if(p == NULL){
+		//There's nothing waiting on Condition.
+		//printf("c->blockQ returned null.\n");
+	}else{
+		//There's at least one thread waiting on the condition
+		while(c->blockQ != NULL){
+			DeQ(&(c->blockQ),&tmp);
+			tmp ->state = BLOCK_ON_MUTEX;
+			//printf("thread state is %u\n",tmp ->state);
+			EnQ(&(m->blockQ),tmp);
+			//printf("thread %p to m->blockQ.\n",tmp);
+		}
+	}
+	
 
 } /* end CondBroadcast */
 
@@ -977,26 +977,26 @@ void CondBroadcast( int32 cond_id )
   /* allocate a new Semaphore */
 int32 SemInit( int initial )
 {
-    int32 i, idx;
+	int32 i, idx;
 
-    if (initial < 0) {
-        fprintf( stderr, "ERROR: Negative initial semaphore value %d!\n", initial);
-        exit(0);
-    }
+	if (initial < 0) {
+		fprintf( stderr, "ERROR: Negative initial semaphore value %d!\n", initial);
+		exit(0);
+	}
 
-    idx = INVALID;
-    for( i=0; i < MAX_SEMAPHORES; ++i ) {
-      if (!semaphores[i].used) { 
-         semaphores[i].used = true;
-         idx = i; break; 
-      }
-    }
-    if (idx == INVALID) {
-        fprintf( stderr, "ERROR: exhaust Semaphores!\n" );
-        exit( 0 );
-    }
-    semaphores[idx].val = initial;
-    return idx;
+	idx = INVALID;
+	for( i=0; i < MAX_SEMAPHORES; ++i ) {
+	  if (!semaphores[i].used) { 
+		 semaphores[i].used = true;
+		 idx = i; break; 
+	  }
+	}
+	if (idx == INVALID) {
+		fprintf( stderr, "ERROR: exhaust Semaphores!\n" );
+		exit( 0 );
+	}
+	semaphores[idx].val = initial;
+	return idx;
 
 } /* end SemInit */
 
@@ -1004,27 +1004,27 @@ int32 SemInit( int initial )
 
 static semaphore_t *SemaphoreOf( int32 id )
 {
-    if ((id < 0) || (id > MAX_SEMAPHORES) || (!semaphores[id].used)) {
+	if ((id < 0) || (id > MAX_SEMAPHORES) || (!semaphores[id].used)) {
 	fprintf( stderr, "ERROR: invalid semaphore %d!\n", id );
 	exit( 0 );
-    }
-    return (&(semaphores[id]));
+	}
+	return (&(semaphores[id]));
 
 } /* end SemaphoreOf */
 
 
 void SemWait( int32 id )
 {
-    semaphore_t *s;
+	semaphore_t *s;
 
-    s = SemaphoreOf( id );
-    --(s->val);
-    if (s->val < 0) { 
-        thr_active->state = BLOCK_ON_SEM;
-        EnQ( &(s->blockQ), thr_active );
-          /* select another thread to run */
+	s = SemaphoreOf( id );
+	--(s->val);
+	if (s->val < 0) { 
+		thr_active->state = BLOCK_ON_SEM;
+		EnQ( &(s->blockQ), thr_active );
+		  /* select another thread to run */
 	Dispatch();
-    }
+	}
 
 } /* end SemWait */
 
@@ -1032,17 +1032,17 @@ void SemWait( int32 id )
 
 void SemSignal( int32 id )
 {
-    semaphore_t *s;
-    thread_t *p;
+	semaphore_t *s;
+	thread_t *p;
 
-    s = SemaphoreOf( id );
-    ++(s->val);
-    if (s-> val <= 0) { /* someone was waiting! */
-        DeQ( &(s->blockQ), &p );
+	s = SemaphoreOf( id );
+	++(s->val);
+	if (s-> val <= 0) { /* someone was waiting! */
+		DeQ( &(s->blockQ), &p );
 	AssignQuantum( p );
-        AddReady( p, false );
-        PreemptIfNecessary();
-    } 
+		AddReady( p, false );
+		PreemptIfNecessary();
+	} 
 
 } /* end SemSignal */
 
