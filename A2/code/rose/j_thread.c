@@ -924,7 +924,7 @@ void CondSignal( int32 cond_id )
 		}
 		DeQ(&(c->blockQ),&p);
 		p->state = BLOCK_ON_MUTEX;
-		EnQ(&(m->blockQ),p);
+		AddFront(&(m->blockQ),p);
 	}
 
 	/*
