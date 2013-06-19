@@ -65,7 +65,7 @@ public class DatabaseRW implements Database {
 
 public void StartWrite() {
 	m.Lock();
-	while (dbState == READING){
+	while (dbState != NOTUSED){
 		++waitingWriters;
 		writeQ.Wait(m);
 		--waitingWriters;
@@ -79,9 +79,17 @@ public void StartWrite() {
 public void EndWrite() {
 	m.Lock();
 	--activeWriters;
-	dbState = NOTUSED;
-	if(waitingWriters > 0) writeQ.Signal();
-	else readQ.Broadcast();
+	if(waitingWriters > 0) { //There's someone waiting to write.
+		//don't change the state
+		writeQ.Signal();
+	}
+	else  if(waitingReaders > 0){//I'm the last writier and someone is waiting to read
+		dbState = READING;
+		readQ.Broadcast();
+	}
+	else{
+		dbState = NOTUSED;
+	}
 	m.UnLock();
 }
 
