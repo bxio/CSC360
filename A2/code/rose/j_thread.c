@@ -917,7 +917,7 @@ void CondSignal( int32 cond_id )
 		//printf("c->blockQ is empty!\n");
 	}else{
 		if(thr_active->relock == NULL){
-			printf("thr_active->relock is null!\n");
+			//printf("thr_active->relock is null!\n");
 			m = c->blockQ->relock;
 		}else{
 			m = thr_active->relock;
