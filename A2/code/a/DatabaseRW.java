@@ -34,31 +34,38 @@ public class DatabaseRW implements Database {
 	public void StartRead() {
 		m.Lock();
 		while (dbState == WRITING){
-			++waitingReaders;
+			++waitingReaders; //reader is now blocked on writing state
 			readQ.Wait(m);
-			--waitingReaders;
+			--waitingReaders;  //switches the state of the reader
 		}
-		++activeReaders;
-		if (activeReaders == 1) dbState = READING;
+		++activeReaders; //switches the state of the reader
+		if (activeReaders == 1){
+			dbState = READING; // set the state to reading
+		}
 		m.UnLock();
 	}
 
 
 	public void EndRead() {
 		m.Lock();
-		--activeReaders;
+		--activeReaders;//decrement count of active readers
 
-		if (activeReaders == 0 && waitingWriters > 0) { // I'm the last to read
-		dbState = NOTUSED;
-		writeQ.Signal();
+		if (activeReaders == 0 && waitingWriters > 0) { // I'm the last to read And there is someone waiting to write
+			dbState = WRITING; // pass the state to writing
+			writeQ.Signal();
+		}
+		else if(activeReaders == 0)
+		{
+			dbState = NOTUSED;
+		}
+
+		m.UnLock();
 	}
-	m.UnLock();
-}
 
 
 public void StartWrite() {
 	m.Lock();
-	while (dbState != NOTUSED){
+	while (dbState == READING){
 		++waitingWriters;
 		writeQ.Wait(m);
 		--waitingWriters;
