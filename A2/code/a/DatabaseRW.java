@@ -51,7 +51,7 @@ public class DatabaseRW implements Database {
 		--activeReaders;//decrement count of active readers
 
 		if (activeReaders == 0 && waitingWriters > 0) { // I'm the last to read And there is someone waiting to write
-			dbState = WRITING; // pass the state to writing
+			dbState = NOTUSED; // pass the state to writing
 			writeQ.Signal();
 		}
 		else if(activeReaders == 0)
