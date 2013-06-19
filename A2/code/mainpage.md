@@ -8,8 +8,8 @@ Completed by:
 
  ---
 
-**Delete Me**
-
+**A brief note about the Quantum**
+Please run all tests on Quantum 10. We've found that in certain cases, running Rose.exe on Quantum 1 fails.
 Put a brief overview of what was done in the assignment here. This file can be found and edited at code/mainpage.md.
 For more information on markdown, [see doxygen markdown documentation](http://www.stack.nl/~dimitri/doxygen/manual/markdown.html).
 
@@ -27,7 +27,7 @@ Discussion of Question 2. Talk about BoundedBuffer and TestP1C1.java.
 
 Discussion of Question 3.
 ##Test Cases##
-In folder d
+Run d/UnitTest.bin on quantum 10. The expected output is "[bb],[a[cc],a],"
 ### Subheading ###
 
 You can create subheadings as well if you need that extra level of organization.
