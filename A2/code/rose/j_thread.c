@@ -1,4 +1,3 @@
-/** @file */ 
 /**************************************************************************************
 *  j_thread.c
 *
@@ -493,7 +492,7 @@ static void DeQ( thread_t **q, thread_t **p )
 static void AddFront( thread_t **q, thread_t *p )
 {
    p->next = (*q);
-   (*q) = p; 
+   (*q) = p;
 
 } /* end AddFront */
 
@@ -579,11 +578,11 @@ bool InitROSE(void)
  */
 
   /** Assign fresh ticks to a thread. **/
-static void AssignQuantum( thread_t *p ) 
+static void AssignQuantum( thread_t *p )
 {
-	if (p == NULL) 
+	if (p == NULL)
 		return;
-	
+
 	switch (p->pri) {
 		default:
 		case DAEMON_LEVEL:
@@ -604,8 +603,8 @@ static void AssignQuantum( thread_t *p )
 
 
 
-  /** current active thread is not runnable; 
-   * select a new ready thread and switch their contexts 
+  /** current active thread is not runnable;
+   * select a new ready thread and switch their contexts
    */
 void Dispatch()
 {
@@ -617,12 +616,12 @@ void Dispatch()
 	  /* save current active's context */
 	thr_active->curr_frame->pc = vm_pc;
 	thr_active->curr_frame->sp = vm_sp;
-	
+
 	DeQ(&(ready_q), &thr_active);
 
 	thr_active->state = RUNNING;
 	thr_active->next = NULL;
-	
+
 
 	  /* restore our new active's context */
 	vm_pc = thr_active->curr_frame->pc;
@@ -639,7 +638,7 @@ void AddReady(thread_t* thread, bool front)
 {
 	if (thread == NULL)
 		return;
-	
+
 	thread->state = READY;
 	thread->next = NULL;
 
@@ -686,7 +685,7 @@ void AddReady(thread_t* thread, bool front)
 
 
 
-  /** 
+  /**
    * check whether "thr_active" is still the highest priority
    * runnable thread; if not, then pre-empt it.
    * N.B. If preemption occurs, "thr_active" is added back to the
@@ -715,7 +714,7 @@ void PreemptIfNecessary(void)
 
 
 
-  /** "thr_active" is given up voluntarily its share of processor; 
+  /** "thr_active" is given up voluntarily its share of processor;
    * select a new READY thread to run (remember to assign quantum)
    */
 void Reschedule()
@@ -738,7 +737,7 @@ void SetLevel( int32 level )
 {
 	if ((level < 0) || (level >= MAX_PRI_LEVELS) ||
 		(level == thr_active->pri)) return;
-	
+
 	thr_active->pri = level;
 	AssignQuantum( thr_active );
 	PreemptIfNecessary();
@@ -774,9 +773,9 @@ int32 MutexInit()
 
 	idx = INVALID;
 	for( i=0; i < MAX_MUTEXES; ++i ) {
-	  if (!mutexes[i].used) { 
+	  if (!mutexes[i].used) {
 		 mutexes[i].used = true;
-		 idx = i; break; 
+		 idx = i; break;
 	  }
 	}
 	if (idx == INVALID) {
@@ -801,7 +800,7 @@ static mutex_t *MutexOf( int32 id )
 
 
 void MutexLock( int32 id )
-{		
+{
 	mutex_t *m;
 
 	m = MutexOf( id );
@@ -834,7 +833,7 @@ void MutexUnLock( int32 id )
 			AssignQuantum( p );
 			AddReady( p, false );
 			PreemptIfNecessary();
-		} 
+		}
 		else {
 			m->owner = NULL;  /* it is free now! */
 		}
@@ -862,10 +861,10 @@ int32 CondInit()
 
 	idx = INVALID;
 	for( i=0; i < MAX_CONDITIONS; ++i ) {
-	  if (!conditions[i].used) { 
+	  if (!conditions[i].used) {
 		 conditions[i].used = true;
-		 idx = i; 
-		 break; 
+		 idx = i;
+		 break;
 	  }
 	}
 	if (idx == INVALID) {
@@ -923,6 +922,7 @@ void CondSignal( int32 cond_id )
 		m = p->relock;
 		if(m == NULL){
 			//printf("mutex from thread %p returned null!\n",p);
+			m = c->blockQ->relock;
 		}else{
 			//printf("Fetched mutex %p owner:%p\n",m,m->owner);
 			m->owner = thr_active;
@@ -933,7 +933,7 @@ void CondSignal( int32 cond_id )
 	}
 
 
-	
+
 } /* end CondSignal */
 
 void CondBroadcast( int32 cond_id )
@@ -969,7 +969,7 @@ void CondBroadcast( int32 cond_id )
 			//printf("thread %p to m->blockQ.\n",tmp);
 		}
 	}
-	
+
 
 } /* end CondBroadcast */
 
@@ -986,9 +986,9 @@ int32 SemInit( int initial )
 
 	idx = INVALID;
 	for( i=0; i < MAX_SEMAPHORES; ++i ) {
-	  if (!semaphores[i].used) { 
+	  if (!semaphores[i].used) {
 		 semaphores[i].used = true;
-		 idx = i; break; 
+		 idx = i; break;
 	  }
 	}
 	if (idx == INVALID) {
@@ -1019,7 +1019,7 @@ void SemWait( int32 id )
 
 	s = SemaphoreOf( id );
 	--(s->val);
-	if (s->val < 0) { 
+	if (s->val < 0) {
 		thr_active->state = BLOCK_ON_SEM;
 		EnQ( &(s->blockQ), thr_active );
 		  /* select another thread to run */
@@ -1042,7 +1042,7 @@ void SemSignal( int32 id )
 	AssignQuantum( p );
 		AddReady( p, false );
 		PreemptIfNecessary();
-	} 
+	}
 
 } /* end SemSignal */
 
