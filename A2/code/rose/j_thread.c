@@ -912,6 +912,22 @@ void CondSignal( int32 cond_id )
 	c = ConditionOf( cond_id );
 
 	/* TO BE WRITTEN BY YOU! */
+
+	if(c->blockQ == NULL){
+		//printf("c->blockQ is empty!\n");
+	}else{
+		if(thr_active->relock == NULL){
+			printf("thr_active->relock is null!\n");
+			m = c->blockQ->relock;
+		}else{
+			m = thr_active->relock;
+		}
+		DeQ(&(c->blockQ),&p);
+		p->state = BLOCK_ON_MUTEX;
+		EnQ(&(m->blockQ),p);
+	}
+
+	/*
 	//wake up first thread in c->blockQ
 	DeQ(&(c->blockQ),&p);
 	if(p==NULL){
@@ -930,7 +946,7 @@ void CondSignal( int32 cond_id )
 		//add thread to m->blockQ
 		EnQ(&(m->blockQ),p);
 		//printf("Just EnQ'd\n");
-	}
+	}*/
 
 
 
@@ -945,14 +961,14 @@ void CondBroadcast( int32 cond_id )
 	c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
 	if(c->blockQ == NULL){
-		printf("c->blockQ is empty!\n");
+		//printf("c->blockQ is empty!\n");
 	}else{
 		//fetch the mutex we need to lock
 		m = thr_active->relock;
 		if(m == NULL){
-			printf("thr_active->relock is null\n");
+			//printf("thr_active->relock is null\n");
 			m = c->blockQ->relock;
-			printf("Relocking mutex %p\n",m );
+			//printf("Relocking mutex %p\n",m );
 		}
 		//set the mutex's owner to thr_active so it unlocks properly
 		m->owner = thr_active;
