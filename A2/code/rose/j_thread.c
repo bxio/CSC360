@@ -915,8 +915,25 @@ void CondSignal( int32 cond_id )
 
 	if(c->blockQ == NULL){
 		//printf("c->blockQ is empty!\n");
+		return;
 	}else{
+		//fetch the mutex that we need to relock
 		if(thr_active->relock == NULL){
+			//printf("thr_active->relock is null!\n");
+			m = c->blockQ->relock;
+		}else{
+			m = thr_active->relock;
+		}
+		//printf("Grabbed mutex %p\n",m );
+		if(m->owner == NULL){//Mutex is free
+			//lock the mutex
+			m->owner = thr_active;
+		}
+		DeQ(&(c->blockQ),&p);
+		p->state = BLOCK_ON_MUTEX;
+		AddFront(&(m->blockQ),p);
+
+		/*if(thr_active->relock == NULL){
 			//printf("thr_active->relock is null!\n");
 			m = c->blockQ->relock;
 		}else{
@@ -924,31 +941,8 @@ void CondSignal( int32 cond_id )
 		}
 		DeQ(&(c->blockQ),&p);
 		p->state = BLOCK_ON_MUTEX;
-		AddFront(&(m->blockQ),p);
+		AddFront(&(m->blockQ),p);*/
 	}
-
-	/*
-	//wake up first thread in c->blockQ
-	DeQ(&(c->blockQ),&p);
-	if(p==NULL){
-		//there's nothing to signal
-		//printf("c->blockQ returned null!\n");
-	}else{
-		//printf("fetched thread %p\n",p);
-		m = p->relock;
-		if(m == NULL){
-			//printf("mutex from thread %p returned null!\n",p);
-			m = c->blockQ->relock;
-		}else{
-			//printf("Fetched mutex %p owner:%p\n",m,m->owner);
-			m->owner = thr_active;
-		}
-		//add thread to m->blockQ
-		EnQ(&(m->blockQ),p);
-		//printf("Just EnQ'd\n");
-	}*/
-
-
 
 } /* end CondSignal */
 
@@ -962,6 +956,7 @@ void CondBroadcast( int32 cond_id )
 	/* TO BE WRITTEN BY YOU! */
 	if(c->blockQ == NULL){
 		//printf("c->blockQ is empty!\n");
+		return;
 	}else{
 		//fetch the mutex we need to lock
 		m = thr_active->relock;
@@ -971,7 +966,9 @@ void CondBroadcast( int32 cond_id )
 			//printf("Relocking mutex %p\n",m );
 		}
 		//set the mutex's owner to thr_active so it unlocks properly
-		m->owner = thr_active;
+		if(m->owner == NULL){
+			m->owner = thr_active;
+		}
 		//printf("I am %p mutex owner is %p\n",thr_active,m->owner);
 		while(c->blockQ != NULL){
 			DeQ(&(c->blockQ),&tmp);
