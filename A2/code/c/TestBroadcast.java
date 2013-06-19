@@ -38,28 +38,25 @@ class TestBroadcast extends uvic.posix.Thread
 
 	public void run()
 	{
-		
-
-		System.print("[" + myname);
-
-		if(myname == "a")
-		{
-			System.print(",");
-			yield();
-			m.Lock();
-			c.Broadcast();
-			m.UnLock();
-		}
-		else
-		{
-			System.print(",");
-			m.Lock();
-			c.Wait(m);
-		}
-		//System.println("Now Running "+myname);
-		
-
-		System.print(myname + "],");
+	System.print("[" + myname);
+	 
+	if(myname == "a")
+	{
+	System.print(",");
+	yield();
+	    m.Lock();
+	    c.Broadcast();
+	    m.UnLock();
+	}
+	else
+	{
+	System.print(",");
+	m.Lock();
+	c.Wait(m);
+	    m.UnLock();
+	}
+	 
+	System.print(myname + "],");
 	}
 
 	String myname;
