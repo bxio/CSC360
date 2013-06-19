@@ -944,23 +944,19 @@ void CondBroadcast( int32 cond_id )
 	thread_t	 *tmp;
 	c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
-	p = thr_active;
-	//Fetch the mutex that we have to relock
-	m = p->relock;
-	if(m == NULL){
-		//printf("thr_active->relock returned null!\n");
-		m = c->blockQ->relock;
-	}
-	//printf("Relocking mutex %p\n",m);
-	//relock the mutex
-	m->owner = p;
-	//printf("I am:%p owner is:%p\n",thr_active,m->owner);
-	p = c->blockQ;
-	if(p == NULL){
-		//There's nothing waiting on Condition.
-		//printf("c->blockQ returned null.\n");
+	if(c->blockQ == NULL){
+		printf("c->blockQ is empty!\n");
 	}else{
-		//There's at least one thread waiting on the condition
+		//fetch the mutex we need to lock
+		m = thr_active->relock;
+		if(m == NULL){
+			printf("thr_active->relock is null\n");
+			m = c->blockQ->relock;
+			printf("Relocking mutex %p\n",m );
+		}
+		//set the mutex's owner to thr_active so it unlocks properly
+		m->owner = thr_active;
+		//printf("I am %p mutex owner is %p\n",thr_active,m->owner);
 		while(c->blockQ != NULL){
 			DeQ(&(c->blockQ),&tmp);
 			tmp ->state = BLOCK_ON_MUTEX;
@@ -969,8 +965,6 @@ void CondBroadcast( int32 cond_id )
 			//printf("thread %p to m->blockQ.\n",tmp);
 		}
 	}
-
-
 } /* end CondBroadcast */
 
 
