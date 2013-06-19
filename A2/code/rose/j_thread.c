@@ -950,7 +950,7 @@ void CondBroadcast( int32 cond_id )
 {
 	condition_t  *c;
 	mutex_t      *m;
-	thread_t     *p;
+	//thread_t     *p;
 	thread_t	 *tmp;
 	c = ConditionOf( cond_id );
 	/* TO BE WRITTEN BY YOU! */
