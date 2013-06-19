@@ -8,10 +8,10 @@ Completed by:
 
  ---
 
-**Delete Me** 
+**Delete Me**
 
 Put a brief overview of what was done in the assignment here. This file can be found and edited at code/mainpage.md.
-For more information on markdown, [see doxygen markdown documentation](http://www.stack.nl/~dimitri/doxygen/manual/markdown.html). 
+For more information on markdown, [see doxygen markdown documentation](http://www.stack.nl/~dimitri/doxygen/manual/markdown.html).
 
 To help organize your documents you can use headings like:
 
@@ -26,12 +26,8 @@ Discussion of Question 2. Talk about BoundedBuffer and TestP1C1.java.
 ## Question 3 ##
 
 Discussion of Question 3.
-
+##Test Cases##
+In folder d
 ### Subheading ###
 
 You can create subheadings as well if you need that extra level of organization.
-
-
-
-
-**Delete Me**
