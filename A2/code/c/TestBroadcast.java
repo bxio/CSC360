@@ -46,6 +46,9 @@ class TestBroadcast extends uvic.posix.Thread
 		{
 			System.print(",");
 			yield();
+			m.Lock();
+			c.Broadcast();
+			m.UnLock();
 		}
 		else
 		{
@@ -54,9 +57,7 @@ class TestBroadcast extends uvic.posix.Thread
 			c.Wait(m);
 		}
 		//System.println("Now Running "+myname);
-		c.Broadcast();
-
-		m.UnLock();
+		
 
 		System.print(myname + "],");
 	}
