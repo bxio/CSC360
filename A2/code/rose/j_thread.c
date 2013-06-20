@@ -920,7 +920,7 @@ void CondSignal( int32 cond_id )
 		//fetch the mutex that we need to relock
 		if(thr_active->relock == NULL){
 			//printf("thr_active->relock is null!\n");
-			m = c->blockQ->relock;
+			m = c->blockQ->relock; //because M is in thbe condition blockQ, it must have called CondWait some time in the past. This means that it must have relock.
 		}else{
 			m = thr_active->relock;
 		}
@@ -959,11 +959,12 @@ void CondBroadcast( int32 cond_id )
 		return;
 	}else{
 		//fetch the mutex we need to lock
-		m = thr_active->relock;
-		if(m == NULL){
+		if(thr_active->relock == NULL){
 			//printf("thr_active->relock is null\n");
 			m = c->blockQ->relock;
 			//printf("Relocking mutex %p\n",m );
+		}else{
+			m = thr_active->relock;
 		}
 		//set the mutex's owner to thr_active so it unlocks properly
 		if(m->owner == NULL){
