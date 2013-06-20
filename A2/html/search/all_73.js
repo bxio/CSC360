@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['sbuffer',['SBuffer',['../interface_s_buffer.html',1,'']]],
+  ['semaphore',['Semaphore',['../classuvic_1_1posix_1_1_semaphore.html',1,'uvic::posix']]],
+  ['semaphore',['Semaphore',['../classuvic_1_1posix_1_1_semaphore.html#ab98d8fef9f3a973f7d927336da3a4f01',1,'uvic::posix::Semaphore']]],
+  ['semaphore_5ft',['semaphore_T',['../structsemaphore___t.html',1,'']]],
+  ['serializable',['serializable',['../structapp___t.html#afd0dfa3d3642ee2851a19aeefdb7bb5e',1,'app_T']]],
+  ['set',['set',['../classuvic_1_1posix_1_1_thread.html#aba1381d4854615d96ded990864a08038',1,'uvic::posix::Thread']]],
+  ['signal',['Signal',['../classuvic_1_1posix_1_1_condition.html#a2d2e3f1c1b46e483f901ffe9fb846853',1,'uvic.posix.Condition.Signal()'],['../classuvic_1_1posix_1_1_semaphore.html#ad247e4a2d00ed4dbdb73d6d178f7bd62',1,'uvic.posix.Semaphore.Signal()']]],
+  ['sleep',['sleep',['../structthread___t.html#a52ebe390894015825645b9ab78fa9088',1,'thread_T']]],
+  ['sp',['sp',['../structframe___t.html#a5130849a6493423610357f5677f6a71a',1,'frame_T']]],
+  ['start',['start',['../classuvic_1_1posix_1_1_thread.html#ad2346a8ce1cd33a503a0ce1e2abcd03d',1,'uvic::posix::Thread']]],
+  ['startread',['StartRead',['../interface_database.html#abb718b47338591ff19646a2f5e7bc3b0',1,'Database.StartRead()'],['../class_database_r_w.html#a0ca206e0926821e4b0b8b9d0b03e5d34',1,'DatabaseRW.StartRead()'],['../class_bounded_buffer.html#ae00b6cd5a1967c649abc334451b3b8d5',1,'BoundedBuffer.StartRead()'],['../interface_s_buffer.html#a516032efd8d81f95c8e6feaaba4b6f4e',1,'SBuffer.StartRead()']]],
+  ['startwrite',['StartWrite',['../interface_database.html#a39fe73f9a82d94141e0fd3ab2f643c61',1,'Database.StartWrite()'],['../class_database_r_w.html#aca6c59bb04a7b2c63e6f9abf4f08e4bc',1,'DatabaseRW.StartWrite()'],['../class_bounded_buffer.html#a453c48b803aa7edee7b3c6c80bcdd140',1,'BoundedBuffer.StartWrite()'],['../interface_s_buffer.html#a30cdee1300bedde022e8adae2804a11f',1,'SBuffer.StartWrite()']]],
+  ['state',['state',['../structthread___t.html#ade6102b1566950a634667cddff42c2dd',1,'thread_T']]],
+  ['static_5fsize',['static_size',['../structapp___t.html#a97020d59b3562bd6200db31f8952f4b4',1,'app_T']]],
+  ['stop',['stop',['../classuvic_1_1posix_1_1_thread.html#a09f4ce4051b3cbcabe7a58aaf5230d0d',1,'uvic::posix::Thread']]],
+  ['string',['string',['../structapp___t.html#a28b38fc0f3b3d017714e969e2c53e7e3',1,'app_T']]],
+  ['string_5fcount',['string_count',['../structapp___t.html#a9df3ba74e44fe74640ff582d0768cd4f',1,'app_T']]],
+  ['string_5foffset',['string_offset',['../structapp___t.html#ac586420f05b69395b06b0f75a83b19c4',1,'app_T']]],
+  ['string_5fvalue',['string_value',['../structapp___t.html#a71d94a4b4b6fd513c233200a48bfb016',1,'app_T']]],
+  ['super',['super',['../structclass___t.html#a3f9cab5cda85e32e0d15d3048dd3e852',1,'class_T']]],
+  ['system',['SYSTEM',['../classuvic_1_1posix_1_1_thread.html#af91f254a048b7b6ceca4b9749e1b1352',1,'uvic::posix::Thread']]]
+];
