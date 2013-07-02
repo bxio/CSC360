@@ -1,0 +1,156 @@
+/*
+** simpleRTJ java language core library component.
+**
+** See the http://www.gnu.org/copyleft/gpl.html for
+** details on usage and redistribution of this file.
+*/
+package java.lang;
+
+/**
+ * Class that will run in a separate thread must subclass Thread.
+ *
+ * For detailed description of this class see the Java language documentation.
+ */
+public class Thread implements Runnable
+{
+    private Runnable target;
+    private boolean interrupting;
+    private boolean daemon = false;
+
+    /**
+     * Creates a Thread object.
+     */
+    public Thread()
+    {
+        this(null);
+    }
+
+    /**
+     * Creates a Thread object with specified target.
+     */
+    public Thread(Runnable target)
+    {
+        this.target = target;
+        this.interrupting = false;
+
+        setDaemon(currentThread().isDaemon());
+    }
+
+    public static void sleep(int millis, int nanos) throws InterruptedException
+    {
+        sleep(millis);
+    }
+
+    /**
+     * Currently running thread sleeps for the specified number of
+     * milliseconds.
+     */
+    public static void sleep(int millis) throws InterruptedException
+    {
+        sleep0(millis);
+        if (Thread.interrupted())
+            throw new InterruptedException();
+    }
+
+    public void interrupt()
+    {
+        interrupting = true;
+        interrupt0();
+    }
+
+    public static boolean interrupted()
+    {
+        boolean intr = Thread.currentThread().interrupting;
+        Thread.currentThread().interrupting = false;
+        return intr;
+    }
+
+    public boolean isInterrupted()
+    {
+        return interrupting;
+    }
+
+    /**
+     * Currently executing thread pauses and allow other threads to run.
+     */
+    public static native void yield();
+
+    /**
+     * Calling this method will cause the thread to begin execution at the specified level
+     */
+    public synchronized native void start(int level);
+
+    /**
+     * Makes the thread to stop running.
+     */
+    public native final void stop();
+
+    /**
+     * Thread execution method.
+     * Subclasses must override this method to implement required functionality.
+     */
+    public void run()
+    {
+        if (target != null)
+            target.run();
+    }
+
+    /**
+     * Sets/clears the daemon flag for this thread.
+     */
+    public final void setDaemon(boolean set)
+    {
+            daemon = set;
+        setDaemon0(set);
+    }
+
+    /**
+     * Returns true if this thread is daemon.
+     */
+    public final boolean isDaemon()
+    {
+            return daemon;
+    }
+
+    /**
+     * Waits for this thread to die.
+     */
+    public final void join() throws InterruptedException
+    {
+        join(0);
+    }
+
+    /**
+     * Waits specified number of milliseconds for this thread to die.
+     */
+    public final void join(int millis) throws InterruptedException
+    {
+        int timeout = System.currentTimeMillis() + millis;
+        while (isAlive() && (millis == 0 || System.currentTimeMillis() < timeout))
+            yield();
+    }
+
+    /**
+     * Checks if this thread is alive
+     */
+    public native boolean isAlive();
+
+    /**
+     * Suspends this thread.
+     */
+    public native final void suspend();
+
+    /**
+     * Resumes a suspended thread.
+     */
+    public native final void resume();
+
+    /**
+     * Returns reference to current thread.
+     */
+    public static native Thread currentThread();
+
+    private static native void sleep0(int millis);
+    private native void interrupt0();
+    private native void setDaemon0(boolean set);
+}
