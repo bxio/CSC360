@@ -32,12 +32,13 @@ public class DiskFCFS extends DiskScheduler
 	protected void insert(DiskRequest dr)
 	{
 		total_requests++;
-		if(current == null) // insert at start of list
+		if(current == null){ // insert at start of list
 			current = tail = dr.enQ(null,current);
-		else // insert at the end
-			dr.enQ(tail,null);
-			tail = dr;
-		showQ();
+		}else{ // insert at the end
+				dr.enQ(tail,null);
+				tail = dr;
+			showQ();
+		}
 	}
 
 	/**
@@ -47,8 +48,9 @@ public class DiskFCFS extends DiskScheduler
 	{
 		DiskRequest cur = current;
 		// update tail reference if required
-		if(tail == current)
+		if(tail == current){
 			tail = null;
+		}
 
 		// advance to next request
 		current = current.next;
