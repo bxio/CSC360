@@ -31,13 +31,28 @@ public class DiskSSTF extends DiskScheduler
 	 */
 	protected void insert(DiskRequest dr)
 	{
-		System.println("TO BE FILLED OUT BY YOU");
-		DiskRequest start = this.head;
-		if(start == null){
-			//dll is empty. Add it to the front.		
-		}else{
-			//find the correct position this request should be and EnQ it there.
+		//System.println("Inserting: "+dr.block);
+		if(current == null){ // insert at start of list
+			current = head = tail = dr.enQ(null,current);
+			//System.println("Added to front of list. Head: "+head.block);
+		}else{ // Insert dr in position.
+			DiskRequest temp=head;
+			if(dr.block < temp.block){
+				dr.enQ(null,temp);
+				head = dr;
+			}else{
+				while((temp.next != null) && (temp.next.block <= dr.block)){
+					temp = temp.next;
+				}
+				dr.enQ(temp,temp.next);
+				if(dr.next == null){
+					tail = dr;
+				}
+			}
+			showQ();
+			//System.println("Anchors"+head.block+" -> "+tail.block);
 		}
+			
 	}
 
 	/**
@@ -45,9 +60,10 @@ public class DiskSSTF extends DiskScheduler
 	 */
 	protected void remove()
 	{
-		System.println("TO BE FILLED OUT BY YOU");
-		DiskRequest prev = null;
-		//check the requests on either side to see which one is closer to your current position.
-		//pick the request to serve, move to it, and DeQ the previous request.
+		System.println("Removing. Head position is "+current.block);
+
+		
+
+		
 	}
 }
