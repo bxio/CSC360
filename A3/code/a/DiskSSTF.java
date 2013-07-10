@@ -61,9 +61,39 @@ public class DiskSSTF extends DiskScheduler
 	protected void remove()
 	{
 		System.println("Removing. Head position is "+current.block);
+		DiskRequest cur = current;
+		if(head == tail){
+			//we're done
+			current = null;
+		}else if(current == head){
+			//we're at the front of the list
+			current = current.next;
+			cur.deQ();
+			head = current;
+		}else if(current == tail){
+			//we're at the end of the list
+			current = current.prev;
+			cur.deQ();
+			tail = current;
+		}else{
+			DiskRequest before = cur.prev;
+			DiskRequest after = cur.next;
+
+			int beforeDist = (cur.block - before.block);
+			int afterDist = (after.block - cur.block);
+
+			if(beforeDist < afterDist){
+				//we're closer to previous
+				current = current.prev;
+				cur.deQ();
+			}else{
+				//we're closer to next
+				current = current.next;
+				cur.deQ();
+			}
+		}
 
 		
 
-		
 	}
 }
