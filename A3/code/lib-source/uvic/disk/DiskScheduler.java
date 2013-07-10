@@ -25,18 +25,18 @@ abstract public class DiskScheduler extends Disk
 	 * The currently scheduled disk request
 	 */
 	protected DiskRequest 	current 	= null;
-	protected int			blockCnt = 0;
+	protected int				blockCnt = 0;
 
 	private boolean			isRunning 	= false;
-	private int				maxLiveReq  = 20;
-	private int				headPos 	= 0;
-	private int				headTravel	= 0;
-	private	int				totalReq	= 0;
+	private int					maxLiveReq  = 20;
+	private int					headPos 	= 0;
+	private int					headTravel	= 0;
+	private	int					totalReq	= 0;
 	private DiskRequest		free_q		= null;
 
-	private Mutex			m				= new Mutex();
-	private Condition		newRequest		= new Condition();
-	private Condition		spaceAvailable	= new Condition();
+	private Mutex				m				= new Mutex();
+	private Condition			newRequest		= new Condition();
+	private Condition			spaceAvailable	= new Condition();
 	
 	/**
 	 * Dequeues the current I/O request and selects the next
