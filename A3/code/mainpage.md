@@ -3,8 +3,8 @@ Assignment 3			{#mainpage}
 
 Completed by:
 
-### Bill Xiong - V00737042 ###
-### Aahan Sureja - V00741138 ###
+### Alice Stark - V00123456 ###
+### Bob Banner - V00654321 ###
 
  ---
 
