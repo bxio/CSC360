@@ -60,7 +60,7 @@ public class DiskSSTF extends DiskScheduler
 	 */
 	protected void remove()
 	{
-		System.println("Removing. Head position is "+current.block);
+		//System.println("Removing. Head position is "+current.block);
 		DiskRequest cur = current;
 		if(head == tail){
 			//we're done
@@ -92,8 +92,5 @@ public class DiskSSTF extends DiskScheduler
 				cur.deQ();
 			}
 		}
-
-		
-
 	}
 }
