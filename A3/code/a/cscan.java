@@ -8,7 +8,7 @@ class cscan extends uvic.posix.Thread
 	static DiskCSCAN disk;
 	static int blocks;
 	static final int TOTAL_THREADS = 5; ///< # of DiskRequesters
-	static final int TOTAL_REQUESTS = 1; ///< # of requests per DiskRequester
+	static final int TOTAL_REQUESTS = 3; ///< # of requests per DiskRequester
 	
 	static final int READ = 1;
 	static final int WRITE = 0;
@@ -30,10 +30,11 @@ class cscan extends uvic.posix.Thread
 			{
 				requests[i][0] = random_block(); // Pick a "random" block position to read
 				// Switch between reading and writing for test purposes
-				if (i % 2 == 0)
+				if (i % 2 == 0){
 					requests[i][1] = WRITE; // Write
-				else
-					requests[i][1] = READ; // Write
+				}else{
+					requests[i][1] = READ; // Read
+				}
 				requests[i][2] = requests[i][0]; // Value, if writing
 			}
 			DiskRequester req = new DiskRequester("d"+r, disk, requests);

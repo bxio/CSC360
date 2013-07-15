@@ -58,23 +58,23 @@ public class DiskCSCAN extends DiskScheduler
 	 */
 	protected void remove()
 	{
-		//System.println("Remove Method. Current Position:"+super.getHeadPos());
-		DiskRequest cur = current;
-
-		if(head == tail){
-			current = null;
-		}else if(cur.next == null){
+		DiskRequest temp = current;
+		if(current ==  tail && current == head){
+			//System.println("There's only one item in the queue!");
+			current = head = tail = null;
+		}else if(current == tail){
+			//System.println("At the end. Going back to Head.");
 			current = head;
-			tail = cur.prev;
-			cur.deQ();
+			tail = tail.prev;
+		}else if(current == head){
+			//System.println("I'm at head!");
+			current = current.next;
+			head = head.next;
 		}else{
 			current = current.next;
-			if(cur == head){
-				head = cur.next;
-			}
-			cur.deQ();
 		}
-
+		temp.deQ();//remove the finished request from the queue
+		showQ();
 
 	}
 }
