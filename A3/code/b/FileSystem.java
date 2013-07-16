@@ -133,7 +133,7 @@ public class FileSystem extends uvic.posix.Thread
 		int[] blockst = new int[blocks.length]; //keeps the relative position of the block index, all values <32
 		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
-			System.println(">>Now Freeing:"+blocks[i]);
+			//System.println(">>Now Freeing:"+blocks[i]);
 			if(blocks[i]<32){
 				targets[i]=0;
 			}else if(blocks[i]<64){
@@ -149,7 +149,7 @@ public class FileSystem extends uvic.posix.Thread
 			}
 			blockst[i]=blocks[i]%32;
 			//System.println("("+targets[i]+","+blockst[i]+")");
-			System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
+			//System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
 
 			for(int j=0;j<=blockst[i];j++){ //construct the mask, 1 the blocks you want to free, 0 elsewhere.
 				if(j==0){
@@ -158,13 +158,13 @@ public class FileSystem extends uvic.posix.Thread
 					mask = mask * 2;
 				}
 			}
-			System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
+			//System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
 			mask = ~mask; //flip the mask, so that it's 0 the blocks you want to free and 1 elsewhere.
-			System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
+			//System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
 			bitmap[targets[i]]=(bitmap[targets[i]] & mask);
-			System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
+			//System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
 			mask = 1;//reset mask
-			System.println(">>Done Freeing:"+blocks[i]);
+			//System.println(">>Done Freeing:"+blocks[i]);
 		
 		}
 
