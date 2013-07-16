@@ -52,7 +52,6 @@ public class DiskSSTF extends DiskScheduler
 			showQ();
 			//System.println("Anchors"+head.block+" -> "+tail.block);
 		}
-			
 	}
 
 	/**
