@@ -207,7 +207,7 @@ public class FileSystem extends uvic.posix.Thread
 		}
 
 		free_blocks(assembled); //Free the assembled blocks from the bitmap
-
+		ds.write(startOffset,0);
 		if (lock) inode_mutex[inode].UnLock();
 	}
 	
