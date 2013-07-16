@@ -141,8 +141,16 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
+		//0-13 first inode
+		int startPos = 13*inode;
+		int blocksToRead = ds.read(startPos);
+		int assembled[] = new int[blocksToRead];
+		for(int i=0;i<blocksToRead;i++){
+			assembled[i] = ds.read(DATA_OFFSET+startPos+i);
+		}
+
 		inode_mutex[inode].UnLock();
-		return null;
+		return assembled;
 	}
 
 	
