@@ -3,8 +3,8 @@ Assignment 3			{#mainpage}
 
 Completed by:
 
-### Alice Stark - V00123456 ###
-### Bob Banner - V00654321 ###
+### Bill Xiong - V00737042 ###
+### Aahan Sureja - V00741138 ###
 
  ---
 
@@ -23,14 +23,11 @@ Discussion of Question 1. You can link and refer to classes and files just by ty
 
 Discussion of Question 2. FileSystem.
 
-### Subheading ###
+## Testing and Test Cases ##
 
-You can create subheadings as well if you need that extra level of organization.
+Please find the following under the folder `/tests`
 
+### Part A ###
 
-
-
-
-
-
-**Delete Me**
+### Part B ###
+For ** TestRead **, You may run `/b/TestRead.bin` to test reading from the first inode. You may also run `/testCases/TestReadINODE1.bin` to read the same file, shifted down 1 inode. (In this test case, the first inode is empty.)
