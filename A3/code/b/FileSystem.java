@@ -129,6 +129,7 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		bitmap_mutex.Lock();
 		// WRITTEN BY YOU
+
 		bitmap_mutex.UnLock();
 	}
 	
@@ -141,14 +142,12 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
-		//0-13 first inode
-		int startPos = 13*inode;
-		int blocksToRead = ds.read(startPos);
-		int assembled[] = new int[blocksToRead];
-		for(int i=0;i<blocksToRead;i++){
-			assembled[i] = ds.read(DATA_OFFSET+startPos+i);
+		int startOffset = 13*inode; //calculate the starting offset, according to given inode number
+		int blocksToRead = ds.read(startOffset);
+		int assembled[] = new int [blocksToRead];
+		for(int i=1;i<=blocksToRead;i++){
+			assembled[i-1]=ds.read(ds.read(i+startOffset)+DATA_OFFSET);
 		}
-
 		inode_mutex[inode].UnLock();
 		return assembled;
 	}
@@ -162,6 +161,7 @@ public class FileSystem extends uvic.posix.Thread
 		// it might make sense why this is like this.
 		if (lock) inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
+
 		if (lock) inode_mutex[inode].UnLock();
 	}
 	
