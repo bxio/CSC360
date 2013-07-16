@@ -129,37 +129,43 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		bitmap_mutex.Lock();
 		// WRITTEN BY YOU
-		int a,b,pos = 0,target = 0, toChange = 0;
-
+		int[] targets = new int[blocks.length]; //keeps the index of the bitmap number we're going to change
+		int[] blockst = new int[blocks.length]; //keeps the relative position of the block index, all values <32
+		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
-			if(blocks[i]<=32){
-				target = 0;
-			}else if(blocks[i]<=64){
-				target = 1;
-			}else if(blocks[i]<=96){
-				target = 2;
-			}else if(blocks[i]<=128){
-				target = 3;
-			}else if(blocks[i]<=160){
-				target = 4;
-			}else if(blocks[i]<=192){
-				target = 5;
+			System.println(">>Now Freeing:"+blocks[i]);
+			if(blocks[i]<32){
+				targets[i]=0;
+			}else if(blocks[i]<64){
+				targets[i]=1;
+			}else if(blocks[i]<96){
+				targets[i]=2;
+			}else if(blocks[i]<128){
+				targets[i]=3;
+			}else if(blocks[i]<160){
+				targets[i]=4;
+			}else if(blocks[i]<192){
+				targets[i]=5;
 			}
-			pos = blocks[i]%32;
-			System.println("Freeing:"+blocks[i]+" Target:"+target+" position:"+pos);
-			//change bitmap[target]'s pos'th bit to 0.
-			toChange = bitmap[target];
-			System.println("Before change:"+Integer.toBinaryString(toChange)+" Changing position:"+pos);
+			blockst[i]=blocks[i]%32;
+			//System.println("("+targets[i]+","+blockst[i]+")");
+			System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
 
-			int power = 2;
-			for(int j=0;j<pos;j++){
-				power = power * 2;
+			for(int j=0;j<=blockst[i];j++){ //construct the mask, 1 the blocks you want to free, 0 elsewhere.
+				if(j==0){
+					mask = 1;
+				}else{
+					mask = mask * 2;
+				}
 			}
-			a = power;
-			System.println("a is("+a+")"+Integer.toBinaryString(a));
-			b = (a ^ toChange);
-			System.println("b is("+b+")"+Integer.toBinaryString(b));
-			bitmap[target] = b;
+			System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
+			mask = ~mask; //flip the mask, so that it's 0 the blocks you want to free and 1 elsewhere.
+			System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
+			bitmap[targets[i]]=(bitmap[targets[i]] & mask);
+			System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
+			mask = 1;//reset mask
+			System.println(">>Done Freeing:"+blocks[i]);
+		
 		}
 
 		bitmap_mutex.UnLock();
@@ -197,10 +203,10 @@ public class FileSystem extends uvic.posix.Thread
 		int blocksToDelete = ds.read(startOffset);
 		int assembled[] = new int[blocksToDelete];
 		for(int i = 1;i<=blocksToDelete;i++){
-			assembled[i-1]=ds.read(ds.read(i+startOffset)+DATA_OFFSET); //add the block to the assembled block
+			assembled[i-1]=ds.read(i+startOffset); //add the block to the assembled block
 		}
 
-		free_blocks(assembled); //Free the assembled blocks.
+		free_blocks(assembled); //Free the assembled blocks from the bitmap
 
 		if (lock) inode_mutex[inode].UnLock();
 	}
