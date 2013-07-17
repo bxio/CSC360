@@ -280,9 +280,15 @@ public class FileSystem extends uvic.posix.Thread
 		// WRITTEN BY YOU
 		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode+INODE_OFFSET; //calculate the starting offset, according to given inode number
 		int blocksToRead = ds.read(startOffset);
-		int assembled[] = new int [blocksToRead];
+		int assembled[] = new int[blocksToRead];
+		int temp[] = new int[blocksToRead];
 		for(int i=1;i<=blocksToRead;i++){
-			assembled[i-1]=ds.read(ds.read(i+startOffset)+DATA_OFFSET);
+			temp[i-1] = ds.read(i+startOffset)+DATA_OFFSET;
+		}
+		//we have to split up the for loop so that the read requests are close together
+		//this way the requests complete quicker
+		for(int i=1;i<blocksToRead;i++){
+			assembled[i-1]=ds.read(temp[i-1]);
 		}
 		inode_mutex[inode].UnLock();
 		return assembled;
