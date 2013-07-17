@@ -108,7 +108,7 @@ public class FileSystem extends uvic.posix.Thread
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
 		//write the file size to the inode
-		ds.write(inode+INODE_OFFSET,contents.length);
+		ds.write((inode+INODE_OFFSET),contents.length);
 
 		//get content.length free blocks from memory
 		int[] pointers = new int[content.length];
