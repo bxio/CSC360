@@ -106,7 +106,6 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		if (content.length > INODE_DATA_SIZE) throw new DiskException("File too big " + content.length + ".");
 		inode_mutex[inode].Lock();
-		// WRITTEN BY YOU
 		//write the file size to the inode
 		ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+INODE_OFFSET),content.length);
 
@@ -123,13 +122,6 @@ public class FileSystem extends uvic.posix.Thread
 		for(int i=0;i<content.length;i++){
 			ds.write((pointers[i]+DATA_OFFSET), content[i]);
 		}
-		//System.println("I'M HERE!!@!!!!!");
-
-		/*
-		for(int i=0;i<content.length;i++){
-			ds.write(pointers[i], content[i]);
-		}
-		*/
 		
 		inode_mutex[inode].UnLock();
 	}
@@ -140,14 +132,16 @@ public class FileSystem extends uvic.posix.Thread
 	private int[] get_free_blocks(int size) throws DiskException
 	{
 		bitmap_mutex.Lock();
-		int[] assembled = new int[size];
-		// WRITTEN BY YOU
-		int target = 0, position = 0, filled = 0, temp;
+		int[] assembled = new int[size]; //make the array for the return
+		int target = 0;  ///< the index for the integer in bitmap
+		int position = 0; ///< the position of the bit corresponding to the block to be written to
+		int filled = 0; ///< the number of free blocks we found (soon to be USED blocks.)
+		int temp;
 		for(int i=0;i<DATA_TOTAL;i++){
-			target = (i/BITMAP_SIZE);
-			position = (i%BITMAP_SIZE);
-			temp = bitmap[target];
-			temp = temp >> position;
+			target = (i/BITMAP_SIZE); //this 
+			position = (i%BITMAP_SIZE); //this reduces i to a number between 0-31, so it's position is relative to the int in bitmap[target]
+			temp = bitmap[target]; //copy the bitmap int
+			temp = temp >> position; //isolate the required bit
 			if(temp % 2 ==0){
 				//last bit is free
 				assembled[filled] = i;
@@ -161,10 +155,9 @@ public class FileSystem extends uvic.posix.Thread
 
 		}
 		if(filled < size){
-			throw new DiskException("Not Enough Free Blocks. Try deleting something.");
+			throw new DiskException("Not Enough Free Blocks. Try deleting something first.");
 		} 
 		
-		//flip all the free bits in assembled to 1.
 		fill_blocks(assembled);
 		bitmap_mutex.UnLock();
 		return assembled;
@@ -176,25 +169,10 @@ public class FileSystem extends uvic.posix.Thread
 	*/
 	private void fill_blocks(int[] blocks)
 	{
-		// WRITTEN BY YOU
-		int[] targets = new int[blocks.length]; //keeps the index of the bitmap number we're going to change
-		int[] blockst = new int[blocks.length]; //keeps the relative position of the block index, all values <32
+		int[] targets = new int[blocks.length]; ///< keeps the index of the bitmap number we're going to change
+		int[] blockst = new int[blocks.length]; ///< keeps the relative position of the block index, all values <32
 		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
-			//System.println(">>Now Freeing:"+blocks[i]);
-			/*if(blocks[i]<BITMAP_SIZE){
-				targets[i]=0;
-			}else if(blocks[i]<(2*BITMAP_SIZE)){
-				targets[i]=1;
-			}else if(blocks[i]<(3*BITMAP_SIZE)){
-				targets[i]=2;
-			}else if(blocks[i]<(4*BITMAP_SIZE)){
-				targets[i]=3;
-			}else if(blocks[i]<(5*BITMAP_SIZE)){
-				targets[i]=4;
-			}else if(blocks[i]<(6*BITMAP_SIZE)){
-				targets[i]=5;
-			}*/
 			targets[i] = blocks[i]/BITMAP_SIZE;
 			blockst[i]=blocks[i]%BITMAP_SIZE;
 			//System.println("("+targets[i]+","+blockst[i]+")");
@@ -208,12 +186,9 @@ public class FileSystem extends uvic.posix.Thread
 				}
 			}
 			//System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
-			//mask = ~mask; //flip the mask, so that it's 0 the blocks you want to free and 1 elsewhere.
-			//System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
-			bitmap[targets[i]]=(bitmap[targets[i]] | mask);
+			bitmap[targets[i]]=(bitmap[targets[i]] | mask); //Bitwise Inclusive OR them together to fill the desired blocks.
 			//System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
 			mask = 1;//reset mask
-			//System.println(">>Done Freeing:"+blocks[i]);
 		}
 	}
 
@@ -224,26 +199,10 @@ public class FileSystem extends uvic.posix.Thread
 	private void free_blocks(int[] blocks)
 	{
 		bitmap_mutex.Lock();
-		// WRITTEN BY YOU
-		int[] targets = new int[blocks.length]; //keeps the index of the bitmap number we're going to change
-		int[] blockst = new int[blocks.length]; //keeps the relative position of the block index, all values <32
+		int[] targets = new int[blocks.length]; ///< keeps the index of the bitmap number we're going to change
+		int[] blockst = new int[blocks.length]; ///< keeps the relative position of the block index, all values <32
 		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
-			//System.println(">>Now Freeing:"+blocks[i]);
-			/*
-			if(blocks[i]<BITMAP_SIZE){
-				targets[i]=0;
-			}else if(blocks[i]<(2*BITMAP_SIZE)){
-				targets[i]=1;
-			}else if(blocks[i]<(3*BITMAP_SIZE)){
-				targets[i]=2;
-			}else if(blocks[i]<(4*BITMAP_SIZE)){
-				targets[i]=3;
-			}else if(blocks[i]<(5*BITMAP_SIZE)){
-				targets[i]=4;
-			}else if(blocks[i]<(6*BITMAP_SIZE)){
-				targets[i]=5;
-			}*/
 			targets[i] = blocks[i]/BITMAP_SIZE;
 			blockst[i]=blocks[i]%BITMAP_SIZE;
 			//System.println("("+targets[i]+","+blockst[i]+")");
@@ -259,10 +218,9 @@ public class FileSystem extends uvic.posix.Thread
 			//System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
 			mask = ~mask; //flip the mask, so that it's 0 the blocks you want to free and 1 elsewhere.
 			//System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
-			bitmap[targets[i]]=(bitmap[targets[i]] & mask);
+			bitmap[targets[i]]=(bitmap[targets[i]] & mask); //bitwise AND to zero out the block.s
 			//System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
-			mask = 1;//reset mask
-			//System.println(">>Done Freeing:"+blocks[i]);
+			mask = 1;//reset mask for next iteration of for loop
 		
 		}
 
@@ -277,13 +235,12 @@ public class FileSystem extends uvic.posix.Thread
 	public int[] read_file(int inode)
 	{
 		inode_mutex[inode].Lock();
-		// WRITTEN BY YOU
 		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode+INODE_OFFSET; //calculate the starting offset, according to given inode number
-		int blocksToRead = ds.read(startOffset);
+		int blocksToRead = ds.read(startOffset); //get the size of the file
 		int assembled[] = new int[blocksToRead];
 		int temp[] = new int[blocksToRead];
 		for(int i=1;i<=blocksToRead;i++){
-			temp[i-1] = ds.read(i+startOffset)+DATA_OFFSET;
+			temp[i-1] = ds.read(i+startOffset)+DATA_OFFSET; //read the data in the actual blocks.
 		}
 		//we have to split up the for loop so that the read requests are close together
 		//this way the requests complete quicker
@@ -302,7 +259,6 @@ public class FileSystem extends uvic.posix.Thread
 		// Clue: depending on how you implement write_file() 
 		// it might make sense why this is like this.
 		if (lock) inode_mutex[inode].Lock();
-		// WRITTEN BY YOU
 		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode+INODE_OFFSET;
 		int blocksToDelete = ds.read(startOffset);
 		int assembled[] = new int[blocksToDelete];
