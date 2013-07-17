@@ -108,7 +108,7 @@ public class FileSystem extends uvic.posix.Thread
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
 		//write the file size to the inode
-		ds.write((inode+INODE_OFFSET),content.length);
+		ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+INODE_OFFSET),content.length);
 
 		//get content.length free blocks from memory
 		int[] pointers = new int[content.length];
@@ -117,8 +117,11 @@ public class FileSystem extends uvic.posix.Thread
 		//fill in the remaining inode pointers
 		for(int i=1;i<=content.length;i++){
 			ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+INODE_OFFSET+i),pointers[i-1]);
-			//write the file data to the actual blocks
-			ds.write(pointers[i-1], content[i-1]);
+		}
+		
+		//write the file data to the actual blocks
+		for(int i=0;i<content.length;i++){
+			ds.write((pointers[i]+DATA_OFFSET), content[i]);
 		}
 		//System.println("I'M HERE!!@!!!!!");
 
