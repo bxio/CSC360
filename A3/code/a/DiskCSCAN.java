@@ -63,6 +63,9 @@ public class DiskCSCAN extends DiskScheduler
 			//System.println("There's only one item in the queue!");
 			current = head = tail = null;
 		}else if(current == tail){
+			super.seek(super.getTotalBlocks());
+			super.seek(0);
+			super.seek(head.block);
 			//System.println("At the end. Going back to Head.");
 			current = head;
 			tail = tail.prev;
@@ -75,6 +78,6 @@ public class DiskCSCAN extends DiskScheduler
 		}
 		temp.deQ();//remove the finished request from the queue
 		showQ();
-
 	}
+
 }
