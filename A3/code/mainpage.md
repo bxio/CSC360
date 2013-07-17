@@ -17,7 +17,13 @@ To help organize your documents you can use headings like:
 
 ## Question 1 ##
 
-Discussion of Question 1. You can link and refer to classes and files just by typing their name, for example, DiskSSTF or DiskSSTF.java (source code).
+We implement the shortest-seek-time-first as well as the circular scan algorithms for disk scheduling. 
+
+In SSTF.java, we insert requests in sorted ascending order into a doubly linked list. Once a request has been serviced, we see if the request previous to the current one (current.prev) is closer to the current than the one proceeding it (current.next). We update our current head position accordingly.
+
+In C-SCAN.java, we maintain one direction for servicing requests, and loop back to the first block once we reach the last block of the disk.
+
+We found SSTF to be significantly faster than the provided FCFS algorithm. C-SCAN is the most fair algorithm.
 
 ## Question 2 ##
 
