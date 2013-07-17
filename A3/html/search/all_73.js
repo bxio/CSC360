@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['save',['save',['../classuvic_1_1disk_1_1_disk.html#ac6b9778592f0bc636e3ce81eb8c2034c',1,'uvic::disk::Disk']]],
+  ['seek',['seek',['../classuvic_1_1disk_1_1_disk_scheduler.html#a1f6b4cece29289b15d92ecf7225db5e0',1,'uvic::disk::DiskScheduler']]],
+  ['semaphore',['Semaphore',['../classuvic_1_1posix_1_1_semaphore.html',1,'uvic::posix']]],
+  ['semaphore',['Semaphore',['../classuvic_1_1posix_1_1_semaphore.html#ab98d8fef9f3a973f7d927336da3a4f01',1,'uvic::posix::Semaphore']]],
+  ['serializable',['Serializable',['../interfacejava_1_1io_1_1_serializable.html',1,'java::io']]],
+  ['set',['set',['../classuvic_1_1posix_1_1_thread.html#aba1381d4854615d96ded990864a08038',1,'uvic::posix::Thread']]],
+  ['short',['Short',['../classjava_1_1lang_1_1_short.html',1,'java::lang']]],
+  ['showq',['showQ',['../classuvic_1_1disk_1_1_disk_scheduler.html#a1fa3b3e24d312f733f6e94716826c2cf',1,'uvic::disk::DiskScheduler']]],
+  ['shutdown',['shutdown',['../class_file_system.html#a4bae85405529df8ca3eef43bc5c52b22',1,'FileSystem.shutdown()'],['../classuvic_1_1disk_1_1_disk_scheduler.html#a0a222576fa983b57a3469e16656e80be',1,'uvic.disk.DiskScheduler.shutdown()']]],
+  ['signal',['Signal',['../classuvic_1_1posix_1_1_condition.html#a2d2e3f1c1b46e483f901ffe9fb846853',1,'uvic.posix.Condition.Signal()'],['../classuvic_1_1posix_1_1_semaphore.html#ad247e4a2d00ed4dbdb73d6d178f7bd62',1,'uvic.posix.Semaphore.Signal()']]],
+  ['spin',['spin',['../classuvic_1_1disk_1_1_disk_scheduler.html#ae12d1674c1db7c1407688584a4921c0f',1,'uvic::disk::DiskScheduler']]],
+  ['stackoverflowerror',['StackOverflowError',['../classjava_1_1lang_1_1_stack_overflow_error.html',1,'java::lang']]],
+  ['stackoverflowerror',['StackOverflowError',['../classjava_1_1lang_1_1_stack_overflow_error.html#a15332c28612f81057f87b1a8f4b39f0b',1,'java.lang.StackOverflowError.StackOverflowError()'],['../classjava_1_1lang_1_1_stack_overflow_error.html#a1bda1fc1ef474418641582badd6efc95',1,'java.lang.StackOverflowError.StackOverflowError(String s)']]],
+  ['start',['start',['../classuvic_1_1posix_1_1_thread.html#ad2346a8ce1cd33a503a0ce1e2abcd03d',1,'uvic::posix::Thread']]],
+  ['startswith',['startsWith',['../classjava_1_1lang_1_1_string.html#ad8bc535ab4bb8958e9b884deebe26760',1,'java.lang.String.startsWith(String prefix, int toffset)'],['../classjava_1_1lang_1_1_string.html#acece5c41de4b7e7f48110f706f3148a5',1,'java.lang.String.startsWith(String prefix)']]],
+  ['stop',['stop',['../classuvic_1_1posix_1_1_thread.html#a09f4ce4051b3cbcabe7a58aaf5230d0d',1,'uvic::posix::Thread']]],
+  ['string',['String',['../classjava_1_1lang_1_1_string.html#a80bf83e79d7a6e502eb2ddd91abb131a',1,'java.lang.String.String()'],['../classjava_1_1lang_1_1_string.html#a3c1d3e73176c4ca45c337be0e44d9df5',1,'java.lang.String.String(String other)'],['../classjava_1_1lang_1_1_string.html#a3f1a21ba4834157ab1994376b6d416d8',1,'java.lang.String.String(char src[])'],['../classjava_1_1lang_1_1_string.html#ab1e95cd00bb5da5b1e8d1cb336964c89',1,'java.lang.String.String(char src[], int offs, int cnt)'],['../classjava_1_1lang_1_1_string.html#a8ac7a02ecb76c469f1302188116ad3ca',1,'java.lang.String.String(byte src[], int offs, int cnt)'],['../classjava_1_1lang_1_1_string.html#a965f4fcaf27ccf4b14701948c0a946f6',1,'java.lang.String.String(StringBuffer sb)']]],
+  ['string',['String',['../classjava_1_1lang_1_1_string.html',1,'java::lang']]],
+  ['stringbuffer',['StringBuffer',['../classjava_1_1lang_1_1_string_buffer.html',1,'java::lang']]],
+  ['stringindexoutofboundsexception',['StringIndexOutOfBoundsException',['../classjava_1_1lang_1_1_string_index_out_of_bounds_exception.html',1,'java::lang']]],
+  ['stringindexoutofboundsexception',['StringIndexOutOfBoundsException',['../classjava_1_1lang_1_1_string_index_out_of_bounds_exception.html#aad9f1172c7d39a6efddc92b253e87243',1,'java.lang.StringIndexOutOfBoundsException.StringIndexOutOfBoundsException()'],['../classjava_1_1lang_1_1_string_index_out_of_bounds_exception.html#a64a10f127e66256146aed3469ed191c8',1,'java.lang.StringIndexOutOfBoundsException.StringIndexOutOfBoundsException(String s)'],['../classjava_1_1lang_1_1_string_index_out_of_bounds_exception.html#a0599064ed80cda3c713da8e05cb2ea6b',1,'java.lang.StringIndexOutOfBoundsException.StringIndexOutOfBoundsException(int index)']]],
+  ['stringtokenizer',['StringTokenizer',['../classjava_1_1util_1_1_string_tokenizer.html',1,'java::util']]],
+  ['system',['SYSTEM',['../classuvic_1_1posix_1_1_thread.html#af91f254a048b7b6ceca4b9749e1b1352',1,'uvic::posix::Thread']]],
+  ['system',['System',['../classjava_1_1lang_1_1_system.html',1,'java::lang']]]
+];

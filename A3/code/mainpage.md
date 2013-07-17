@@ -19,6 +19,7 @@ In C-SCAN.java, we maintain one direction for servicing requests, and loop back 
 
 We found SSTF to be significantly faster than the provided FCFS algorithm. C-SCAN is the most fair algorithm.
 
+In case you want to see our CLOOK, it is located in `DiskCLOOK.java`.
 ## Question 2 ##
 
 In FileSystem.java, we implemented a simple filesystem with 8 inodes, 192 data blocks, and a corresponding 192-bit bitmap. 
