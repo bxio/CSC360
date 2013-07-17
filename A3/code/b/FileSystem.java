@@ -244,8 +244,8 @@ public class FileSystem extends uvic.posix.Thread
 		}
 		//we have to split up the for loop so that the read requests are close together
 		//this way the requests complete quicker
-		for(int i=1;i<blocksToRead;i++){
-			assembled[i-1]=ds.read(temp[i-1]);
+		for(int i=0;i<blocksToRead;i++){
+			assembled[i]=ds.read(temp[i]);
 		}
 		inode_mutex[inode].UnLock();
 		return assembled;
