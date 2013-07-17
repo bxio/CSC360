@@ -107,6 +107,22 @@ public class FileSystem extends uvic.posix.Thread
 		if (content.length > INODE_DATA_SIZE) throw new DiskException("File too big " + content.length + ".");
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
+		//write the file size to the inode
+		ds.write(inode+INODE_OFFSET,contents.length);
+
+		//get content.length free blocks from memory
+		int[] pointers = new int[content.length];
+		pointers = get_free_blocks(content.length);
+
+		//fill the remaining inode pointers
+		for(int i=1;i<=content.length;i++){
+			ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+i),pointers[i-1]);
+		}
+		//write the file data to the actual blocks
+		for(int i=0;i<content.length;i++){
+			ds.write(pointers[i], content[i]);
+		}
+		
 		inode_mutex[inode].UnLock();
 	}
 	
@@ -116,10 +132,18 @@ public class FileSystem extends uvic.posix.Thread
 	private int[] get_free_blocks(int size) throws DiskException
 	{
 		bitmap_mutex.Lock();
-		int[] pointers = new int[size];
+		int[] assembled = new int[size];
 		// WRITTEN BY YOU
+		for(int i=0;i<DATA_TOTAL;i++){
+
+
+
+
+
+
+		}
 		bitmap_mutex.UnLock();
-		return pointers;
+		return assembled;
 	}
 	
 	/**
@@ -134,20 +158,20 @@ public class FileSystem extends uvic.posix.Thread
 		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
 			//System.println(">>Now Freeing:"+blocks[i]);
-			if(blocks[i]<32){
+			if(blocks[i]<BITMAP_SIZE){
 				targets[i]=0;
-			}else if(blocks[i]<64){
+			}else if(blocks[i]<(2*BITMAP_SIZE)){
 				targets[i]=1;
-			}else if(blocks[i]<96){
+			}else if(blocks[i]<(3*BITMAP_SIZE)){
 				targets[i]=2;
-			}else if(blocks[i]<128){
+			}else if(blocks[i]<(4*BITMAP_SIZE)){
 				targets[i]=3;
-			}else if(blocks[i]<160){
+			}else if(blocks[i]<(5*BITMAP_SIZE)){
 				targets[i]=4;
-			}else if(blocks[i]<192){
+			}else if(blocks[i]<(6*BITMAP_SIZE)){
 				targets[i]=5;
 			}
-			blockst[i]=blocks[i]%32;
+			blockst[i]=blocks[i]%BITMAP_SIZE;
 			//System.println("("+targets[i]+","+blockst[i]+")");
 			//System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
 
@@ -180,7 +204,7 @@ public class FileSystem extends uvic.posix.Thread
 	{
 		inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
-		int startOffset = 13*inode; //calculate the starting offset, according to given inode number
+		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode+INODE_OFFSET; //calculate the starting offset, according to given inode number
 		int blocksToRead = ds.read(startOffset);
 		int assembled[] = new int [blocksToRead];
 		for(int i=1;i<=blocksToRead;i++){
@@ -199,7 +223,7 @@ public class FileSystem extends uvic.posix.Thread
 		// it might make sense why this is like this.
 		if (lock) inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
-		int startOffset = 13*inode;
+		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode;
 		int blocksToDelete = ds.read(startOffset);
 		int assembled[] = new int[blocksToDelete];
 		for(int i = 1;i<=blocksToDelete;i++){
