@@ -27,13 +27,19 @@ We found SSTF to be significantly faster than the provided FCFS algorithm. C-SCA
 
 ## Question 2 ##
 
-Discussion of Question 2. FileSystem.
+In FileSystem.java, we implemented a simple filesystem with 8 inodes, 192 data blocks, and a corresponding 192-bit bitmap. 
+
+free_blocks() accesses the bitmap and update values when deleting a file. We generate the bitmask and use the bitwise AND operation to update the bitmap.
+
+For writing, we have written a helper method fill_blocks() which is called by get_free_blocks() to update the bitmap for writing. We generate the bitmask and use the bitwise INCLUSIVE OR operation to update the bitmap.
+
+A major chunk of the work in reading, writing and deleting is calculating the address on disk using the different offsets. See code for more details.
 
 ## Testing and Test Cases ##
 
 Please find the following under the folder `/tests`
 
 ### Part A ###
-
+We have two test cases each for SSTF and C-SCAN. One test case with 3 requests per thread, one with 5 requests per thread.
 ### Part B ###
 For ** TestRead **, You may run `/b/TestRead.bin` to test reading from the first inode. You may also run `/testCases/TestReadINODE1.bin` to read the same file, shifted down 1 inode. (In this test case, the first inode is empty.)
