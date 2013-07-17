@@ -114,14 +114,19 @@ public class FileSystem extends uvic.posix.Thread
 		int[] pointers = new int[content.length];
 		pointers = get_free_blocks(content.length);
 
-		//fill the remaining inode pointers
+		//fill in the remaining inode pointers
 		for(int i=1;i<=content.length;i++){
-			ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+i),pointers[i-1]);
+			ds.write(((inode*(INODE_HEADER_SIZE+INODE_DATA_SIZE))+INODE_OFFSET+i),pointers[i-1]);
+			//write the file data to the actual blocks
+			ds.write(pointers[i-1], content[i-1]);
 		}
-		//write the file data to the actual blocks
+		//System.println("I'M HERE!!@!!!!!");
+
+		/*
 		for(int i=0;i<content.length;i++){
 			ds.write(pointers[i], content[i]);
 		}
+		*/
 		
 		inode_mutex[inode].UnLock();
 	}
@@ -134,18 +139,82 @@ public class FileSystem extends uvic.posix.Thread
 		bitmap_mutex.Lock();
 		int[] assembled = new int[size];
 		// WRITTEN BY YOU
+		int target = 0, position = 0, filled = 0, temp;
 		for(int i=0;i<DATA_TOTAL;i++){
+			target = (i/BITMAP_SIZE);
+			position = (i%BITMAP_SIZE);
+			temp = bitmap[target];
+			temp = temp >> position;
+			if(temp % 2 ==0){
+				//last bit is free
+				assembled[filled] = i;
+				++filled;
+			}
 
-
-
-
-
+			if(filled == size){
+				//we filled all slots.
+				break;
+			}
 
 		}
+		if(filled < size){
+			throw new DiskException("Not Enough Free Blocks. Try deleting something.");
+		} 
+		
+		//flip all the free bits in assembled to 1.
+		fill_blocks(assembled);
 		bitmap_mutex.UnLock();
 		return assembled;
+
 	}
 	
+	/**
+		Set blocks in the bitmap to USED (or 1).
+	*/
+	private void fill_blocks(int[] blocks)
+	{
+		// WRITTEN BY YOU
+		int[] targets = new int[blocks.length]; //keeps the index of the bitmap number we're going to change
+		int[] blockst = new int[blocks.length]; //keeps the relative position of the block index, all values <32
+		int mask = 1;
+		for(int i=0;i<blocks.length;i++){
+			//System.println(">>Now Freeing:"+blocks[i]);
+			/*if(blocks[i]<BITMAP_SIZE){
+				targets[i]=0;
+			}else if(blocks[i]<(2*BITMAP_SIZE)){
+				targets[i]=1;
+			}else if(blocks[i]<(3*BITMAP_SIZE)){
+				targets[i]=2;
+			}else if(blocks[i]<(4*BITMAP_SIZE)){
+				targets[i]=3;
+			}else if(blocks[i]<(5*BITMAP_SIZE)){
+				targets[i]=4;
+			}else if(blocks[i]<(6*BITMAP_SIZE)){
+				targets[i]=5;
+			}*/
+			targets[i] = blocks[i]/BITMAP_SIZE;
+			blockst[i]=blocks[i]%BITMAP_SIZE;
+			//System.println("("+targets[i]+","+blockst[i]+")");
+			//System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
+
+			for(int j=0;j<=blockst[i];j++){ //construct the mask, 1 the blocks you want to free, 0 elsewhere.
+				if(j==0){
+					mask = 1;
+				}else{
+					mask = mask * 2;
+				}
+			}
+			//System.println("Mask:"+Integer.toBinaryString(mask)+"("+mask+")");
+			//mask = ~mask; //flip the mask, so that it's 0 the blocks you want to free and 1 elsewhere.
+			//System.println("Flip:"+Integer.toBinaryString(mask)+"("+mask+")");
+			bitmap[targets[i]]=(bitmap[targets[i]] | mask);
+			//System.println("New:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
+			mask = 1;//reset mask
+			//System.println(">>Done Freeing:"+blocks[i]);
+		}
+	}
+
+
 	/**
 		Set blocks in the bitmap to FREE (or 0).
 	*/
@@ -158,6 +227,7 @@ public class FileSystem extends uvic.posix.Thread
 		int mask = 1;
 		for(int i=0;i<blocks.length;i++){
 			//System.println(">>Now Freeing:"+blocks[i]);
+			/*
 			if(blocks[i]<BITMAP_SIZE){
 				targets[i]=0;
 			}else if(blocks[i]<(2*BITMAP_SIZE)){
@@ -170,7 +240,8 @@ public class FileSystem extends uvic.posix.Thread
 				targets[i]=4;
 			}else if(blocks[i]<(6*BITMAP_SIZE)){
 				targets[i]=5;
-			}
+			}*/
+			targets[i] = blocks[i]/BITMAP_SIZE;
 			blockst[i]=blocks[i]%BITMAP_SIZE;
 			//System.println("("+targets[i]+","+blockst[i]+")");
 			//System.println("Map:"+Integer.toBinaryString(bitmap[targets[i]])+"("+bitmap[targets[i]]+")");
@@ -223,7 +294,7 @@ public class FileSystem extends uvic.posix.Thread
 		// it might make sense why this is like this.
 		if (lock) inode_mutex[inode].Lock();
 		// WRITTEN BY YOU
-		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode;
+		int startOffset = (INODE_HEADER_SIZE+INODE_DATA_SIZE)*inode+INODE_OFFSET;
 		int blocksToDelete = ds.read(startOffset);
 		int assembled[] = new int[blocksToDelete];
 		for(int i = 1;i<=blocksToDelete;i++){
