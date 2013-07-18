@@ -1,0 +1,82 @@
+/************************************************************************
+This file is part of java core libraries for the simpleRTJ virtual machine.
+
+This file is covered by the GNU GPL with the following exception:
+  As a special exception, the copyright holders of this library give you permission
+  to link this library with independent modules to produce an executable, regardless
+  of the license terms of these independent modules, and to copy and distribute the
+  resulting executable under terms of your choice, provided that you also meet, for
+  each linked independent module, the terms and conditions of the license of that
+  module. An independent module is a module which is not derived from or based on
+  this library. If you modify this library, you may extend this exception to your
+  version of the library, but you are not obligated to do so. If you do not wish
+  to do so, delete this exception statement from your version.
+
+This file is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+Created/modified by:
+    RTJ Computing
+***********************************************************************/
+
+package java.lang;
+
+/**
+ * Object is the root of the class hierarchy.
+ *
+ * For detailed description of this class see the Java language documentation.
+ */
+public class Object
+{
+    public boolean equals(Object obj)
+    {
+        return (this == obj);
+    }
+
+    public String toString()
+    {
+        return Integer.toHexString(hashCode());
+    }
+
+    public final void wait(int timeout, int nanos) throws InterruptedException
+    {
+        // Ignore nanos, except avoid clipping a non-zero quantity to zero
+        if (timeout == 0 && nanos > 0)
+        {
+            timeout++;
+        }
+
+        wait(timeout);
+    }
+
+    public final void wait() throws InterruptedException
+    {
+        wait(0);
+    }
+
+    public final void wait(int timeout) throws InterruptedException
+    {
+        wait0(timeout);
+        if (Thread.interrupted())
+        {
+            throw new InterruptedException();
+        }
+    }
+
+    protected Object clone() throws CloneNotSupportedException
+    {
+        if (this instanceof Cloneable)
+            return clone0(this);
+        else
+            throw new CloneNotSupportedException();
+    }
+
+    public native int hashCode();
+    public final native void notify();
+    public final native void notifyAll();
+    private final native void wait0(int timeout);
+    private final native Object clone0(Object obj);
+}
+
