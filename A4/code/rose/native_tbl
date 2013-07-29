@@ -1,0 +1,79 @@
+j_lang.c:    if (config->getProperty != NULL)
+j_lang.c:        prop = config->getProperty(key);
+j_lang.c:    if (config->getProperty != NULL)
+j_lang.c:        prop = config->getProperty(key);
+j_lang.c:    if (dst->count < (uint32)(config->stack_trace->count * sizeof(trace_tbl_t)))
+j_lang.c:    for (i=0; i < config->stack_trace->count; i++)
+j_lang.c:        dst_buf[i] = config->stack_trace->trace[i];
+j_lang.c:    for (i=0; i < config->events; i++)
+j_lang.c:        config->ev_counters[i] = 0;
+j_lang.c:    *rv = config->events;
+j_lang.c:    if (config->events > 0 && config->ev_counters != NULL)
+j_lang.c:        for (i=0; i < config->events; i++)
+j_lang.c:            if (config->ev_counters[ev_index] > 0)
+j_lang.c:                i = config->events;
+j_lang.c:                config->ev_counters[ev_index]--;
+j_lang.c:            if (++ev_index == config->events)
+j_lang.c:            config->ev_counters[par[1]] = 0;
+j_lang.c:        for (i=0; i < config->timers; i++)
+j_lang.c:    *rv = config->timers;
+j_thread.c:    for (i=0; i < config->threads; i++)
+j_thread.c:    for (i=0; i < config->threads; i++)
+j_thread.c:    for (i=0; i < config->threads; i++)
+j_thread.c:    for (i=0; i < config->threads; i++)
+j_thread.c:    for (i=0; i < config->threads; i++)
+j_thread.c:    for (i=0; i < (config->threads-1); i++)
+j_thread.c:    threads[(config->threads-1)].next = NULL;
+j_vm.c:    config->vmGetStringCount = getStringCount;
+j_vm.c:    config->vmGetStringArray = getStringArray;
+j_vm.c:    config->vmGetArraySize = getArraySize;
+j_vm.c:    config->vmGetArray = getArray;
+j_vm.c:    config->vmGetSysTime = getSysTime;
+j_vm.c:    config->vmUpdateEventCounter = updateEventCounter;
+j_vm.c:    usrFunc(config->usrNotify, NOTIFY_VM_INIT);
+j_vm.c:        usrFunc(config->usrNotify, NOTIFY_VM_NOAPP);
+j_vm.c:    printf( "Starting ROSE v.1.1 (Quantum = %d msec) ...\n", config->time_slice);
+j_vm.c:    heap_ptr = (uint8 *)ALIGN4(config->heap_start);
+j_vm.c:    if (config->timers > 0)
+j_vm.c:        heap_ptr += (config->timers * sizeof(timer_t));
+j_vm.c:    config->stack_trace = (trace_t *)heap_ptr;
+j_vm.c:    heap_ptr += config->strings * sizeof(strings_t);
+j_vm.c:    heap_ptr += config->threads * sizeof(thread_t);
+j_vm.c:    heap_ptr += config->references * sizeof(ref_t);
+j_vm.c:    if (heap_ptr + MIN_OBJDATA_SIZE > config->heap_end)
+j_vm.c:        usrFunc(config->usrNotify, NOTIFY_INSUF_HEAP);
+j_vm.c:    clearMem(config->heap_start, (int32)(heap_ptr - config->heap_start));
+j_vm.c:    frame_ptr = config->heap_end;
+j_vm.c:                temp_ptr = config->heap_end;
+j_vm.c:                config->heap_end -= (APP->class_count * sizeof(clinit_list[0]));
+j_vm.c:                clinit_list = (class_t **)config->heap_end;
+j_vm.c:                frame_ptr = config->heap_end;
+j_vm.c:                config->heap_end = temp_ptr;
+j_vm.c:                        usrFunc(config->usrNotify, NOTIFY_VM_START);
+j_vm.c:    usrFunc(config->usrNotify, (uint16)((excep << 8) | detail));
+j_vm.c:      usrFunc(config->usrNotify, (uint16)((excep << 8) | detail));
+j_vm.c:        config->stack_trace->count = 0;
+j_vm.c:            config->stack_trace->trace[i].method = REL_LOC(frame->method);
+j_vm.c:            config->stack_trace->trace[i].pc = REL_LOC(frame->pc);
+j_vm.c:            config->stack_trace->count++;
+j_vm.c:        expired_ms = vm_time_ms + config->time_slice;
+j_vm.c:            config->clearWdt();
+j_vm.c:                expired_ms = vm_time_ms + config->time_slice;
+j_vm.c:        vm_excep = (uint8)config->native_tbl[native->blen_idx]((int32 *)vm_args, (int32 *)&retval);
+j_vm.c:        for (i=0; i < config->strings; i++)
+j_vm.c:        if (i < config->strings)
+j_vm.c:    for (i=0; i < config->strings; i++)
+j_vm.c:    for (i=0; i < config->strings; i++)
+j_vm.c:            ptr = APP->csum_start + (uint32)config->app_start;
+j_vm.c:    if (config->args_count > 0 && config->args == NULL)
+j_vm.c:    aref = doSimpleArray(T_OBJREF, config->args_count);
+j_vm.c:    for (i=0; i < config->args_count; i++)
+j_vm.c:        sref[i] = PUT_REF(createStringObject((uint16)(i+1), strLen(config->args[i]), config->args[i]));
+j_vm.c:    config->ev_counters[index]++;
+jvm.h:#define ABS_LOC(x)      ((uint8 *)((uint32)x + (uint32)config->app_start))
+jvm.h:#define REL_LOC(x)      ((uint8 *)((uint32)x - (uint32)config->app_start))
+jvm.h:#define CLASS_LOC(x)    ((class_t *)((uint32)x + (uint32)config->app_start))
+jvm.h:#define METHOD_LOC(x)   ((method_t *)((uint32)x + (uint32)config->app_start))
+jvm.h:#define FIELD_LOC(x)    ((field_t *)((uint32)x + (uint32)config->app_start))
+jvm.h:#define CONST_LOC(x)    ((const_t *)((uint32)x + (uint32)config->app_start))
+jvm.h:#define APP             ((app_t *)config->app_start)

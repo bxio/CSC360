@@ -1,0 +1,79 @@
+//----------------------------------------------------------------------
+// This file contains control flags (parameters) that are used by the
+// ClassLinker program when generating output file from application's
+// class files. ClassLinker expects that the application control file
+// will have the same name as main application file and have '.control'
+// extension.
+//----------------------------------------------------------------------
+
+
+// List of directories and/or library zip/jar files separated by semicolon.
+// LinkClassPath is used to find files required for linking application
+// classes.
+LinkClassPath=.;../lib;../lib/uvic.jar;../lib/java.jar
+
+// Map file contains detailed information about all classes composing
+// the final binary image.
+// Possible values: Y or N
+// If 'Y' is specified then a file with extension '.map' is created.
+// Output map file can be created in HTML format if MapFileHtml
+// switch is set to 'Y'. The file extension is then '.map.html'
+MapFile=Y
+MapFileHtml=n
+
+// List files contain source code mixed with java bytecodes.
+// If file name is specified then a list file with extension '.list'
+// is created.
+// Multiple list files can be created by separating the class file
+// names with semicolons.
+// Output list file can be created in HTML format if ListFileHtml
+// switch is set to 'Y'. The file extension is then '.list.html'
+ListFile=
+ListFileHtml=N
+
+// Possible values: Y or N
+// If Y is specified then all console output is suppressed.
+// However, all error messages will be printed.
+QuietMode=N
+
+// Specifies location and name of the native lookup table files.
+// There are two pre defined templates:
+// - native_asm.template for assembly file output
+// - native_c.template for 'C' file output
+// These files must be present in the ClassLinker directory and can be modified
+// to contain application specific sections. If C or assembly lookup file is not
+// required rename or remove appropriate template from ClassLinker directory.
+NativeLookupFile=
+
+// Specifies the format of the data in the output file. Available options are:
+//   LINEAR_64K
+//   BANKED_64K
+//   LINEAR_16M
+MemoryModel=LINEAR_16M
+
+// Application version number - max length is 12 characters.
+// Application description - max length is 32 characters
+// If length is greater than max. size that the string will be truncated.
+AppID=rose
+AppDesc=NetTest Application
+
+// Format of the additional output file
+// First parameter specifies the format of the output file
+// Second parameter (separated by comma) specifies the  file extension of the
+// otput file. Default is '.srec' or '.ihex'
+// Supported formats: Intel and Motorola
+OutputFormat=Intel,hex
+
+// Base address(in hex or decimal) of application in the memory.
+// If specified, then it will be used to show absolute locations in the
+// map file and used as based address in the file specified by the
+// OutputFormat flag. This address is also exported into native lookup files
+// so that it can be used by the native code to specify location of this
+// Java application
+BaseAddr=0x0
+
+// Format of the numeric values present in the output file.
+// Possible options are:
+// LSB - the least significant byte of multi-byte value is written first
+// MSB - the most significant byte of multi-byte value is written first
+ByteOrdering=LSB
