@@ -5,7 +5,7 @@ import uvic.disk.*;
 
 class fcfs extends uvic.posix.Thread
 {
-	static DiskFCFS disk;
+	static DiskLFU disk;
 	static int blocks;
 	static final int TOTAL_THREADS = 2; ///< # of DiskRequesters
 	static final int TOTAL_REQUESTS = 10; ///< # of requests per DiskRequester
@@ -25,7 +25,7 @@ class fcfs extends uvic.posix.Thread
 
 	static void main(String args[])
 	{
-		disk = new DiskFCFS(0);
+		disk = new DiskLFU(0);
 		blocks = disk.getTotalBlocks();
 
 		disk.spin(REAL_TIME);

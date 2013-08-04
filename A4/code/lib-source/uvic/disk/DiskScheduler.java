@@ -39,11 +39,11 @@ abstract public class DiskScheduler extends Disk
 	private Condition		spaceAvailable	= new Condition();
 	private static final int CACHE_SIZE = 16;
 
-	private int[] cacheContent;///< content of the block positions
-	private int[] cacheIndex;///< the block positions
-	private int[] cacheRecord;///< lru or lfu helper
-	private boolean[] cacheDirtyBit; ///< records whether the block changes or not
-	private int cacheCount;
+	protected int[] cacheContent;///< content of the block positions
+	protected int[] cacheIndex;///< the block positions
+	protected int[] cacheRecord;///< lru or lfu helper
+	protected boolean[] cacheDirtyBit; ///< records whether the block changes or not
+	protected int cacheCount;
 
 	public void createCache(){
 		this.cacheContent = new int[CACHE_SIZE];
@@ -80,20 +80,21 @@ abstract public class DiskScheduler extends Disk
 		if(this.isInCache(blockIndex)){
 			return cacheContent[this.getCacheIndex(blockIndex)];
 		}
-		return null;
+		return -1;
 	}
 
 	abstract protected int findVictim(int[] record);
+	/*
 	abstract protected int[] accessedCache(int[] record, int cacheIndexAccessed);
 
 	public void updateRecord(int cacheIndexAccessed){
 		this.cacheRecord  = this.accessedCache(this.cacheRecord,cacheIndexAccessed);
 	}
-
+	*/
 	public void insertIntoCache(int blockIndex, int blockContent){
 		if(this.cacheCount < CACHE_SIZE){//cache is not full
-			this.cacheContent[cacheCount] = result;
-			this.cacheIndex[cacheCount] = position;
+			this.cacheContent[cacheCount] = blockContent;
+			this.cacheIndex[cacheCount] = blockIndex;
 			this.cacheRecord[cacheCount] = 0;
 			this.cacheCount++;
 		}else{ //cache is full
@@ -156,6 +157,12 @@ abstract public class DiskScheduler extends Disk
 			DiskRequest dr = new DiskRequest();
 			free_q = dr.enQ(null,free_q);
 		}
+		//initiate the cache
+		this.cacheContent = new int[CACHE_SIZE];
+		this.cacheIndex = new int[CACHE_SIZE];
+		this.cacheRecord = new int[CACHE_SIZE];
+		this.cacheDirtyBit = new boolean[CACHE_SIZE];
+		this.cacheCount = 0;
 	}
 
 	/** 
@@ -248,10 +255,11 @@ abstract public class DiskScheduler extends Disk
 	{
 		m.Lock();
 		System.println("Reading!");
+		int result = 0;
 
 		//first, check the cache for the block.
 		if(this.isInCache(position)){
-			int result = this.getContent(position);
+			result = this.getContent(position);
 		}else{
 			// get free request
 			DiskRequest dr = getRequest(position, -1, true);
@@ -265,7 +273,7 @@ abstract public class DiskScheduler extends Disk
 			// wait for request to finish
 			dr.finished.Wait(m);
 
-			int result = dr.data;
+			result = dr.data;
 
 			// release request 
 			releaseRequest(dr);
@@ -305,7 +313,7 @@ abstract public class DiskScheduler extends Disk
 			// wait for request to finish
 			dr.finished.Wait(m);
 
-			this.insertIntoCache(position, content);
+			this.insertIntoCache(position, value);
 			// release request 
 			releaseRequest(dr);	
 		}

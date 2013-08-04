@@ -59,4 +59,7 @@ public class DiskFCFS extends DiskScheduler
 		cur.deQ();
 		showQ();
 	}
+	protected int findVictim(int[] record){
+		return -1;
+	}
 }
