@@ -31,6 +31,7 @@ public class DiskFCFS extends DiskScheduler
 	 */
 	protected void insert(DiskRequest dr)
 	{
+		System.println("inserting!");
 		total_requests++;
 		if(current == null) // insert at start of list
 			current = tail = dr.enQ(null,current);
@@ -45,6 +46,7 @@ public class DiskFCFS extends DiskScheduler
 	 */
 	protected void remove()
 	{
+		System.println("removing!");
 		DiskRequest cur = current;
 		// update tail reference if required
 		if(tail == current)

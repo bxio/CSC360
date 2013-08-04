@@ -28,8 +28,9 @@ javax.jar:
 uvic.jar:
 	rm -f uvic/posix/*.class
 	rm -f uvic/disk/*.class
-	$(JAVAC) $(TARGET) uvic/posix/*.java 
-	$(JAVAC) $(TARGET) uvic/disk/*.java 
+	$(JAVAC) $(TARGET) -cp $(CLASSPATH) -bootclasspath $(BOOTCLASSPATH) uvic/posix/*.java 
+	$(JAVAC) $(TARGET) -cp $(CLASSPATH) -bootclasspath $(BOOTCLASSPATH) uvic/disk/*.java 
+
 	$(JAR) cf uvic.jar uvic/posix/*.class uvic/disk/*.class
 	cp uvic.jar ../lib/.
 

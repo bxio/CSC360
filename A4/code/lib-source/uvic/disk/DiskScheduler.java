@@ -37,7 +37,92 @@ abstract public class DiskScheduler extends Disk
 	private Mutex			m				= new Mutex();
 	private Condition		newRequest		= new Condition();
 	private Condition		spaceAvailable	= new Condition();
-	
+	private static final int CACHE_SIZE = 16;
+
+	private int[] cacheContent;///< content of the block positions
+	private int[] cacheIndex;///< the block positions
+	private int[] cacheRecord;///< lru or lfu helper
+	private boolean[] cacheDirtyBit; ///< records whether the block changes or not
+	private int cacheCount;
+
+	public void createCache(){
+		this.cacheContent = new int[CACHE_SIZE];
+		this.cacheIndex = new int[CACHE_SIZE];
+		this.cacheRecord = new int[CACHE_SIZE];
+		this.cacheDirtyBit = new boolean[CACHE_SIZE];
+		this.cacheCount = 0;
+	}
+
+	public boolean isInCache(int blockPosition){
+		for(int i=0;i<CACHE_SIZE;i++){
+			if(cacheIndex[i] == blockPosition){
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Dequeues the current I/O request and selects the next
+	 * request for processing. This method must be implemented by derived 
+	 * classes. The scheduling policy of the disk emulator is derived from 
+	 * this method and the insert method.
+	 */
+	public int getCacheIndex(int blockIndex){
+		for(int i=0;i<CACHE_SIZE;i++){
+			if(cacheIndex[i] == blockIndex){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public int getContent(int blockIndex){
+		if(this.isInCache(blockIndex)){
+			return cacheContent[this.getCacheIndex(blockIndex)];
+		}
+		return null;
+	}
+
+	abstract protected int findVictim(int[] record);
+	abstract protected int[] accessedCache(int[] record, int cacheIndexAccessed);
+
+	public void updateRecord(int cacheIndexAccessed){
+		this.cacheRecord  = this.accessedCache(this.cacheRecord,cacheIndexAccessed);
+	}
+
+	public void insertIntoCache(int blockIndex, int blockContent){
+		if(this.cacheCount < CACHE_SIZE){//cache is not full
+			this.cacheContent[cacheCount] = result;
+			this.cacheIndex[cacheCount] = position;
+			this.cacheRecord[cacheCount] = 0;
+			this.cacheCount++;
+		}else{ //cache is full
+			int victim = findVictim(this.cacheRecord);
+			//replace the victim
+			this.replace(victim, blockIndex, blockContent);
+		}
+	}
+
+	public void replace(int victimIndex, int blockIndex, int blockContent){
+		if(cacheDirtyBit[victimIndex] == true){
+			//content has changed. Write it to disk before replacing
+			this.writeToDisk(cacheIndex[victimIndex], cacheContent[victimIndex]);
+		}
+		//kick victim
+		this.cacheContent[victimIndex] = blockContent;
+		this.cacheIndex[victimIndex] = blockIndex;
+		this.cacheRecord[victimIndex] = 0;
+		this.cacheDirtyBit[victimIndex] = false; //the content is fresh, just fetched from disk
+	}
+
+	public void flush(){
+		for(int i=0;i<CACHE_SIZE;i++){
+			if(this.cacheDirtyBit[i]){
+				this.writeToDisk(this.cacheIndex[i],this.cacheContent[i]);
+			}
+		}
+	}
+
 	/**
 	 * Dequeues the current I/O request and selects the next
 	 * request for processing. This method must be implemented by derived 
@@ -114,6 +199,7 @@ abstract public class DiskScheduler extends Disk
 	 */
 	public void shutdown()
 	{
+		//TODO: Put flush method call here
 		m.Lock();
 
 		if(isRunning)
@@ -161,24 +247,33 @@ abstract public class DiskScheduler extends Disk
 	public int read(int position)
 	{
 		m.Lock();
+		System.println("Reading!");
 
-		// get free request
-		DiskRequest dr = getRequest(position, -1, true);
+		//first, check the cache for the block.
+		if(this.isInCache(position)){
+			int result = this.getContent(position);
+		}else{
+			// get free request
+			DiskRequest dr = getRequest(position, -1, true);
 
-		// queue up the request
-		insert(dr);
+			// queue up the request
+			insert(dr);
 
-		// let disk thread know that a new request has arrived
-		newRequest.Signal();
+			// let disk thread know that a new request has arrived
+			newRequest.Signal();
 
-		// wait for request to finish
-		dr.finished.Wait(m);
+			// wait for request to finish
+			dr.finished.Wait(m);
 
-		int result = dr.data;
-		
-		// release request 
-		releaseRequest(dr);
+			int result = dr.data;
 
+			// release request 
+			releaseRequest(dr);
+
+			//insert it into cache
+			insertIntoCache(position,result);
+			
+		}
 		m.UnLock();
 		return result;
 	}
@@ -190,6 +285,43 @@ abstract public class DiskScheduler extends Disk
 	 * 			buffer	the data to be written
 	 */
 	public void write(int position, int value)
+	{
+		m.Lock();
+		if(this.isInCache(position)){
+			//block is in the cache.
+			int temp = this.getCacheIndex(position);
+			this.cacheContent[temp] = value;
+			this.cacheDirtyBit[temp] = true;
+		}else{
+			// get free request
+			DiskRequest dr = getRequest(position,value,false);
+
+			// queue up the request
+			insert(dr);
+
+			// let disk thread know that a new request has arrived
+			newRequest.Signal();
+
+			// wait for request to finish
+			dr.finished.Wait(m);
+
+			this.insertIntoCache(position, content);
+			// release request 
+			releaseRequest(dr);	
+		}
+		
+
+		m.UnLock();
+	}
+
+
+	/**
+	 * Writes a block of data at the specified block directly to disk. This method blocks
+	 * until the request is completed or an error occurs. 
+	 * @param	position the zero based block number
+	 * 			buffer	the data to be written
+	 */
+	public void writeToDisk(int position, int value)
 	{
 		m.Lock();
 
