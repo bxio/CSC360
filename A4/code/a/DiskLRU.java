@@ -70,11 +70,13 @@ public class DiskLRU extends DiskScheduler
 	protected int[] accessedCache(int[] record, int cacheIndexAccessed){
 		for(int i=0;i<CACHE_SIZE;i++){
 			if(record[i] == 0){
-				record[i] = 1;
+				record[i] =1;
 			}else{
-				record[i] = record[i] << 1;
+				record[i] = record[i] << 1 +1;
 			}
 		}
+		//reset the most recently used item
+		record[cacheIndexAccessed]  = 0;
 		return record;
 	}
 }

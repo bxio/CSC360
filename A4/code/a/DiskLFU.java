@@ -30,7 +30,7 @@ public class DiskLFU extends DiskScheduler
 		 */
 		protected void insert(DiskRequest dr)
 		{
-			System.println("inserting!");
+			//System.println("inserting!");
 			total_requests++;
 			if(current == null) // insert at start of list
 				current = tail = dr.enQ(null,current);
@@ -45,7 +45,7 @@ public class DiskLFU extends DiskScheduler
 		 */
 		protected void remove()
 		{
-			System.println("removing!");
+			//System.println("removing!");
 			DiskRequest cur = current;
 			// update tail reference if required
 			if(tail == current)
@@ -60,7 +60,7 @@ public class DiskLFU extends DiskScheduler
 		}
 
 		protected int findVictim(int[] record){
-			int min = 99999999;
+			int min = Integer.MAX_VALUE;
 			int position = 0;
 			for(int i=0;i < CACHE_SIZE;i++){
 				if(record[i]< min){

@@ -84,13 +84,13 @@ abstract public class DiskScheduler extends Disk
 	}
 
 	abstract protected int findVictim(int[] record);
-	/*
+	
 	abstract protected int[] accessedCache(int[] record, int cacheIndexAccessed);
 
 	public void updateRecord(int cacheIndexAccessed){
 		this.cacheRecord  = this.accessedCache(this.cacheRecord,cacheIndexAccessed);
 	}
-	*/
+	
 	public void insertIntoCache(int blockIndex, int blockContent){
 		if(this.cacheCount < CACHE_SIZE){//cache is not full
 			this.cacheContent[cacheCount] = blockContent;
@@ -260,6 +260,7 @@ abstract public class DiskScheduler extends Disk
 		//first, check the cache for the block.
 		if(this.isInCache(position)){
 			result = this.getContent(position);
+			this.updateRecord(this.getCacheIndex(position));
 		}else{
 			// get free request
 			DiskRequest dr = getRequest(position, -1, true);
@@ -300,6 +301,7 @@ abstract public class DiskScheduler extends Disk
 			int temp = this.getCacheIndex(position);
 			this.cacheContent[temp] = value;
 			this.cacheDirtyBit[temp] = true;
+			this.updateRecord(this.getCacheIndex(position));
 		}else{
 			// get free request
 			DiskRequest dr = getRequest(position,value,false);
@@ -317,8 +319,6 @@ abstract public class DiskScheduler extends Disk
 			// release request 
 			releaseRequest(dr);	
 		}
-		
-
 		m.UnLock();
 	}
 

@@ -1,6 +1,7 @@
 CSC360 Summer 2013 Repo
 ======
 Group Members:
+
 * Bill Xiong
 * Aahan Suneja
 
