@@ -38,104 +38,6 @@ abstract public class DiskScheduler extends Disk
 	private Condition		newRequest		= new Condition();
 	private Condition		spaceAvailable	= new Condition();
 	
-	//Start block cache variables and methods
-	private static final int CACHE_SIZE = 16;
-	private int[] cache;
-	private int[] index;
-	private int[] record;
-	private boolean[] dirtyBit;
-	/**
-	 * Finds a victim block to replace, given the block cache's record. This method must be implemented by derived 
-	 * classes. The scheduling policy of the disk emulator is derived from 
-	 * this method and the insert method.
-	 * @param record the record of the block cache
-	 */
-	abstract protected int findVictim(int[] record);
-
-	/**
-	 * Instantiates the Block Cache.
-	 *
-	 */
-	public void createBlockCache(){
-		this.cache = new int[CACHE_SIZE];
-		this.index = new int[CACHE_SIZE];
-		this.dirtyBit = new boolean[CACHE_SIZE];
-		this.record = new int[CACHE_SIZE];
-	}
-
-	/**
-	 * Returns whether the block at the requested index is in the cache or not
-	 *
-	 * @param	request	 the disk index position of the requested block
-	 * @return	true if the block is in the cache, false otherwise.
-	 */
-	public boolean contains(int request){
-		for(int i=0;i<CACHE_SIZE;i++){
-			if(index[i]==request){
-				return true;
-			}
-		}
-		return false;
-	}
-	/**
-	 * Checks whether the given block index is in the cache, if so, returns its index.
-	 *
-	 * @param	request	 the disk index position of the requested block
-	 * @return	the position of the block in the blockcache's various indices, 
-	 * -1 if the block is not found.
-	 */
-	public int find(int request){
-		for(int i=0;i<CACHE_SIZE;i++){
-			if(index[i]==request){
-				return i;
-			}
-		}
-		return (-1);
-	}
-	/**
-	 * Returns whether the block at the requested index has been edited or not.
-	 *
-	 * @param	request	 the disk index position of the requested block
-	 * @return	whether the block has been edited
-	 */
-	public boolean wasEdited(int request){
-		return dirtyBit[find(request)];
-	}
-	/**
-	 * Replaces the block cache's item with a given block's position and content.
-	 * Writes the old block to disk if it's edited.
-	 *
-	 * @param	out	 the disk index position of the requested block
-	 * @param	inPos	the position of the new block coming into the cache
-	 * @param	inContent	the content of the new block
-	 * @return	true if the block is in the cache, false otherwise.
-	 */
-	public void replace(int out, int inPos, int inContent){
-		//first, write the block if it's dirty
-		if(dirtyBit[out]){
-			//write the edited block to disk.
-			write(index[out], cache[out]);
-		}
-		//replace the old block with the new block.
-		cache[out] = inContent;
-		index[out] = inPos;
-		dirtyBit[out] = false;
-	}
-	/**
-	 * Writes all the blocks that have been edited to the disk.
-	 *
-	 */
-	public void flush(){
-		for(int i=0;i<CACHE_SIZE;i++){
-			if(dirtyBit[i]){
-				//Schedule a disk request and write this to disk.
-				write(index[i], cache[i]);
-			}
-		}
-
-	}
-	//End block cache variables and methods
-
 	/**
 	 * Dequeues the current I/O request and selects the next
 	 * request for processing. This method must be implemented by derived 
@@ -169,7 +71,6 @@ abstract public class DiskScheduler extends Disk
 			DiskRequest dr = new DiskRequest();
 			free_q = dr.enQ(null,free_q);
 		}
-		createBlockCache();
 	}
 
 	/** 
@@ -260,9 +161,6 @@ abstract public class DiskScheduler extends Disk
 	public int read(int position)
 	{
 		m.Lock();
-
-		//check the cache first
-
 
 		// get free request
 		DiskRequest dr = getRequest(position, -1, true);
